@@ -74,6 +74,11 @@
     <ClInclude Include="external\sqlite3\sqlite3.h" />
     <ClInclude Include="Finally.h" />
     <ClInclude Include="LINQ.h" />
+    <ClInclude Include="Logging\AbstractLogger.h" />
+    <ClInclude Include="Logging\ILogger.h" />
+    <ClInclude Include="Logging\ILoggerAware.h" />
+    <ClInclude Include="Logging\NullLogger.h" />
+    <ClInclude Include="Logging\Severity.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="Plugin\IPluginCanUnload.h" />
@@ -167,6 +172,8 @@
     <ClCompile Include="external\lua\lvm.c" />
     <ClCompile Include="external\lua\lzio.c" />
     <ClCompile Include="external\sqlite3\sqlite3.c" />
+    <ClCompile Include="Logging\AbstractLogger.cpp" />
+    <ClCompile Include="Logging\NullLogger.cpp" />
     <ClCompile Include="Plugin\Plugin.cpp" />
     <ClCompile Include="Plugin\PluginBase.cpp" />
     <ClCompile Include="Plugin\PluginManager.cpp" />
