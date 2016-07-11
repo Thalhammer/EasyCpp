@@ -1,0 +1,3 @@
+[submodule "EasyCppTest/googletest"]
+	path = EasyCppTest/googletest
+	url = https://github.com/google/googletest
