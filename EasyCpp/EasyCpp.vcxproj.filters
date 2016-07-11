@@ -69,6 +69,18 @@
     <ClInclude Include="LINQ.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Base64.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Base64URL.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="BundleFilter.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="StringAlgorithm.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -90,6 +102,15 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Bundle.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Base64.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Base64URL.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="BundleFilter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

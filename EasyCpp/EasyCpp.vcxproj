@@ -22,8 +22,11 @@
     <ClInclude Include="AnyArray.h" />
     <ClInclude Include="AnyValue.h" />
     <ClInclude Include="Backtrace.h" />
+    <ClInclude Include="Base64.h" />
+    <ClInclude Include="Base64URL.h" />
     <ClInclude Include="BasicException.h" />
     <ClInclude Include="Bundle.h" />
+    <ClInclude Include="BundleFilter.h" />
     <ClInclude Include="ConvertException.h" />
     <ClInclude Include="DllExport.h" />
     <ClInclude Include="Finally.h" />
@@ -31,6 +34,7 @@
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="RuntimeException.h" />
     <ClInclude Include="Serialize\Serializable.h" />
+    <ClInclude Include="StringAlgorithm.h" />
     <ClInclude Include="TypeInfo.h" />
     <ClInclude Include="ValueConverter.h" />
     <ClInclude Include="VarArgs.h" />
@@ -38,8 +42,11 @@
   <ItemGroup>
     <ClCompile Include="AnyValue.cpp" />
     <ClCompile Include="Backtrace.cpp" />
+    <ClCompile Include="Base64.cpp" />
+    <ClCompile Include="Base64URL.cpp" />
     <ClCompile Include="BasicException.cpp" />
     <ClCompile Include="Bundle.cpp" />
+    <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="ConvertException.cpp" />
     <ClCompile Include="RuntimeException.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
