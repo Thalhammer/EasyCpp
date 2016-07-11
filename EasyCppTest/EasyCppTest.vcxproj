@@ -206,6 +206,7 @@
     <ClCompile Include="LINQ.cpp" />
     <ClCompile Include="MinistoreSerializer.cpp" />
     <ClCompile Include="PHPSessionSerializer.cpp" />
+    <ClCompile Include="ScriptingLua.cpp" />
     <ClCompile Include="SerializeVector.cpp" />
     <ClCompile Include="StringAlgorithm.cpp" />
   </ItemGroup>

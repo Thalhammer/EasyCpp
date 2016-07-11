@@ -77,6 +77,8 @@
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="RuntimeException.h" />
+    <ClInclude Include="Scripting\LuaException.h" />
+    <ClInclude Include="Scripting\LuaState.h" />
     <ClInclude Include="Serialize\BsonSerializer.h" />
     <ClInclude Include="Serialize\JsonSerializer.h" />
     <ClInclude Include="Serialize\MinistoreSerializer.h" />
@@ -145,6 +147,8 @@
     <ClCompile Include="external\lua\lzio.c" />
     <ClCompile Include="external\sqlite3\sqlite3.c" />
     <ClCompile Include="RuntimeException.cpp" />
+    <ClCompile Include="Scripting\LuaException.cpp" />
+    <ClCompile Include="Scripting\LuaState.cpp" />
     <ClCompile Include="Serialize\BsonSerializer.cpp" />
     <ClCompile Include="Serialize\JsonSerializer.cpp" />
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />

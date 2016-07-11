@@ -37,6 +37,12 @@
     <Filter Include="external\lua">
       <UniqueIdentifier>{afdb39b9-3218-47a5-aef9-36137ee0273d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Scripting">
+      <UniqueIdentifier>{faeadb75-6722-484c-a81e-5cdb48deb831}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scripting">
+      <UniqueIdentifier>{f1481d7a-e005-422c-a1f3-92f24f6ede95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -246,6 +252,12 @@
     <ClInclude Include="Serialize\JsonSerializer.h">
       <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
+    <ClInclude Include="Scripting\LuaState.h">
+      <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\LuaException.h">
+      <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -409,6 +421,12 @@
     </ClCompile>
     <ClCompile Include="Serialize\JsonSerializer.cpp">
       <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\LuaException.cpp">
+      <Filter>Quelldateien\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\LuaState.cpp">
+      <Filter>Quelldateien\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
