@@ -96,6 +96,21 @@
     <ClInclude Include="TypeInfo.h" />
     <ClInclude Include="ValueConverter.h" />
     <ClInclude Include="VarArgs.h" />
+    <ClInclude Include="VFS\InputOutputStream.h" />
+    <ClInclude Include="VFS\InputStream.h" />
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSInputOutputStream.h" />
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSInputStream.h" />
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSOutputStream.h" />
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSProvider.h" />
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSStream.h" />
+    <ClInclude Include="VFS\OutputStream.h" />
+    <ClInclude Include="VFS\Path.h" />
+    <ClInclude Include="VFS\Stream.h" />
+    <ClInclude Include="VFS\StringReader.h" />
+    <ClInclude Include="VFS\StringWriter.h" />
+    <ClInclude Include="VFS\VFS.h" />
+    <ClInclude Include="VFS\VFSProvider.h" />
+    <ClInclude Include="VFS\VFSVFSProvider\VFSVFSProvider.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnyValue.cpp" />
@@ -163,6 +178,16 @@
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSInputOutputStream.cpp" />
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSInputStream.cpp" />
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSOutputStream.cpp" />
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSProvider.cpp" />
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSStream.cpp" />
+    <ClCompile Include="VFS\Path.cpp" />
+    <ClCompile Include="VFS\StringReader.cpp" />
+    <ClCompile Include="VFS\StringWriter.cpp" />
+    <ClCompile Include="VFS\VFS.cpp" />
+    <ClCompile Include="VFS\VFSVFSProvider\VFSVFSProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="external\json\json_valueiterator.inl" />

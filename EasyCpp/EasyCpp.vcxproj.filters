@@ -49,6 +49,24 @@
     <Filter Include="Quelldateien\Plugin">
       <UniqueIdentifier>{173509ed-68ec-4aba-86a2-11124a641cad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\VFS">
+      <UniqueIdentifier>{f27723cd-152e-46c9-8dd0-09922c717a48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\VFS">
+      <UniqueIdentifier>{5fc0cd98-a1e2-4f81-b753-9660f33f3159}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\VFS\VFSVFSProvider">
+      <UniqueIdentifier>{2993c30d-aa6d-43b0-aa66-3083ae91338a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\VFS\VFSVFSProvider">
+      <UniqueIdentifier>{5af02360-cb24-4431-a372-f9d0be5af127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\VFS\OSVFSProvider">
+      <UniqueIdentifier>{3d1914f8-e142-4282-a56c-274ef2a37f67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\VFS\OSVFSProvider">
+      <UniqueIdentifier>{1648d68f-ac04-4569-a492-fcf634b4d969}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -282,6 +300,51 @@
     <ClInclude Include="Plugin\IPluginCanUnload.h">
       <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="VFS\Path.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\Stream.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\InputStream.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\OutputStream.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\InputOutputStream.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\StringReader.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\StringWriter.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\VFSProvider.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\VFS.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\VFSVFSProvider\VFSVFSProvider.h">
+      <Filter>Headerdateien\VFS\VFSVFSProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSStream.h">
+      <Filter>Headerdateien\VFS\OSVFSProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSInputStream.h">
+      <Filter>Headerdateien\VFS\OSVFSProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSOutputStream.h">
+      <Filter>Headerdateien\VFS\OSVFSProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSInputOutputStream.h">
+      <Filter>Headerdateien\VFS\OSVFSProvider</Filter>
+    </ClInclude>
+    <ClInclude Include="VFS\OSVFSProvider\OSVFSProvider.h">
+      <Filter>Headerdateien\VFS\OSVFSProvider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -460,6 +523,36 @@
     </ClCompile>
     <ClCompile Include="Plugin\PluginManager.cpp">
       <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\Path.cpp">
+      <Filter>Quelldateien\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\StringReader.cpp">
+      <Filter>Quelldateien\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\StringWriter.cpp">
+      <Filter>Quelldateien\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\VFS.cpp">
+      <Filter>Quelldateien\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\VFSVFSProvider\VFSVFSProvider.cpp">
+      <Filter>Quelldateien\VFS\VFSVFSProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSStream.cpp">
+      <Filter>Quelldateien\VFS\OSVFSProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSInputStream.cpp">
+      <Filter>Quelldateien\VFS\OSVFSProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSOutputStream.cpp">
+      <Filter>Quelldateien\VFS\OSVFSProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSInputOutputStream.cpp">
+      <Filter>Quelldateien\VFS\OSVFSProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\OSVFSProvider\OSVFSProvider.cpp">
+      <Filter>Quelldateien\VFS\OSVFSProvider</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
