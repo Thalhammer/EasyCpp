@@ -43,6 +43,12 @@
     <Filter Include="Quelldateien\Scripting">
       <UniqueIdentifier>{f1481d7a-e005-422c-a1f3-92f24f6ede95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Plugin">
+      <UniqueIdentifier>{0c956b32-2516-43a0-a8f1-d1a5176730bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Plugin">
+      <UniqueIdentifier>{173509ed-68ec-4aba-86a2-11124a641cad}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -258,6 +264,24 @@
     <ClInclude Include="Scripting\LuaException.h">
       <Filter>Headerdateien\Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="Plugin\PluginBaseInterface.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\PluginInterface.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\PluginBase.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\PluginManager.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\Plugin.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\IPluginCanUnload.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -427,6 +451,15 @@
     </ClCompile>
     <ClCompile Include="Scripting\LuaState.cpp">
       <Filter>Quelldateien\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\PluginBase.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\Plugin.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\PluginManager.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

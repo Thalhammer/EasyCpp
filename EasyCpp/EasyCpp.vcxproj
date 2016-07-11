@@ -76,6 +76,12 @@
     <ClInclude Include="LINQ.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PerformanceCheck.h" />
+    <ClInclude Include="Plugin\IPluginCanUnload.h" />
+    <ClInclude Include="Plugin\Plugin.h" />
+    <ClInclude Include="Plugin\PluginBase.h" />
+    <ClInclude Include="Plugin\PluginBaseInterface.h" />
+    <ClInclude Include="Plugin\PluginInterface.h" />
+    <ClInclude Include="Plugin\PluginManager.h" />
     <ClInclude Include="RuntimeException.h" />
     <ClInclude Include="Scripting\LuaException.h" />
     <ClInclude Include="Scripting\LuaState.h" />
@@ -146,6 +152,9 @@
     <ClCompile Include="external\lua\lvm.c" />
     <ClCompile Include="external\lua\lzio.c" />
     <ClCompile Include="external\sqlite3\sqlite3.c" />
+    <ClCompile Include="Plugin\Plugin.cpp" />
+    <ClCompile Include="Plugin\PluginBase.cpp" />
+    <ClCompile Include="Plugin\PluginManager.cpp" />
     <ClCompile Include="RuntimeException.cpp" />
     <ClCompile Include="Scripting\LuaException.cpp" />
     <ClCompile Include="Scripting\LuaState.cpp" />
