@@ -13,5 +13,75 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\ErrorHandling">
+      <UniqueIdentifier>{1ddf7a24-39ba-4e9e-8f7b-d12bfc26b213}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\ErrorHandling">
+      <UniqueIdentifier>{93464960-7117-422b-b71f-3a735fd67495}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Serialize">
+      <UniqueIdentifier>{a00e8ae9-46cf-4a04-b833-f2418ece0463}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DllExport.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Finally.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NonCopyable.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeInfo.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ValueConverter.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="ConvertException.h">
+      <Filter>Headerdateien\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="RuntimeException.h">
+      <Filter>Headerdateien\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicException.h">
+      <Filter>Headerdateien\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="Backtrace.h">
+      <Filter>Headerdateien\ErrorHandling</Filter>
+    </ClInclude>
+    <ClInclude Include="AnyValue.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Bundle.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\Serializable.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ValueConverter.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="ConvertException.cpp">
+      <Filter>Quelldateien\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="RuntimeException.cpp">
+      <Filter>Quelldateien\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="Backtrace.cpp">
+      <Filter>Quelldateien\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicException.cpp">
+      <Filter>Quelldateien\ErrorHandling</Filter>
+    </ClCompile>
+    <ClCompile Include="AnyValue.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Bundle.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

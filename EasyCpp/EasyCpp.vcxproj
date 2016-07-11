@@ -18,6 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AnyValue.h" />
+    <ClInclude Include="Backtrace.h" />
+    <ClInclude Include="BasicException.h" />
+    <ClInclude Include="Bundle.h" />
+    <ClInclude Include="ConvertException.h" />
+    <ClInclude Include="DllExport.h" />
+    <ClInclude Include="Finally.h" />
+    <ClInclude Include="NonCopyable.h" />
+    <ClInclude Include="RuntimeException.h" />
+    <ClInclude Include="Serialize\Serializable.h" />
+    <ClInclude Include="TypeInfo.h" />
+    <ClInclude Include="ValueConverter.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AnyValue.cpp" />
+    <ClCompile Include="Backtrace.cpp" />
+    <ClCompile Include="BasicException.cpp" />
+    <ClCompile Include="Bundle.cpp" />
+    <ClCompile Include="ConvertException.cpp" />
+    <ClCompile Include="RuntimeException.cpp" />
+    <ClCompile Include="ValueConverter.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AB3A108E-1190-43AE-93F9-EF7CA1C06AA0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
