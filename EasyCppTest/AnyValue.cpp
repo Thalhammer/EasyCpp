@@ -52,4 +52,14 @@ namespace EasyCppTest
 		ASSERT_TRUE(any2.isType<bool>());
 		ASSERT_FALSE(any2.isSerializable());
 	}
+
+	TEST(AnyValue, CastOperator)
+	{
+		AnyValue a = std::string("20");
+
+		std::string s = a;
+		ASSERT_EQ(std::string("20"), s);
+		int i = a;
+		ASSERT_EQ(20, i);
+	}
 }
