@@ -146,6 +146,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnyValue.cpp" />
+    <ClCompile Include="Backtrace.cpp" />
+    <ClCompile Include="Base64.cpp" />
+    <ClCompile Include="BsonSerializer.cpp" />
+    <ClCompile Include="Bundle.cpp" />
+    <ClCompile Include="BundleFilter.cpp" />
+    <ClCompile Include="Convert.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Finally.cpp" />
     <ClCompile Include="googletest\googletest\src\gtest-all.cc" />
     <ClCompile Include="googletest\googletest\src\gtest-death-test.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -193,6 +202,11 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="LINQ.cpp" />
+    <ClCompile Include="MinistoreSerializer.cpp" />
+    <ClCompile Include="PHPSessionSerializer.cpp" />
+    <ClCompile Include="SerializeVector.cpp" />
+    <ClCompile Include="StringAlgorithm.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="googletest\googletest\include\gtest\gtest-death-test.h" />

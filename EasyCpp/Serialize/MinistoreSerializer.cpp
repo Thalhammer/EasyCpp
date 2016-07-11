@@ -1,51 +1,51 @@
-#include "Ministore.h"
+#include "MinistoreSerializer.h"
 #include "../BufferWriter.h"
 
 namespace EasyCpp
 {
 	namespace Serialize
 	{
-		Ministore::Ministore()
+		MinistoreSerializer::MinistoreSerializer()
 		{
 		}
 
-		Ministore::~Ministore()
+		MinistoreSerializer::~MinistoreSerializer()
 		{
 		}
 
-		void Ministore::setCodeTable(const std::vector<std::string>& table)
+		void MinistoreSerializer::setCodeTable(const std::vector<std::string>& table)
 		{
 			if (table.size() > 1536)
 				throw std::runtime_error("Codetable is to large");
 			_codeTable = table;
 		}
 
-		std::vector<std::string> Ministore::getCodeTable() const
+		std::vector<std::string> MinistoreSerializer::getCodeTable() const
 		{
 			return _codeTable;
 		}
 
-		void Ministore::setValueBackref(bool enabled)
+		void MinistoreSerializer::setValueBackref(bool enabled)
 		{
 			_valueBackref = enabled;
 		}
 
-		bool Ministore::isValueBackref()
+		bool MinistoreSerializer::isValueBackref()
 		{
 			return _valueBackref;
 		}
 
-		void Ministore::setValueCodeTable(bool enabled)
+		void MinistoreSerializer::setValueCodeTable(bool enabled)
 		{
 			_valueCodeTable = enabled;
 		}
 
-		bool Ministore::isValueCodeTable()
+		bool MinistoreSerializer::isValueCodeTable()
 		{
 			return _valueCodeTable;
 		}
 
-		void Ministore::writeDocument(BufferWriter & wrt, const Bundle & b, std::vector<std::string>& backref) const
+		void MinistoreSerializer::writeDocument(BufferWriter & wrt, const Bundle & b, std::vector<std::string>& backref) const
 		{
 			size_t start = wrt.getPosition();
 			wrt.writeUInt32(0);
@@ -62,7 +62,7 @@ namespace EasyCpp
 			wrt.setPosition(end);
 		}
 
-		void Ministore::writeArray(BufferWriter & wrt, std::vector<AnyValue>& b, std::vector<std::string>& backref) const
+		void MinistoreSerializer::writeArray(BufferWriter & wrt, std::vector<AnyValue>& b, std::vector<std::string>& backref) const
 		{
 			size_t start = wrt.getPosition();
 			wrt.writeUInt32(0);
@@ -79,7 +79,7 @@ namespace EasyCpp
 			wrt.setPosition(end);
 		}
 
-		void Ministore::writeDocumentElement(BufferWriter& wrt, const std::string & key, const AnyValue & val, std::vector<std::string>& backref) const
+		void MinistoreSerializer::writeDocumentElement(BufferWriter& wrt, const std::string & key, const AnyValue & val, std::vector<std::string>& backref) const
 		{
 			uint8_t refid = 0;
 			uint8_t start = 0;
@@ -122,7 +122,7 @@ namespace EasyCpp
 			this->writeToken(wrt, start, refid, key, val, backref);
 		}
 
-		void Ministore::writeToken(BufferWriter & wrt, uint8_t start, uint8_t refid, const std::string& key, const AnyValue & val, std::vector<std::string>& backref) const
+		void MinistoreSerializer::writeToken(BufferWriter & wrt, uint8_t start, uint8_t refid, const std::string& key, const AnyValue & val, std::vector<std::string>& backref) const
 		{
 			uint16_t val_refid = UINT16_MAX;
 			// Check type
@@ -258,7 +258,7 @@ namespace EasyCpp
 			}
 		}
 
-		std::string Serialize::Ministore::serialize(const AnyValue & any) const
+		std::string MinistoreSerializer::serialize(const AnyValue & any) const
 		{
 			std::vector<std::string> backrefTable;
 			std::vector<uint8_t> res;
@@ -273,7 +273,7 @@ namespace EasyCpp
 			return std::string(res.begin(), res.end());
 		}
 
-		AnyValue Serialize::Ministore::deserialize(const std::string & str)
+		AnyValue MinistoreSerializer::deserialize(const std::string & str)
 		{
 			return AnyValue();
 		}

@@ -96,9 +96,6 @@
     <ClInclude Include="Serialize\Serializer.h">
       <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
-    <ClInclude Include="Serialize\Ministore.h">
-      <Filter>Headerdateien\Serialize</Filter>
-    </ClInclude>
     <ClInclude Include="BufferWriter.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -111,11 +108,11 @@
     <ClInclude Include="Serialize\BsonSerializer.h">
       <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
-    <ClInclude Include="Serialize\BufferReader.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="BufferReader.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\MinistoreSerializer.h">
+      <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,13 +149,13 @@
     <ClCompile Include="DynLib.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Serialize\Ministore.cpp">
-      <Filter>Quelldateien\Serialize</Filter>
-    </ClCompile>
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp">
       <Filter>Quelldateien\Serialize</Filter>
     </ClCompile>
     <ClCompile Include="Serialize\BsonSerializer.cpp">
+      <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\MinistoreSerializer.cpp">
       <Filter>Quelldateien\Serialize</Filter>
     </ClCompile>
   </ItemGroup>

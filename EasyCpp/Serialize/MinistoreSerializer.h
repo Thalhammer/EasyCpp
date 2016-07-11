@@ -13,11 +13,11 @@ namespace EasyCpp
 	namespace Serialize
 	{
 		//! Support for Thalhammer MINIStore
-		class DLL_EXPORT Ministore : public Serializer
+		class DLL_EXPORT MinistoreSerializer : public Serializer
 		{
 		public:
-			Ministore();
-			virtual ~Ministore();
+			MinistoreSerializer();
+			virtual ~MinistoreSerializer();
 
 			void setCodeTable(const std::vector<std::string>& table);
 			std::vector<std::string> getCodeTable() const;

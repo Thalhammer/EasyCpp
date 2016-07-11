@@ -2,7 +2,7 @@
 #include <chrono>
 #include <functional>
 
-namespace Util
+namespace EasyCpp
 {
 	class PerformanceCheck
 	{
