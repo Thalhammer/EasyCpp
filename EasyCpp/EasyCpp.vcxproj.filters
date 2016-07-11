@@ -67,6 +67,12 @@
     <Filter Include="Quelldateien\VFS\OSVFSProvider">
       <UniqueIdentifier>{1648d68f-ac04-4569-a492-fcf634b4d969}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Logging">
+      <UniqueIdentifier>{680dd71b-727f-45f6-8dbf-70b2badb5a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Logging">
+      <UniqueIdentifier>{6381943f-b462-4336-af9f-3e76795c8921}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -345,6 +351,21 @@
     <ClInclude Include="VFS\OSVFSProvider\OSVFSProvider.h">
       <Filter>Headerdateien\VFS\OSVFSProvider</Filter>
     </ClInclude>
+    <ClInclude Include="Logging\Severity.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging\ILogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging\AbstractLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging\NullLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="Logging\ILoggerAware.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -553,6 +574,12 @@
     </ClCompile>
     <ClCompile Include="VFS\OSVFSProvider\OSVFSProvider.cpp">
       <Filter>Quelldateien\VFS\OSVFSProvider</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\AbstractLogger.cpp">
+      <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\NullLogger.cpp">
+      <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
