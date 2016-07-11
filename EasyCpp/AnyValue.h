@@ -141,6 +141,12 @@ namespace EasyCpp
 			}
 		}
 
+		template <typename T>
+		operator T ()
+		{
+			return this->as<T>();
+		}
+
 		//! \brief Überprüft ob der gespeicherte Wert vom Typ T ist.
 		template <typename T>
 		bool isType() const
