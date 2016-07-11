@@ -33,12 +33,52 @@
     <ClInclude Include="DllExport.h" />
     <ClInclude Include="DynLib.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="external\json\allocator.h" />
+    <ClInclude Include="external\json\assertions.h" />
+    <ClInclude Include="external\json\autolink.h" />
+    <ClInclude Include="external\json\config.h" />
+    <ClInclude Include="external\json\features.h" />
+    <ClInclude Include="external\json\forwards.h" />
+    <ClInclude Include="external\json\json.h" />
+    <ClInclude Include="external\json\json_tool.h" />
+    <ClInclude Include="external\json\reader.h" />
+    <ClInclude Include="external\json\value.h" />
+    <ClInclude Include="external\json\version.h" />
+    <ClInclude Include="external\json\writer.h" />
+    <ClInclude Include="external\lua\lapi.h" />
+    <ClInclude Include="external\lua\lauxlib.h" />
+    <ClInclude Include="external\lua\lcode.h" />
+    <ClInclude Include="external\lua\lctype.h" />
+    <ClInclude Include="external\lua\ldebug.h" />
+    <ClInclude Include="external\lua\ldo.h" />
+    <ClInclude Include="external\lua\lfunc.h" />
+    <ClInclude Include="external\lua\lgc.h" />
+    <ClInclude Include="external\lua\llex.h" />
+    <ClInclude Include="external\lua\llimits.h" />
+    <ClInclude Include="external\lua\lmem.h" />
+    <ClInclude Include="external\lua\lobject.h" />
+    <ClInclude Include="external\lua\lopcodes.h" />
+    <ClInclude Include="external\lua\lparser.h" />
+    <ClInclude Include="external\lua\lprefix.h" />
+    <ClInclude Include="external\lua\lstate.h" />
+    <ClInclude Include="external\lua\lstring.h" />
+    <ClInclude Include="external\lua\ltable.h" />
+    <ClInclude Include="external\lua\ltm.h" />
+    <ClInclude Include="external\lua\lua.h" />
+    <ClInclude Include="external\lua\lua.hpp" />
+    <ClInclude Include="external\lua\luaconf.h" />
+    <ClInclude Include="external\lua\lualib.h" />
+    <ClInclude Include="external\lua\lundump.h" />
+    <ClInclude Include="external\lua\lvm.h" />
+    <ClInclude Include="external\lua\lzio.h" />
+    <ClInclude Include="external\sqlite3\sqlite3.h" />
     <ClInclude Include="Finally.h" />
     <ClInclude Include="LINQ.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="RuntimeException.h" />
     <ClInclude Include="Serialize\BsonSerializer.h" />
+    <ClInclude Include="Serialize\JsonSerializer.h" />
     <ClInclude Include="Serialize\MinistoreSerializer.h" />
     <ClInclude Include="Serialize\PHPSessionSerializer.h" />
     <ClInclude Include="Serialize\Serializable.h" />
@@ -59,11 +99,60 @@
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="ConvertException.cpp" />
     <ClCompile Include="DynLib.cpp" />
+    <ClCompile Include="external\json\json_reader.cpp" />
+    <ClCompile Include="external\json\json_value.cpp" />
+    <ClCompile Include="external\json\json_writer.cpp" />
+    <ClCompile Include="external\lua\lapi.c" />
+    <ClCompile Include="external\lua\lauxlib.c" />
+    <ClCompile Include="external\lua\lbaselib.c" />
+    <ClCompile Include="external\lua\lbitlib.c" />
+    <ClCompile Include="external\lua\lcode.c" />
+    <ClCompile Include="external\lua\lcorolib.c" />
+    <ClCompile Include="external\lua\lctype.c" />
+    <ClCompile Include="external\lua\ldblib.c" />
+    <ClCompile Include="external\lua\ldebug.c" />
+    <ClCompile Include="external\lua\ldo.c" />
+    <ClCompile Include="external\lua\ldump.c" />
+    <ClCompile Include="external\lua\lfunc.c" />
+    <ClCompile Include="external\lua\lgc.c" />
+    <ClCompile Include="external\lua\linit.c" />
+    <ClCompile Include="external\lua\liolib.c" />
+    <ClCompile Include="external\lua\llex.c" />
+    <ClCompile Include="external\lua\lmathlib.c" />
+    <ClCompile Include="external\lua\lmem.c" />
+    <ClCompile Include="external\lua\loadlib.c" />
+    <ClCompile Include="external\lua\lobject.c" />
+    <ClCompile Include="external\lua\lopcodes.c" />
+    <ClCompile Include="external\lua\loslib.c" />
+    <ClCompile Include="external\lua\lparser.c" />
+    <ClCompile Include="external\lua\lstate.c" />
+    <ClCompile Include="external\lua\lstring.c" />
+    <ClCompile Include="external\lua\lstrlib.c" />
+    <ClCompile Include="external\lua\ltable.c" />
+    <ClCompile Include="external\lua\ltablib.c" />
+    <ClCompile Include="external\lua\ltm.c" />
+    <ClCompile Include="external\lua\lua.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="external\lua\luac.c">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="external\lua\lundump.c" />
+    <ClCompile Include="external\lua\lutf8lib.c" />
+    <ClCompile Include="external\lua\lvm.c" />
+    <ClCompile Include="external\lua\lzio.c" />
+    <ClCompile Include="external\sqlite3\sqlite3.c" />
     <ClCompile Include="RuntimeException.cpp" />
     <ClCompile Include="Serialize\BsonSerializer.cpp" />
+    <ClCompile Include="Serialize\JsonSerializer.cpp" />
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="external\json\json_valueiterator.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AB3A108E-1190-43AE-93F9-EF7CA1C06AA0}</ProjectGuid>
@@ -118,12 +207,14 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>external;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>external;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

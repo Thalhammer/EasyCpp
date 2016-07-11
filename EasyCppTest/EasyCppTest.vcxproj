@@ -202,6 +202,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="JsonSerializer.cpp" />
     <ClCompile Include="LINQ.cpp" />
     <ClCompile Include="MinistoreSerializer.cpp" />
     <ClCompile Include="PHPSessionSerializer.cpp" />

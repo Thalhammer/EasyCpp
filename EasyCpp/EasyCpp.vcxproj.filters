@@ -25,6 +25,18 @@
     <Filter Include="Quelldateien\Serialize">
       <UniqueIdentifier>{0ced8a02-c653-4547-94a5-2c4c5531c9cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external">
+      <UniqueIdentifier>{4598a9ff-0e2f-4691-9755-71a379a2078b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\json">
+      <UniqueIdentifier>{4f75cebf-30fa-4032-beb2-0ba0fe15a418}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\sqlite3">
+      <UniqueIdentifier>{9e5d053d-3ba0-4f9c-a515-3153f64668e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="external\lua">
+      <UniqueIdentifier>{afdb39b9-3218-47a5-aef9-36137ee0273d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -114,6 +126,126 @@
     <ClInclude Include="Serialize\MinistoreSerializer.h">
       <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
+    <ClInclude Include="external\json\allocator.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\assertions.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\autolink.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\config.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\features.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\forwards.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\json.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\json_tool.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\reader.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\value.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\version.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\json\writer.h">
+      <Filter>external\json</Filter>
+    </ClInclude>
+    <ClInclude Include="external\sqlite3\sqlite3.h">
+      <Filter>external\sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lapi.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lauxlib.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lcode.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lctype.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\ldebug.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\ldo.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lfunc.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lgc.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\llex.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\llimits.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lmem.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lobject.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lopcodes.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lparser.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lprefix.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lstate.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lstring.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\ltable.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\ltm.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lua.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lua.hpp">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\luaconf.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lualib.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lundump.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lvm.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="external\lua\lzio.h">
+      <Filter>external\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\JsonSerializer.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -158,5 +290,130 @@
     <ClCompile Include="Serialize\MinistoreSerializer.cpp">
       <Filter>Quelldateien\Serialize</Filter>
     </ClCompile>
+    <ClCompile Include="external\json\json_reader.cpp">
+      <Filter>external\json</Filter>
+    </ClCompile>
+    <ClCompile Include="external\json\json_value.cpp">
+      <Filter>external\json</Filter>
+    </ClCompile>
+    <ClCompile Include="external\json\json_writer.cpp">
+      <Filter>external\json</Filter>
+    </ClCompile>
+    <ClCompile Include="external\sqlite3\sqlite3.c">
+      <Filter>external\sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lapi.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lauxlib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lbaselib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lbitlib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lcode.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lcorolib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lctype.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ldblib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ldebug.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ldo.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ldump.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lfunc.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lgc.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\linit.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\liolib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\llex.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lmathlib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lmem.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\loadlib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lobject.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lopcodes.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\loslib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lparser.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lstate.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lstring.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lstrlib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ltable.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ltablib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\ltm.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lua.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\luac.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lundump.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lutf8lib.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lvm.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="external\lua\lzio.c">
+      <Filter>external\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\JsonSerializer.cpp">
+      <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="external\json\json_valueiterator.inl">
+      <Filter>external\json</Filter>
+    </None>
   </ItemGroup>
 </Project>
