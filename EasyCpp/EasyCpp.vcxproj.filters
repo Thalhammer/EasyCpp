@@ -60,6 +60,15 @@
     <ClInclude Include="Serialize\Serializable.h">
       <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
+    <ClInclude Include="VarArgs.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="AnyArray.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="LINQ.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">

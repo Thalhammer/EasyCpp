@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnyArray.h" />
     <ClInclude Include="AnyValue.h" />
     <ClInclude Include="Backtrace.h" />
     <ClInclude Include="BasicException.h" />
@@ -26,11 +27,13 @@
     <ClInclude Include="ConvertException.h" />
     <ClInclude Include="DllExport.h" />
     <ClInclude Include="Finally.h" />
+    <ClInclude Include="LINQ.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="RuntimeException.h" />
     <ClInclude Include="Serialize\Serializable.h" />
     <ClInclude Include="TypeInfo.h" />
     <ClInclude Include="ValueConverter.h" />
+    <ClInclude Include="VarArgs.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AnyValue.cpp" />
