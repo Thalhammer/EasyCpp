@@ -22,6 +22,9 @@
     <Filter Include="Headerdateien\Serialize">
       <UniqueIdentifier>{a00e8ae9-46cf-4a04-b833-f2418ece0463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Serialize">
+      <UniqueIdentifier>{0ced8a02-c653-4547-94a5-2c4c5531c9cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -81,6 +84,39 @@
     <ClInclude Include="StringAlgorithm.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="DynLib.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="PerformanceCheck.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\Serializer.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\Ministore.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferWriter.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\PHPSessionSerializer.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\Vector.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\BsonSerializer.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\BufferReader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="BufferReader.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -112,6 +148,18 @@
     </ClCompile>
     <ClCompile Include="BundleFilter.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="DynLib.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\Ministore.cpp">
+      <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\PHPSessionSerializer.cpp">
+      <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Serialize\BsonSerializer.cpp">
+      <Filter>Quelldateien\Serialize</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
