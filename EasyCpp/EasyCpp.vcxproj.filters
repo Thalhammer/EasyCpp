@@ -73,6 +73,12 @@
     <Filter Include="Quelldateien\Logging">
       <UniqueIdentifier>{6381943f-b462-4336-af9f-3e76795c8921}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Database">
+      <UniqueIdentifier>{b261a4c1-0844-441f-9cb7-af11a59ce270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Database">
+      <UniqueIdentifier>{79b5b386-70a3-4a5a-bda6-6da893cc6244}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -366,6 +372,18 @@
     <ClInclude Include="Logging\ILoggerAware.h">
       <Filter>Headerdateien\Logging</Filter>
     </ClInclude>
+    <ClInclude Include="Database\Database.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\DatabaseDriver.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\Statement.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\ResultSet.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -580,6 +598,12 @@
     </ClCompile>
     <ClCompile Include="Logging\NullLogger.cpp">
       <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\DatabaseDriver.cpp">
+      <Filter>Quelldateien\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\ResultSet.cpp">
+      <Filter>Quelldateien\Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
