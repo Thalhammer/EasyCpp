@@ -8,7 +8,7 @@ namespace EasyCpp
 	{
 		class DatabaseDriver;
 		typedef std::shared_ptr<DatabaseDriver> DatabaseDriverPtr;
-		class DatabaseDriver
+		class DLL_EXPORT DatabaseDriver
 		{
 		public:
 			virtual ~DatabaseDriver() {}

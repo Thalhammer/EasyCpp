@@ -79,6 +79,12 @@
     <Filter Include="Quelldateien\Database">
       <UniqueIdentifier>{79b5b386-70a3-4a5a-bda6-6da893cc6244}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Database\Sqlite3">
+      <UniqueIdentifier>{ed1dd33e-c4e8-4b26-ae07-582e25b306c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Database\Sqlite3">
+      <UniqueIdentifier>{3699b95b-5d73-400e-b8cd-aecefd67d1a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -384,6 +390,21 @@
     <ClInclude Include="Database\ResultSet.h">
       <Filter>Headerdateien\Database</Filter>
     </ClInclude>
+    <ClInclude Include="Database\Sqlite3\Sqlite3DatabaseDriver.h">
+      <Filter>Headerdateien\Database\Sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\Sqlite3\Sqlite3SharedData.h">
+      <Filter>Headerdateien\Database\Sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\Sqlite3\Sqlite3Database.h">
+      <Filter>Headerdateien\Database\Sqlite3</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\DatabaseException.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Database\Sqlite3\Sqlite3Statement.h">
+      <Filter>Headerdateien\Database\Sqlite3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -604,6 +625,21 @@
     </ClCompile>
     <ClCompile Include="Database\ResultSet.cpp">
       <Filter>Quelldateien\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Sqlite3\Sqlite3DatabaseDriver.cpp">
+      <Filter>Quelldateien\Database\Sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Sqlite3\Sqlite3SharedData.cpp">
+      <Filter>Quelldateien\Database\Sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Sqlite3\Sqlite3Database.cpp">
+      <Filter>Quelldateien\Database\Sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\DatabaseException.cpp">
+      <Filter>Quelldateien\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Sqlite3\Sqlite3Statement.cpp">
+      <Filter>Quelldateien\Database\Sqlite3</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -8,6 +8,11 @@ namespace EasyCpp
 		{
 		}
 
+		ResultSet::ResultSet(std::unordered_set<std::string> columns)
+			:_columns(columns)
+		{
+		}
+
 		ResultSet::~ResultSet()
 		{
 		}
@@ -34,6 +39,7 @@ namespace EasyCpp
 				if (!_columns.count(it.first))
 					_columns.insert(it.first);
 			}
+			_rows.push_back(row);
 		}
 
 		size_t ResultSet::size()

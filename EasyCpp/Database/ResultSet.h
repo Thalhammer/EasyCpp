@@ -8,10 +8,11 @@ namespace EasyCpp
 {
 	namespace Database
 	{
-		class ResultSet
+		class DLL_EXPORT ResultSet
 		{
 		public:
 			ResultSet();
+			ResultSet(std::unordered_set<std::string> columns);
 			~ResultSet();
 
 			Bundle& operator[](uint64_t);

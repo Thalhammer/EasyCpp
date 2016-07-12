@@ -24,7 +24,6 @@ namespace EasyCpp
 			virtual std::string lastInsertedId(const std::string& name = "") = 0;
 
 			virtual StatementPtr prepare(const std::string& sql, const Bundle& driver_options = {}) = 0;
-			virtual StatementPtr query(const std::string& sql) = 0;
 		};
 		typedef std::shared_ptr<Database> DatabasePtr;
 	}
