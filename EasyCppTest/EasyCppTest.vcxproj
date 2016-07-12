@@ -153,6 +153,7 @@
     <ClCompile Include="Bundle.cpp" />
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="Convert.cpp" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Finally.cpp" />
     <ClCompile Include="googletest\googletest\src\gtest-all.cc" />
