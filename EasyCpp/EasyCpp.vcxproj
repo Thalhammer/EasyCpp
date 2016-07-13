@@ -32,6 +32,7 @@
     <ClInclude Include="ConvertException.h" />
     <ClInclude Include="Database\Database.h" />
     <ClInclude Include="Database\DatabaseDriver.h" />
+    <ClInclude Include="Database\DatabaseDriverManager.h" />
     <ClInclude Include="Database\DatabaseException.h" />
     <ClInclude Include="Database\ResultSet.h" />
     <ClInclude Include="Database\Sqlite3\Sqlite3Database.h" />
@@ -135,7 +136,7 @@
     <ClCompile Include="Bundle.cpp" />
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="ConvertException.cpp" />
-    <ClCompile Include="Database\DatabaseDriver.cpp" />
+    <ClCompile Include="Database\DatabaseDriverManager.cpp" />
     <ClCompile Include="Database\DatabaseException.cpp" />
     <ClCompile Include="Database\ResultSet.cpp" />
     <ClCompile Include="Database\Sqlite3\Sqlite3Database.cpp" />

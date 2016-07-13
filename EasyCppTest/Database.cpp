@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <Database/DatabaseDriver.h>
+#include <Database/DatabaseDriverManager.h>
 
 using namespace EasyCpp;
 
@@ -7,7 +8,7 @@ namespace EasyCppTest
 {
 	TEST(Database, SQLITEDatabaseCreate)
 	{
-		auto db = Database::DatabaseDriver::getDriver("sqlite3")->createInstance(":memory:");
+		auto db = Database::DatabaseDriverManager::getDriver("sqlite3")->createInstance(":memory:");
 		ASSERT_NE(db.get(), nullptr);
 		db.reset();
 		ASSERT_EQ(db.get(), nullptr);
@@ -15,7 +16,7 @@ namespace EasyCppTest
 
 	TEST(Database, SQLITEStatementExecute)
 	{
-		auto db = Database::DatabaseDriver::getDriver("sqlite3")->createInstance(":memory:");
+		auto db = Database::DatabaseDriverManager::getDriver("sqlite3")->createInstance(":memory:");
 		ASSERT_NE(db.get(), nullptr);
 		auto stmt = db->prepare("SELECT 1");
 		ASSERT_NE(stmt.get(), nullptr);
@@ -26,7 +27,7 @@ namespace EasyCppTest
 
 	TEST(Database, SQLITEInvalidStatement)
 	{
-		auto db = Database::DatabaseDriver::getDriver("sqlite3")->createInstance(":memory:");
+		auto db = Database::DatabaseDriverManager::getDriver("sqlite3")->createInstance(":memory:");
 		ASSERT_NE(db.get(), nullptr);
 		ASSERT_THROW({
 			db->exec("SELECT a FROM b");
@@ -35,7 +36,7 @@ namespace EasyCppTest
 
 	TEST(Database, SQLITEInsertSelect)
 	{
-		auto db = Database::DatabaseDriver::getDriver("sqlite3")->createInstance(":memory:");
+		auto db = Database::DatabaseDriverManager::getDriver("sqlite3")->createInstance(":memory:");
 		ASSERT_NE(db.get(), nullptr);
 		db->exec("CREATE TABLE \"test\" (\"id\" INTEGER PRIMARY KEY AUTOINCREMENT, \"value\" TEXT );");
 		auto stmt = db->prepare("SELECT * FROM sqlite_master WHERE tbl_name = 'test'; ");

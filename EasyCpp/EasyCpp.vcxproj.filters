@@ -405,6 +405,9 @@
     <ClInclude Include="Database\Sqlite3\Sqlite3Statement.h">
       <Filter>Headerdateien\Database\Sqlite3</Filter>
     </ClInclude>
+    <ClInclude Include="Database\DatabaseDriverManager.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -620,9 +623,6 @@
     <ClCompile Include="Logging\NullLogger.cpp">
       <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="Database\DatabaseDriver.cpp">
-      <Filter>Quelldateien\Database</Filter>
-    </ClCompile>
     <ClCompile Include="Database\ResultSet.cpp">
       <Filter>Quelldateien\Database</Filter>
     </ClCompile>
@@ -640,6 +640,9 @@
     </ClCompile>
     <ClCompile Include="Database\Sqlite3\Sqlite3Statement.cpp">
       <Filter>Quelldateien\Database\Sqlite3</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\DatabaseDriverManager.cpp">
+      <Filter>Quelldateien\Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

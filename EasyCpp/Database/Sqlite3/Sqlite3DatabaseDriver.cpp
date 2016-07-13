@@ -1,12 +1,13 @@
 #include "Sqlite3DatabaseDriver.h"
 #include "Sqlite3Database.h"
+#include "../DatabaseDriverManager.h"
 
 namespace {
 	class InitDriver
 	{
 	public:
 		InitDriver() {
-			EasyCpp::Database::DatabaseDriver::registerDriver("sqlite3", std::make_shared<EasyCpp::Database::Sqlite3::Sqlite3DatabaseDriver>());
+			EasyCpp::Database::DatabaseDriverManager::registerDriver("sqlite3", std::make_shared<EasyCpp::Database::Sqlite3::Sqlite3DatabaseDriver>());
 		}
 	private:
 		static InitDriver _auto_init;

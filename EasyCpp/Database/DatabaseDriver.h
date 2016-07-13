@@ -13,12 +13,6 @@ namespace EasyCpp
 		public:
 			virtual ~DatabaseDriver() {}
 			virtual DatabasePtr createInstance(const std::string& dsn, const Bundle& options = {}) = 0;
-
-			static std::vector<std::string> getAvailableDrivers();
-			static void registerDriver(const std::string& name, DatabaseDriverPtr driver);
-			static DatabaseDriverPtr getDriver(const std::string& name);
-		private:
-			static std::map<std::string, DatabaseDriverPtr> _drivers;
 		};
 	}
 }
