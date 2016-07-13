@@ -4,9 +4,7 @@
 
 namespace EasyCpp
 {
-	//! \ingroup Util
-	//! \class BufferReader
-	//! \brief Ermöglicht den einfachen Zugriff auf Binärstrukturen.
+	/// <summary>Allows easy reading of binary structures.</summary>
 	class BufferReader
 	{
 	public:

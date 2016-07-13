@@ -10,9 +10,8 @@
 namespace EasyCpp
 {
 	class Bundle;
-	//! \ingroup Util
-	//! \class AnyValue
-	//! \brief A wrapper class to pass around a variable without the need to know it's type.
+
+	/// <summary>Class for passing dynamic typed values</summary>
 	class DLL_EXPORT AnyValue
 	{
 	private:
@@ -103,24 +102,26 @@ namespace EasyCpp
 			TypeInfo _info;
 		};
 	public:
-		//! \brief Defaultconstruktor, erzeugt ein AnyValue, dass nullptr enthält.
+		/// <summary>Defaultconstruktor, creates a AnyValue containing nullptr.</summary>
 		AnyValue();
 
-		//! \brief Erzeugt ein AnyValue, dass die übergebene Variable enthält.
+		/// <summary>Creates a AnyValue which contains the given value.</summary>
+		/// <param name="val">The value to store in this AnyValue</param>
 		template <typename T>
 		AnyValue(T val)
 		{
 			_value.reset((ValueBase*)new Value<T>(val));
 		}
 
-		//! \brief Defaultkonstruktor
+		/// <summary>Defaultdestructor</summary>
 		virtual ~AnyValue();
 
-		//! \brief Versucht den AnyValue in den Typ T zu konvertieren.
-		//!
-		//! Ist der gespeicherte Wert vom Typ T wird er direkt zurückgegeben.
-		//! Ist dies nicht der Fall wird versucht den gespeicherten Typ mit Hilfe von ValueConverter in den Zieltyp zu konvertieren.
-		//! Ist dies ebenfalls nicht möglich, aber der Zieltyp implementiert Serializable wird fromAnyValue(*this) aufgerufen, ansonsten wird eine exception geworfen.
+		/// <summary>Tries to convert this AnyValue to type T.
+		/// In case T is the AnyValues actual type, it's value is directly returned.
+		/// Otherwise we try to convert the value using ValueConverter.
+		/// If there's now possible converter but Type T implements Serializable a new instance of T is created and T::fromAnyValue(*this) is called.
+		/// If all of these fails a std::runtime_error is thrown.</summary>
+		/// <returns>The stored value as type T</returns>
 		template <typename T>
 		T as() const
 		{
@@ -141,43 +142,52 @@ namespace EasyCpp
 			}
 		}
 
+		/// <summary>Implicit value conversation.</summary>
+		/// <see cref="as()"/>
 		template <typename T>
 		operator T ()
 		{
 			return this->as<T>();
 		}
 
-		//! \brief Überprüft ob der gespeicherte Wert vom Typ T ist.
+		/// <summary>Check whether the stored value is of type T</summary>
+		/// <returns>true if the stored value if of type T</returns>
 		template <typename T>
 		bool isType() const
 		{
 			return isType(typeid(T));
 		}
-		//! \brief Überprüft ob der gespeicherte Wert vom übergebenen TypeInfo ist.
+		/// <summary>Check whether the stored value is of the specified type.</summary>
+		/// <returns>True if the stored value if of the specified type.</returns>
 		bool isType(const TypeInfo& info) const;
-		//! \brief Überprüft ob der gespeicherte Wert vom übergebenen type_info ist.
+		/// <summary>Check whether the stored value is of the specified type.</summary>
+		/// <returns>True if the stored value if of the specified type.</returns>
 		bool isType(const std::type_info& info) const;
 
-		//! \brief Überprüft ob es möglich ist den gespeicherten Wert in den Typ T zu konvertieren.
+		/// <summary>Check whether it is possible to convert this value to the specified type.</summary>
+		/// <returns>True if the stored value can be converted.</returns>
 		template <typename T>
 		bool isConvertibleTo() const
 		{
 			return isConvertibleTo(typeid(T));
 		}
-		//! \brief Überprüft ob es möglich ist den gespeicherten Wert in den TypeInfo typ zu konvertieren.
+		/// <summary>Check whether it is possible to convert this value to the specified type.</summary>
+		/// <returns>True if the stored value can be converted.</returns>
 		bool isConvertibleTo(const TypeInfo& info) const;
-		//! \brief Überprüft ob es möglich ist den gespeicherten Wert in den type_info typ zu konvertieren.
+		/// <summary>Check whether it is possible to convert this value to the specified type.</summary>
+		/// <returns>True if the stored value can be converted.</returns>
 		bool isConvertibleTo(const std::type_info& type) const;
 
-		//! \brief Gibt den Typ des gespeicherten Wertes zurück.
+		/// <summary>Get extended information about the stored type.</summary>
 		TypeInfo type_info() const;
-		//! \brief Gibt den Typ des gespeicherten Wertes als std::type_info zurück.
+		/// <summary>Get standard information about the stored type.</summary>
 		const std::type_info& type() const;
-		//! \brief Erstellt eine Kopie des gespeicherten Wertes mit Hilfe des CopyConstructor.
+		/// <summary>Create a copy of it's value by calling the corresponding copy constructor.</summary>
 		AnyValue copy() const;
-		//! \brief Überprüft ob der gespeicherte Typ Serializable implementiert.
+		/// <summary>Check if the contained value is serializable.</summary>
 		bool isSerializable() const;
-		//! \brief Serialisiert den gespeicherten Wert.
+		/// <summary>Serialize the contained value.</summary>
+		/// <exception cref="std::runtime_error">Thrown if the value does not implement Serializable</exception>
 		AnyValue serialize() const;
 	private:
 		template<typename T>

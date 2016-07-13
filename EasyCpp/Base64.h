@@ -7,9 +7,7 @@
 namespace EasyCpp
 {
 
-	//! \ingroup Util
-	//! \class Base64
-	//! Base64 Klasse für die Konvertierung von Binärdaten in strings und zurück.
+	/// <summary>Base64 class for converting binary data to strings and back</summary>
 	class DLL_EXPORT Base64
 	{
 	private:
@@ -18,19 +16,18 @@ namespace EasyCpp
 		static void single(std::string& res, uint8_t d1, uint8_t d2, uint8_t d3);
 		static void single(std::vector<uint8_t>& res, const char* ptr);
 	public:
-		//! Konvertiert einen std::string in einen Base64 encodierten String.
-		//! Dies ermöglicht das fehlerfreie übertragen von UTF-8 über 7 bit Medien.
-		//! @param str Der zu verarbeitende string.
-		//! @return Die Base64 Repräsentation der Eingabedaten.
+		/// <summary>Converts a std::string to a base64 encoded string.</summary>
+		/// <param>The string to convert</param>
+		/// <returns>Base64 encoded string</returns>
 		static std::string toString(const std::string& str);
-		//! Konvertiert Binärdaten in einen Base64 String.
-		//! @param data Die zu verarbeitenden Daten.
-		//! @return Die Base64 Repräsentation der Eingabedaten.
+		/// <summary>Converts a data array to a base64 encoded string.</summary>
+		/// <param>The data to convert</param>
+		/// <returns>Base64 encoded string</returns>
 		static std::string toString(const std::vector<uint8_t>& data);
-		//! Konvertiert einen Base64 String in Binärdaten.
-		//! @param str Der Base64 encodierte String.
-		//! @return Die decodierten Binärdaten.
-		//! @throws std::runtime_error Fehlerhafter eingabe string.
+		/// <summary>Converts a base64 encoded string to binary data.</summary>
+		/// <param>The string to convert</param>
+		/// <returns>The contained binary data</returns>
+		/// <exception cref="std::runtime_error">Thrown if the passed base64 string is invalid</exception>
 		static std::vector<uint8_t> toBinary(const std::string& str);
 	};
 
