@@ -1,5 +1,5 @@
 #pragma once
-#include "dllexport.h"
+#include "DllExport.h"
 #include <string>
 #include <vector>
 #include <cstdint>

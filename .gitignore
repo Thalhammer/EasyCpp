@@ -3,3 +3,6 @@ EasyCpp.VC.db
 EasyCpp.VC.VC.opendb
 Debug
 Release
+*.o
+.deps
+*.so

@@ -1,4 +1,5 @@
 #include "Sqlite3Statement.h"
+#include <cstddef>
 #include "../DatabaseException.h"
 
 #include "../../Finally.h"

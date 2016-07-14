@@ -1,6 +1,6 @@
 #pragma once
 extern "C" {
-#include <sqlite3\sqlite3.h>
+#include <sqlite3/sqlite3.h>
 }
 #include "../../NonCopyable.h"
 #include <memory>
