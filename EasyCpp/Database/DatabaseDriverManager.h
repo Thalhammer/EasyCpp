@@ -14,7 +14,8 @@ namespace EasyCpp
 			static DatabaseDriverPtr getDriver(const std::string& name);
 		private:
 			DatabaseDriverManager();
-			static std::map<std::string, DatabaseDriverPtr> _drivers;
+			static DatabaseDriverManager& getInstance();
+			std::map<std::string, DatabaseDriverPtr> _drivers;
 		};
 	}
 }

@@ -4,26 +4,39 @@ namespace EasyCpp
 {
 	namespace Database
 	{
-		std::map<std::string, DatabaseDriverPtr> DatabaseDriverManager::_drivers;
+		DatabaseDriverManager& DatabaseDriverManager::getInstance()
+		{
+			static DatabaseDriverManager manager;
+			return manager;
+		}
+
+		DatabaseDriverManager::DatabaseDriverManager()
+		{
+
+		}
+
 		std::vector<std::string> DatabaseDriverManager::getAvailableDrivers()
 		{
+			auto& instance = getInstance();
 			std::vector<std::string> res;
-			for (const auto& i : _drivers) res.push_back(i.first);
+			for (const auto& i : instance._drivers) res.push_back(i.first);
 			return res;
 		}
 
 		void DatabaseDriverManager::registerDriver(const std::string & name, DatabaseDriverPtr driver)
 		{
-			if (_drivers.count(name) != 0)
+			auto& instance = getInstance();
+			if (instance._drivers.count(name) != 0)
 				throw std::invalid_argument("A driver with this name is already registered");
-			_drivers.insert({ name, driver });
+			instance._drivers.insert({ name, driver });
 		}
 
 		DatabaseDriverPtr DatabaseDriverManager::getDriver(const std::string & name)
 		{
-			if (_drivers.count(name) != 1)
+			auto& instance = getInstance();
+			if (instance._drivers.count(name) != 1)
 				throw std::out_of_range("Driver not found");
-			return _drivers.at(name);
+			return instance._drivers.at(name);
 		}
 	}
 }

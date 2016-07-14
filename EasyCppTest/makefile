@@ -1,16 +1,16 @@
-SRC = $(shell find . -name '*.cpp') $(shell find . -name '*.c')
-EXCLUDE_SRC = ./external/lua/luac.c ./external/lua/lua.c
+SRC = $(shell find . -name '*.cpp') $(shell find . -name '*.c') googletest/googletest/src/gtest-all.cc googletest/googletest/src/gtest_main.cc
+EXCLUDE_SRC = 
 FSRC = $(filter-out $(EXCLUDE_SRC), $(SRC))
 OBJ = $(FSRC:=.o)
 
 DEP_DIR = .deps
 
-FLAGS = -fPIC -Wall -Wno-unknown-pragmas -Iexternal -O2 -march=native
+FLAGS = -fPIC -Wall -Wno-unknown-pragmas -O2 -march=native -Igoogletest/googletest/include -Igoogletest/googletest/ -I../EasyCpp
 CXXFLAGS = -std=c++14
 CFLAGS = 
-LINKFLAGS = 
+LINKFLAGS = -Wl,-R -Wl,. -L. -lEasyCpp -ldl -pthread
 
-OUTFILE = libEasyCpp.so
+OUTFILE = EasyCppTest
 
 .PHONY: clean debug release
 
@@ -20,9 +20,15 @@ debug: FLAGS += -g
 debug: $(OUTFILE)
 
 $(OUTFILE): $(OBJ)
-	@echo Generating shared library
-	@$(CXX) -shared -o $@ $^ $(LINKFLAGS)
+	@echo Generating binary
+	@$(CXX) -o $@ $^ $(LINKFLAGS)
 	@echo Build done
+
+%.cc.o: %.cc
+	@echo Building $<
+	@$(CXX) -c $(FLAGS) $(CXXFLAGS) $< -o $@
+	@mkdir -p `dirname $(DEP_DIR)/$@.d`
+	@$(CXX) -c $(FLAGS) $(CXXFLAGS) -MT '$@' -MM $< > $(DEP_DIR)/$@.d
 
 %.cpp.o: %.cpp
 	@echo Building $<
@@ -37,7 +43,7 @@ $(OUTFILE): $(OBJ)
 	@$(CC) -c $(FLAGS) $(CFLAGS) -MT '$@' -MM $< > $(DEP_DIR)/$@.d
 
 clean:
-	@echo Removing shared library
+	@echo Removing binary
 	@rm -f $(OUTFILE)
 	@echo Removing objects
 	@rm -f $(OBJ)
