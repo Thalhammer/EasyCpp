@@ -58,11 +58,15 @@ namespace EasyCpp
 
 	bool AnyValue::isSerializable() const
 	{
+		if (!_value)
+			throw std::runtime_error("Value is null!");
 		return _value->isSerializable();
 	}
 
 	AnyValue AnyValue::serialize() const
 	{
+		if (!_value)
+			throw std::runtime_error("Value is null!");
 		return _value->asSerializable().toAnyValue();
 	}
 }

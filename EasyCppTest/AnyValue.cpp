@@ -62,4 +62,10 @@ namespace EasyCppTest
 		int i = a;
 		ASSERT_EQ(20, i);
 	}
+
+	TEST(AnyValue, NullNotNullptr)
+	{
+		AnyValue a((void*)0x00);
+		ASSERT_FALSE(a.isType<nullptr_t>());
+	}
 }

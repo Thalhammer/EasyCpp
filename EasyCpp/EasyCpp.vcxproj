@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnyArray.h" />
+    <ClInclude Include="AnyFunction.h" />
     <ClInclude Include="AnyValue.h" />
     <ClInclude Include="AutoInit.h" />
     <ClInclude Include="Backtrace.h" />
@@ -139,6 +140,7 @@
     <ClInclude Include="VFS\VFSVFSProvider\VFSVFSProvider.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnyFunction.cpp" />
     <ClCompile Include="AnyValue.cpp" />
     <ClCompile Include="Backtrace.cpp" />
     <ClCompile Include="Base64.cpp" />
@@ -307,6 +309,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;EASYCPP_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -335,6 +339,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;EASYCPP_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

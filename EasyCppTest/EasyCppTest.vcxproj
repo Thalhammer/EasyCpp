@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnyFunction.cpp" />
     <ClCompile Include="AnyValue.cpp" />
     <ClCompile Include="Backtrace.cpp" />
     <ClCompile Include="Base64.cpp" />

@@ -447,6 +447,9 @@
     <ClInclude Include="Hash\SHA384.h">
       <Filter>Headerdateien\Hash</Filter>
     </ClInclude>
+    <ClInclude Include="AnyFunction.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -706,6 +709,9 @@
     </ClCompile>
     <ClCompile Include="Hash\SHA384.cpp">
       <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="AnyFunction.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
