@@ -20,7 +20,7 @@ namespace EasyCpp
 		SHA1::SHA1()
 		{
 			sha1 = new SHA_CTX();
-			SHA_Init((SHA_CTX*)sha1);
+			int i= SHA1_Init((SHA_CTX*)sha1);
 		}
 
 		SHA1::~SHA1()
@@ -30,13 +30,13 @@ namespace EasyCpp
 
 		void SHA1::update(const std::string & str)
 		{
-			SHA_Update((SHA_CTX*)sha1, str.c_str(), str.size());
+			int i = SHA1_Update((SHA_CTX*)sha1, str.c_str(), str.size());
 		}
 
 		std::string SHA1::final()
 		{
 			unsigned char hash[SHA_DIGEST_LENGTH];
-			SHA_Final(hash, (SHA_CTX*)sha1);
+			int i = SHA1_Final(hash, (SHA_CTX*)sha1);
 			std::stringstream ss;
 			for (int i = 0; i < SHA_DIGEST_LENGTH; i++)
 			{

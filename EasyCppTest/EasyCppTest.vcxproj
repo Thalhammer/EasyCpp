@@ -211,6 +211,7 @@
     <ClCompile Include="ScriptingLua.cpp" />
     <ClCompile Include="SerializeVector.cpp" />
     <ClCompile Include="StringAlgorithm.cpp" />
+    <ClCompile Include="TypeInfo.cpp" />
     <ClCompile Include="VFS_Path.cpp" />
   </ItemGroup>
   <ItemGroup>
