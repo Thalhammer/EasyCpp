@@ -4,6 +4,27 @@
 
 namespace EasyCpp
 {
+	template<typename... Args>
+        struct VarArgsTypeInfoImpl;
+
+	template<typename T, typename... Args>
+        struct VarArgsTypeInfoImpl<T, Args...>
+        {
+        	static void getTypeInfo(std::vector<TypeInfo>& vect)
+                {
+                	vect.push_back(TypeInfo::CreateInfo<T>());
+                        VarArgsTypeInfoImpl<Args...>::getTypeInfo(vect);
+                }
+	};
+
+        template<>
+        struct VarArgsTypeInfoImpl<>
+        {
+        	static void getTypeInfo(std::vector<TypeInfo>& vect)
+                {
+                }
+        };
+
 	class VarArgs
 	{
 	private:
@@ -22,27 +43,6 @@ namespace EasyCpp
 			vect.push_back(arg);
 			expand(vect, args...);
 		}
-
-		template<typename... Args>
-		struct TypeInfoImpl;
-
-		template<typename T, typename... Args>
-		struct TypeInfoImpl<T, Args...>
-		{
-			static void getTypeInfo(std::vector<TypeInfo>& vect)
-			{
-				vect.push_back(TypeInfo::CreateInfo<T>());
-				TypeInfoImpl<Args...>::getTypeInfo(vect);
-			}
-		};
-
-		template<>
-		struct TypeInfoImpl<>
-		{
-			static void getTypeInfo(std::vector<TypeInfo>& vect)
-			{
-			}
-		};
 
 		template<typename Result>
 		static Result call_detail(std::function<Result()> fn, const AnyArray& a, size_t i)
@@ -79,7 +79,7 @@ namespace EasyCpp
 		static std::vector<TypeInfo> getTypeInfo()
 		{
 			std::vector<TypeInfo> res;
-			TypeInfoImpl<Args...>::getTypeInfo(res);
+			VarArgsTypeInfoImpl<Args...>::getTypeInfo(res);
 			return res;
 		}
 

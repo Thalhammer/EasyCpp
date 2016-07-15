@@ -15,7 +15,7 @@ namespace EasyCpp
 		HashPtr HashManager::getHash(const std::string & hash)
 		{
 			auto instance = getInstance();
-			if (!instance._providers.count(hash) == 1)
+			if (!(instance._providers.count(hash) == 1))
 				throw std::out_of_range("Hash not found");
 			return instance._providers.at(hash)();
 		}
@@ -23,7 +23,7 @@ namespace EasyCpp
 		void HashManager::registerHash(const std::string & hash, HashProviderFn createfn)
 		{
 			auto instance = getInstance();
-			if (!instance._providers.count(hash) == 0)
+			if (!(instance._providers.count(hash) == 0))
 				throw std::runtime_error("Hash already registered");
 			instance._providers.insert({ hash, createfn });
 		}

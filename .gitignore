@@ -6,3 +6,4 @@ Release
 *.o
 .deps
 *.so
+EasyCppTest/EasyCppTest
