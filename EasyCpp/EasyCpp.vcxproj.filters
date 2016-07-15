@@ -85,6 +85,12 @@
     <Filter Include="Headerdateien\Database\Sqlite3">
       <UniqueIdentifier>{3699b95b-5d73-400e-b8cd-aecefd67d1a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Hash">
+      <UniqueIdentifier>{e10a562e-6d37-43ab-8bb3-eef83c18ed31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Hash">
+      <UniqueIdentifier>{446b34e6-6d86-47c5-912f-025fb58850f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -408,6 +414,39 @@
     <ClInclude Include="Database\DatabaseDriverManager.h">
       <Filter>Headerdateien\Database</Filter>
     </ClInclude>
+    <ClInclude Include="Hash\Hash.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\HashManager.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoInit.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Preprocessor.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\MD4.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\MD5.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\SHA1.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\SHA256.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\SHA512.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\SHA224.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\SHA384.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -643,6 +682,30 @@
     </ClCompile>
     <ClCompile Include="Database\DatabaseDriverManager.cpp">
       <Filter>Quelldateien\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\HashManager.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\MD4.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\MD5.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\SHA256.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\SHA512.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\SHA1.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\SHA224.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\SHA384.cpp">
+      <Filter>Quelldateien\Hash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
