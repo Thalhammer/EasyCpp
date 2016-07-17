@@ -4,6 +4,8 @@
 #include "OSVFSOutputStream.h"
 #include "OSVFSInputOutputStream.h"
 #include "../StringAlgorithm.h"
+#include "../../AutoInit.h"
+#include "../VFSProviderManager.h"
 #include <cstdio>
 
 #if defined(__linux__)
@@ -20,6 +22,12 @@ namespace EasyCpp
 {
 	namespace VFS
 	{
+		AUTO_INIT({
+			VFSProviderManager::registerProvider("os", [](const Bundle& options) {
+				return std::make_shared<OSVFSProvider>(options.get<std::string>("base"));
+			});
+		})
+
 		OSVFSProvider::OSVFSProvider(const std::string & base)
 			:_base(base)
 		{

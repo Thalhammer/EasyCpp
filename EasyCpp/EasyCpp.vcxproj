@@ -139,6 +139,7 @@
     <ClInclude Include="VFS\StringWriter.h" />
     <ClInclude Include="VFS\VFS.h" />
     <ClInclude Include="VFS\VFSProvider.h" />
+    <ClInclude Include="VFS\VFSProviderManager.h" />
     <ClInclude Include="VFS\VFSVFSProvider\VFSVFSProvider.h" />
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +237,7 @@
     <ClCompile Include="VFS\StringReader.cpp" />
     <ClCompile Include="VFS\StringWriter.cpp" />
     <ClCompile Include="VFS\VFS.cpp" />
+    <ClCompile Include="VFS\VFSProviderManager.cpp" />
     <ClCompile Include="VFS\VFSVFSProvider\VFSVFSProvider.cpp" />
   </ItemGroup>
   <ItemGroup>

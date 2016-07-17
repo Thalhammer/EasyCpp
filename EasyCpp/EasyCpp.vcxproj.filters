@@ -456,6 +456,9 @@
     <ClInclude Include="Plugin\InitArgs.h">
       <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="VFS\VFSProviderManager.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -724,6 +727,9 @@
     </ClCompile>
     <ClCompile Include="Plugin\InitArgs.cpp">
       <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\VFSProviderManager.cpp">
+      <Filter>Quelldateien\VFS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace EasyCpp
 {
 	namespace VFS
 	{
-		class VFSProviderManager
+		class DLL_EXPORT VFSProviderManager
 		{
 		public:
 			typedef std::function<VFSProviderPtr(const Bundle& options)> VFSProviderFn;

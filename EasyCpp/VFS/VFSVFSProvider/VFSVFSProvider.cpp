@@ -1,9 +1,26 @@
 #include "VFSVFSProvider.h"
+#include "../../AutoInit.h"
+#include "../VFSProviderManager.h"
 
 namespace EasyCpp
 {
 	namespace VFS
 	{
+		AUTO_INIT({
+			VFSProviderManager::registerProvider("vfs", [](const Bundle& options) {
+				auto vfs = std::make_shared<VFS>();
+				if (options.isSet("mountpoints")) {
+					for (auto& i : options.get<Bundle>("mountpoints"))
+					{
+						auto type = i.second.as<Bundle>().get<std::string>("type");
+						auto mnt_options = i.second.as<Bundle>().get<Bundle>("options");
+						vfs->addMountPoint(i.first, VFSProviderManager::getProvider(type, mnt_options));
+					}
+				}
+				return std::make_shared<VFSVFSProvider>(vfs, options.get<std::string>("base"));
+			});
+		})
+
 		VFSVFSProvider::VFSVFSProvider(VFS vfs, Path base)
 			: VFSVFSProvider(std::make_shared<VFS>(vfs), base)
 		{

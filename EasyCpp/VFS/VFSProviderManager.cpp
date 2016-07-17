@@ -35,5 +35,15 @@ namespace EasyCpp
 			auto& instance = getInstance();
 			return instance._providers.at(name)(options);
 		}
+
+		VFSProviderManager::VFSProviderManager()
+		{
+		}
+
+		VFSProviderManager & VFSProviderManager::getInstance()
+		{
+			static VFSProviderManager manager;
+			return manager;
+		}
 	}
 }
