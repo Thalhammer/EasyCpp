@@ -1,11 +1,11 @@
 #pragma once
-#include "PluginInterface.h"
+#include "Interface.h"
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class IPluginCanUnload : public PluginInterface<IPluginCanUnload>
+		class IPluginCanUnload : public Interface<IPluginCanUnload>
 		{
 		public:
 			static constexpr const char* INTERFACE_NAME = "IPluginCanUnload";

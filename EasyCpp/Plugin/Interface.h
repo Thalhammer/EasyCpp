@@ -6,21 +6,21 @@ namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class PluginInterfaceBase {
+		class InterfaceBase {
 		public:
-			virtual ~PluginInterfaceBase() {}
+			virtual ~InterfaceBase() {}
 			virtual std::string getName() const = 0;
 			virtual uint64_t getVersion() const = 0;
 		};
 
 		template<typename T>
-		class PluginInterface : public PluginInterfaceBase
+		class Interface : public InterfaceBase
 		{
 		public:
-			virtual ~PluginInterface() {}
+			virtual ~Interface() {}
 			virtual std::string getName() const { return T::INTERFACE_NAME; }
 			virtual uint64_t getVersion() const { return T::INTERFACE_VERSION; }
 		};
-		typedef std::shared_ptr<PluginInterfaceBase> PluginInterfacePtr;
+		typedef std::shared_ptr<InterfaceBase> InterfacePtr;
 	}
 }

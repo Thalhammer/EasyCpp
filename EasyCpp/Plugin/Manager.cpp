@@ -1,4 +1,4 @@
-#include "PluginManager.h"
+#include "Manager.h"
 #include "Plugin.h"
 #include <fstream>
 
@@ -6,15 +6,15 @@ namespace EasyCpp
 {
 	namespace Plugin
 	{
-		PluginManager::PluginManager()
+		Manager::Manager()
 		{
 		}
 
-		PluginManager::~PluginManager()
+		Manager::~Manager()
 		{
 		}
 
-		void PluginManager::registerInterface(PluginInterfacePtr iface)
+		void Manager::registerInterface(InterfacePtr iface)
 		{
 			auto name = iface->getName();
 			auto rev = iface->getVersion();
@@ -25,7 +25,7 @@ namespace EasyCpp
 			_server_ifaces[name][rev] = iface;
 		}
 
-		void PluginManager::loadPlugin(const std::string & name, const std::string & path, const std::vector<PluginInterfacePtr>& server_ifaces)
+		void Manager::loadPlugin(const std::string & name, const std::string & path, const std::vector<InterfacePtr>& server_ifaces)
 		{
 			if (_plugins.count(name))
 				throw std::runtime_error("Plugin name already used");
@@ -36,7 +36,7 @@ namespace EasyCpp
 			_plugins[name] = plugin;
 		}
 
-		void PluginManager::loadPluginFromMemory(const std::string & name, const std::vector<uint8_t>& data, const std::vector<PluginInterfacePtr>& server_ifaces)
+		void Manager::loadPluginFromMemory(const std::string & name, const std::vector<uint8_t>& data, const std::vector<InterfacePtr>& server_ifaces)
 		{
 			// Write data to a file and load it.
 			char fname[L_tmpnam];
@@ -50,30 +50,31 @@ namespace EasyCpp
 			this->loadPlugin(name, fname, server_ifaces);
 		}
 
-		PluginInterfacePtr PluginManager::getInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version)
+		InterfacePtr Manager::getInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version)
 		{
 			if (_plugins.count(pluginname) == 0)
 				throw std::runtime_error("Plugin not found");
-			return _plugins[pluginname]->getInterface(ifacename, version);
+			return _plugins.at(pluginname)->getInterface(ifacename, version);
 		}
 
-		bool PluginManager::hasInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version)
+		bool Manager::hasInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version)
 		{
 			if (_plugins.count(pluginname) == 0)
 				throw std::runtime_error("Plugin not found");
-			return _plugins[pluginname]->hasInterface(ifacename, version);
+			return _plugins.at(pluginname)->hasInterface(ifacename, version);
 		}
 
-		void PluginManager::unloadPlugin(const std::string & name)
+		void Manager::unloadPlugin(const std::string & name)
 		{
 			if (!_plugins.count(name))
 				throw std::runtime_error("Plugin not found");
-			if (!_plugins[name]->canUnload())
+			if (!_plugins.at(name)->canUnload())
 				throw std::runtime_error("Plugin is in use");
+			_plugins.at(name)->deinit();
 			_plugins.erase(name);
 		}
 
-		std::vector<std::string> PluginManager::getPlugins()
+		std::vector<std::string> Manager::getPlugins()
 		{
 			std::vector<std::string> res;
 			for (auto e : _plugins)

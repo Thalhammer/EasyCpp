@@ -1,22 +1,22 @@
-#include "PluginBase.h"
+#include "Base.h"
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		PluginBase::~PluginBase()
+		Base::~Base()
 		{
 		}
 
-		std::vector<PluginInterfacePtr> PluginBase::init(std::vector<PluginInterfacePtr> server_interfaces)
+		void Base::init(InitArgs& args)
 		{
-			for (auto e : server_interfaces)
+			for (auto e : args.getServerInterfaces())
 				_server_interfaces[e->getName()][e->getVersion()] = e;
 
-			return init();
+			init(args);
 		}
 
-		PluginInterfacePtr PluginBase::getServerInterface(const std::string & ifacename, uint64_t version)
+		InterfacePtr Base::getServerInterface(const std::string & ifacename, uint64_t version)
 		{
 			if (!_server_interfaces.count(ifacename))
 				throw std::runtime_error("Interface not found");
@@ -25,7 +25,7 @@ namespace EasyCpp
 			return _server_interfaces.at(ifacename).at(version);
 		}
 
-		bool PluginBase::hasServerInterface(const std::string & ifacename, uint64_t version)
+		bool Base::hasServerInterface(const std::string & ifacename, uint64_t version)
 		{
 			return _server_interfaces.count(ifacename) && _server_interfaces.at(ifacename).count(version);
 		}

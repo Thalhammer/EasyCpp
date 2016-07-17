@@ -3,23 +3,23 @@
 #include <memory>
 #include <map>
 #include <vector>
-#include "PluginInterface.h"
+#include "Interface.h"
 #include "../DllExport.h"
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class DLL_EXPORT PluginManager
+		class DLL_EXPORT Manager
 		{
 		public:
-			PluginManager();
-			~PluginManager();
+			Manager();
+			~Manager();
 
-			void registerInterface(PluginInterfacePtr iface);
+			void registerInterface(InterfacePtr iface);
 
-			void loadPlugin(const std::string& name, const std::string& path, const std::vector<PluginInterfacePtr>& server_ifaces = {});
-			void loadPluginFromMemory(const std::string& name, const std::vector<uint8_t>& data, const std::vector<PluginInterfacePtr>& server_ifaces = {});
+			void loadPlugin(const std::string& name, const std::string& path, const std::vector<InterfacePtr>& server_ifaces = {});
+			void loadPluginFromMemory(const std::string& name, const std::vector<uint8_t>& data, const std::vector<InterfacePtr>& server_ifaces = {});
 			template <typename T>
 			std::shared_ptr<T> getInterface(const std::string& pluginname)
 			{
@@ -39,10 +39,10 @@ namespace EasyCpp
 		private:
 			class Plugin;
 
-			PluginInterfacePtr getInterface(const std::string& pluginname, const std::string& ifacename, uint64_t version);
+			InterfacePtr getInterface(const std::string& pluginname, const std::string& ifacename, uint64_t version);
 			bool hasInterface(const std::string& pluginname, const std::string& ifacename, uint64_t version);
 
-			typedef std::map<std::string, std::map<uint64_t, PluginInterfacePtr>> interface_map_t;
+			typedef std::map<std::string, std::map<uint64_t, InterfacePtr>> interface_map_t;
 			interface_map_t _server_ifaces;
 			std::map<std::string, std::shared_ptr<Plugin>> _plugins;
 		};

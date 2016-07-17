@@ -306,18 +306,6 @@
     <ClInclude Include="Scripting\LuaException.h">
       <Filter>Headerdateien\Scripting</Filter>
     </ClInclude>
-    <ClInclude Include="Plugin\PluginBaseInterface.h">
-      <Filter>Headerdateien\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="Plugin\PluginInterface.h">
-      <Filter>Headerdateien\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="Plugin\PluginBase.h">
-      <Filter>Headerdateien\Plugin</Filter>
-    </ClInclude>
-    <ClInclude Include="Plugin\PluginManager.h">
-      <Filter>Headerdateien\Plugin</Filter>
-    </ClInclude>
     <ClInclude Include="Plugin\Plugin.h">
       <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
@@ -449,6 +437,24 @@
     </ClInclude>
     <ClInclude Include="AnyFunction.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\DeinitArgs.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\Interface.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\Manager.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\BaseInterface.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\Base.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
+    <ClInclude Include="Plugin\InitArgs.h">
+      <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -620,13 +626,7 @@
     <ClCompile Include="Scripting\LuaState.cpp">
       <Filter>Quelldateien\Scripting</Filter>
     </ClCompile>
-    <ClCompile Include="Plugin\PluginBase.cpp">
-      <Filter>Quelldateien\Plugin</Filter>
-    </ClCompile>
     <ClCompile Include="Plugin\Plugin.cpp">
-      <Filter>Quelldateien\Plugin</Filter>
-    </ClCompile>
-    <ClCompile Include="Plugin\PluginManager.cpp">
       <Filter>Quelldateien\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="VFS\Path.cpp">
@@ -712,6 +712,18 @@
     </ClCompile>
     <ClCompile Include="AnyFunction.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\DeinitArgs.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\Base.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\Manager.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
+    </ClCompile>
+    <ClCompile Include="Plugin\InitArgs.cpp">
+      <Filter>Quelldateien\Plugin</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

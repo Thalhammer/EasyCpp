@@ -1,16 +1,16 @@
 #pragma once
 #include <map>
-#include "PluginBaseInterface.h"
+#include "BaseInterface.h"
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class DLL_EXPORT PluginBase : public PluginBaseInterface
+		class DLL_EXPORT Base : public BaseInterface
 		{
 		public:
-			virtual ~PluginBase();
-			virtual std::vector<PluginInterfacePtr> init(std::vector<PluginInterfacePtr> server_interfaces) override;
+			virtual ~Base();
+			virtual void init(InitArgs& args) override;
 			template <typename T>
 			std::shared_ptr<T> getServerInterface()
 			{
@@ -26,11 +26,11 @@ namespace EasyCpp
 				return hasServerInterface(T::INTERFACE_NAME, T::INTERFACE_VERSION);
 			}
 		protected:
-			virtual std::vector<PluginInterfacePtr> init() = 0;
+			virtual void pluginInit(InitArgs& args) = 0;
 		private:
-			PluginInterfacePtr getServerInterface(const std::string& ifacename, uint64_t version);
+			InterfacePtr getServerInterface(const std::string& ifacename, uint64_t version);
 			bool hasServerInterface(const std::string& ifacename, uint64_t version);
-			std::map<std::string, std::map<uint64_t, PluginInterfacePtr>> _server_interfaces;
+			std::map<std::string, std::map<uint64_t,InterfacePtr>> _server_interfaces;
 		};
 	}
 }

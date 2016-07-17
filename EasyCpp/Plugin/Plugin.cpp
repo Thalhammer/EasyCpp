@@ -6,46 +6,48 @@ namespace EasyCpp
 {
 	namespace Plugin
 	{
-		PluginManager::Plugin::Plugin(std::string name, std::string path, interface_map_t & server_ifaces)
+		Manager::Plugin::Plugin(std::string name, std::string path, interface_map_t & server_ifaces)
 			:_name(name), _path(path), _lib(path)
 		{
-			auto create_fn = _lib.getFunction<PluginBaseInterface*()>("createBaseInterface");
-			auto delete_fn = _lib.getFunction<void(PluginBaseInterface*)>("deleteBaseInterface");
+			auto create_fn = _lib.getFunction<BaseInterface*()>("createBaseInterface");
+			auto delete_fn = _lib.getFunction<void(BaseInterface*)>("deleteBaseInterface");
 			_baseiface.reset(create_fn(), delete_fn);
-			std::vector<PluginInterfacePtr> sifaces;
+			
+			InitArgs args;
 			for (auto e : server_ifaces)
 				for (auto e2 : e.second)
-					sifaces.push_back(e2.second);
+					args.appendServerInterface(e2.second);
 
-			auto ifaces = _baseiface->init(sifaces);
-			for (auto e : ifaces)
+			_baseiface->init(args);
+			//_name = args.getPluginName();
+			for (auto e : args.getPluginInterfaces())
 			{
 				_interfaces[e->getName()][e->getVersion()] = e;
 			}
 		}
 
-		PluginManager::Plugin::~Plugin()
+		Manager::Plugin::~Plugin()
 		{
 			_interfaces.clear();
 			_baseiface.reset();
 		}
 
-		std::string PluginManager::Plugin::getName() const
+		std::string Manager::Plugin::getName() const
 		{
 			return _name;
 		}
 
-		std::string PluginManager::Plugin::getPath() const
+		std::string Manager::Plugin::getPath() const
 		{
 			return _path;
 		}
 
-		DynLib & PluginManager::Plugin::getDynLib()
+		DynLib & Manager::Plugin::getDynLib()
 		{
 			return _lib;
 		}
 
-		PluginInterfacePtr PluginManager::Plugin::getInterface(const std::string & ifacename, uint64_t version) const
+		InterfacePtr Manager::Plugin::getInterface(const std::string & ifacename, uint64_t version) const
 		{
 			if (!_interfaces.count(ifacename))
 				throw std::runtime_error("Interface not found");
@@ -54,12 +56,12 @@ namespace EasyCpp
 			return _interfaces.at(ifacename).at(version);
 		}
 
-		bool PluginManager::Plugin::hasInterface(const std::string & ifacename, uint64_t version) const
+		bool Manager::Plugin::hasInterface(const std::string & ifacename, uint64_t version) const
 		{
 			return _interfaces.count(ifacename) && _interfaces.at(ifacename).count(version);
 		}
 
-		bool PluginManager::Plugin::canUnload() const
+		bool Manager::Plugin::canUnload() const
 		{
 			if (this->hasInterface<IPluginCanUnload>())
 			{
@@ -67,6 +69,14 @@ namespace EasyCpp
 				return iface->canUnload();
 			}
 			else return true;
+		}
+
+		void Manager::Plugin::deinit()
+		{
+			DeinitArgs args;
+			_baseiface->deinit(args);
+			if (args.isCanceled())
+				throw std::runtime_error("Failed to deinit plugin:" + args.getCancelString());
 		}
 	}
 }
