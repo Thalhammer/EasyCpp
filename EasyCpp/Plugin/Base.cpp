@@ -13,7 +13,7 @@ namespace EasyCpp
 			for (auto e : args.getServerInterfaces())
 				_server_interfaces[e->getName()][e->getVersion()] = e;
 
-			init(args);
+			pluginInit(args);
 		}
 
 		InterfacePtr Base::getServerInterface(const std::string & ifacename, uint64_t version)

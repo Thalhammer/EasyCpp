@@ -155,6 +155,7 @@
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="Convert.cpp" />
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="VarArgs.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Finally.cpp" />

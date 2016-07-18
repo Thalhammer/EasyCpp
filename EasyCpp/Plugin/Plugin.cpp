@@ -73,6 +73,9 @@ namespace EasyCpp
 
 		void Manager::Plugin::deinit()
 		{
+			// Clear references
+			_interfaces.clear();
+
 			DeinitArgs args;
 			_baseiface->deinit(args);
 			if (args.isCanceled())
