@@ -27,6 +27,9 @@
     <ClInclude Include="RefCounted.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="MySQLDatabase.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PluginInterface.cpp">
@@ -39,6 +42,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="MySQLDatabaseDriver.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="MySQLDatabase.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

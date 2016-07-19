@@ -1,4 +1,5 @@
 #include "MySQLDatabaseDriver.h"
+#include "MySQLDatabase.h"
 
 namespace EasyCppMySql
 {
@@ -13,6 +14,6 @@ namespace EasyCppMySql
 
 	EasyCpp::Database::DatabasePtr MySQLDatabaseDriver::createInstance(const std::string & dsn, const EasyCpp::Bundle & options)
 	{
-		throw std::logic_error("Not yet implemented");
+		return std::make_shared<MySQLDatabase>(dsn, options);
 	}
 }
