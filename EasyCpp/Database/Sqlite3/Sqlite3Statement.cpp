@@ -115,30 +115,30 @@ namespace EasyCpp
 				auto db = _shared->getDatabase();
 				if (value.isType<std::vector<uint8_t>>()) {
 					auto v = value.as<std::vector<uint8_t>>();
-					int rc = sqlite3_bind_blob64(_stmt, id + 1, v.data(), v.size(), SQLITE_TRANSIENT);
+					int rc = sqlite3_bind_blob64(_stmt, (int)(id + 1), v.data(), v.size(), SQLITE_TRANSIENT);
 					if (rc != SQLITE_OK)
 						throw DatabaseException(sqlite3_errmsg(db.get()), {});
 				}
 				else if (value.type_info().isIntegral()) {
 					auto v = value.as<int64_t>();
-					int rc = sqlite3_bind_int64(_stmt, id + 1, v);
+					int rc = sqlite3_bind_int64(_stmt, (int)(id + 1), v);
 					if (rc != SQLITE_OK)
 						throw DatabaseException(sqlite3_errmsg(db.get()), {});
 				}
 				else if (value.type_info().isFloatingPoint()) {
 					auto v = value.as<double>();
-					int rc = sqlite3_bind_double(_stmt, id + 1, v);
+					int rc = sqlite3_bind_double(_stmt, (int)(id + 1), v);
 					if (rc != SQLITE_OK)
 						throw DatabaseException(sqlite3_errmsg(db.get()), {});
 				}
 				else if (value.isType<nullptr_t>()) {
-					int rc = sqlite3_bind_null(_stmt, id + 1);
+					int rc = sqlite3_bind_null(_stmt, (int)(id + 1));
 					if (rc != SQLITE_OK)
 						throw DatabaseException(sqlite3_errmsg(db.get()), {});
 				}
 				else {
 					auto v = value.as<std::string>();
-					int rc = sqlite3_bind_text64(_stmt, id + 1, v.data(), v.length(), SQLITE_TRANSIENT, SQLITE_UTF8);
+					int rc = sqlite3_bind_text64(_stmt, (int)(id + 1), v.data(), v.length(), SQLITE_TRANSIENT, SQLITE_UTF8);
 					if (rc != SQLITE_OK)
 						throw DatabaseException(sqlite3_errmsg(db.get()), {});
 				}

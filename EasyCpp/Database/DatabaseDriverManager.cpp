@@ -31,6 +31,12 @@ namespace EasyCpp
 			instance._drivers.insert({ name, driver });
 		}
 
+		void DatabaseDriverManager::deregisterDriver(const std::string & name)
+		{
+			auto& instance = getInstance();
+			instance._drivers.erase(name);
+		}
+
 		DatabaseDriverPtr DatabaseDriverManager::getDriver(const std::string & name)
 		{
 			auto& instance = getInstance();

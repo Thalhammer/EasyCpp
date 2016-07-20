@@ -30,6 +30,12 @@
     <ClInclude Include="MySQLDatabase.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="MySQLHandle.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="MySQLStatement.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="PluginInterface.cpp">
@@ -45,6 +51,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="MySQLDatabase.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="MySQLStatement.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

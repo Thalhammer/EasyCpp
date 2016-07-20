@@ -2,47 +2,59 @@
 #include <StringAlgorithm.h>
 #include <VFS/Path.h>
 #include <Database/DatabaseException.h>
+#include "MySQLStatement.h"
 
 using EasyCpp::Database::DatabaseException;
 
 namespace EasyCppMySql
 {
+	thread_local MySQLHandle::ThreadInitializer MySQLHandle::initializer;
 
 	bool MySQLDatabase::beginTransaction()
 	{
-		auto res = mysql_autocommit(_hdl.get(), 0);
-		if (res == 0) {
-			*_in_transaction = true;
-		}
-		return res == 0;
+		return _hdl->executeThreadSafe<bool>([](MySQLHandle::HandleAccessor& hdl) {
+			auto res = mysql_autocommit(hdl.getHandle(), 0);
+			if (res == 0) {
+				hdl.setInTransaction(true);
+			}
+			return res == 0;
+		});
 	}
 
 	bool MySQLDatabase::commit()
 	{
-		auto res = mysql_commit(_hdl.get());
-		if (res == 0) {
-			*_in_transaction = false;
-		}
-		return res == 0;
+		return _hdl->executeThreadSafe<bool>([](MySQLHandle::HandleAccessor& hdl) {
+			auto res = mysql_commit(hdl.getHandle());
+			if (res == 0) {
+				hdl.setInTransaction(false);
+			}
+			return res == 0;
+		});
 	}
 
 	bool MySQLDatabase::rollBack()
 	{
-		auto res = mysql_rollback(_hdl.get());
-		if (res == 0) {
-			*_in_transaction = false;
-		}
-		return res == 0;
+		return _hdl->executeThreadSafe<bool>([](MySQLHandle::HandleAccessor& hdl) {
+			auto res = mysql_rollback(hdl.getHandle());
+			if (res == 0) {
+				hdl.setInTransaction(false);
+			}
+			return res == 0;
+		});
 	}
 
 	bool MySQLDatabase::inTransaction()
 	{
-		return *_in_transaction;
+		return _hdl->executeThreadSafe<bool>([](MySQLHandle::HandleAccessor& hdl) {
+			return hdl.getInTransaction();
+		});
 	}
 
 	std::string MySQLDatabase::errorCode()
 	{
-		return std::to_string(mysql_errno(_hdl.get()));
+		return _hdl->executeThreadSafe<std::string>([](MySQLHandle::HandleAccessor& hdl) {
+			return std::to_string(mysql_errno(hdl.getHandle()));
+		});
 	}
 
 	EasyCpp::Bundle MySQLDatabase::errorInfo()
@@ -68,12 +80,14 @@ namespace EasyCppMySql
 
 	std::string MySQLDatabase::lastInsertedId(const std::string & name)
 	{
-		return std::to_string(mysql_insert_id(_hdl.get()));
+		return _hdl->executeThreadSafe<std::string>([](MySQLHandle::HandleAccessor& hdl) {
+			return std::to_string(mysql_insert_id(hdl.getHandle()));
+		});
 	}
 
 	EasyCpp::Database::StatementPtr MySQLDatabase::prepare(const std::string & sql, const EasyCpp::Bundle & driver_options)
 	{
-		return EasyCpp::Database::StatementPtr();
+		return std::make_shared<MySQLStatement>(sql, _hdl);
 	}
 
 	EasyCppMySql::MySQLDatabase::MySQLDatabase(const std::string& dsn, const EasyCpp::Bundle& options)
@@ -112,38 +126,40 @@ namespace EasyCppMySql
 			throw DatabaseException("Only specify host or unix_socket", {});
 		}
 		
-		_hdl = std::shared_ptr<MYSQL>(mysql_init(nullptr), mysql_close);
-		if (!_hdl) {
-			throw DatabaseException("Failed to init mysql handle", {});
-		}
-		if (ioptions.isSet("autoreconnect") && ioptions["autoreconnect"].as<bool>()) {
-			my_bool auto_reconnect = true;
-			if (mysql_options(_hdl.get(), MYSQL_OPT_RECONNECT, &auto_reconnect))
-				throw DatabaseException("Failed to set options", EasyCpp::Bundle({ { std::string("option"), "autoreconnect"} }));
-		}
-		if (mysql_real_connect(_hdl.get(),
-			ioptions.isSet("host") ? ioptions["host"].as<std::string>().c_str() : nullptr,
-			ioptions.isSet("user") ? ioptions["user"].as<std::string>().c_str() : nullptr,
-			ioptions.isSet("pass") ? ioptions["pass"].as<std::string>().c_str() : nullptr,
-			ioptions.isSet("dbname") ? ioptions["dbname"].as<std::string>().c_str() : nullptr, 
-			ioptions.isSet("port") ? ioptions["port"].as<unsigned int>() : 0,
-			ioptions.isSet("unix_socket") ? ioptions["unix_socket"].as<std::string>().c_str() : nullptr,
-			0) == nullptr)
-		{
-			unsigned int error = mysql_errno(_hdl.get());
-			const char* msg = mysql_error(_hdl.get());
-			throw DatabaseException("Failed to connect to database",EasyCpp::Bundle({
-				{"code", error},
-				{"msg", std::string(msg)}
-			}));
-		}
-		if (ioptions.isSet("charset")) {
-			if (mysql_set_character_set(_hdl.get(), ioptions["charset"].as<std::string>().c_str()))
-				throw DatabaseException(std::string("Failed to set options."), EasyCpp::Bundle({
-					{"option", "charset"},
-					{"charset", ioptions["charset"].as<std::string>() }
+		_hdl = std::make_shared<MySQLHandle>();
+		
+		
+		_hdl->executeThreadSafe<void>([this,&ioptions](MySQLHandle::HandleAccessor& hdl) {
+			if (ioptions.isSet("autoreconnect") && ioptions["autoreconnect"].as<bool>()) {
+				my_bool auto_reconnect = true;
+				if (mysql_options(hdl.getHandle(), MYSQL_OPT_RECONNECT, &auto_reconnect))
+					throw DatabaseException("Failed to set options", EasyCpp::Bundle({ { std::string("option"), "autoreconnect" } }));
+			}
+
+			if (mysql_real_connect(hdl.getHandle(),
+				ioptions.isSet("host") ? ioptions["host"].as<std::string>().c_str() : nullptr,
+				ioptions.isSet("user") ? ioptions["user"].as<std::string>().c_str() : nullptr,
+				ioptions.isSet("pass") ? ioptions["pass"].as<std::string>().c_str() : nullptr,
+				ioptions.isSet("dbname") ? ioptions["dbname"].as<std::string>().c_str() : nullptr,
+				ioptions.isSet("port") ? ioptions["port"].as<unsigned int>() : 0,
+				ioptions.isSet("unix_socket") ? ioptions["unix_socket"].as<std::string>().c_str() : nullptr,
+				0) == nullptr)
+			{
+				unsigned int error = mysql_errno(hdl.getHandle());
+				const char* msg = mysql_error(hdl.getHandle());
+				throw DatabaseException("Failed to connect to database", EasyCpp::Bundle({
+					{ "code", error },
+					{ "msg", std::string(msg) }
 				}));
-		}
+			}
+			if (ioptions.isSet("charset")) {
+				if (mysql_set_character_set(hdl.getHandle(), ioptions["charset"].as<std::string>().c_str()))
+					throw DatabaseException(std::string("Failed to set options."), EasyCpp::Bundle({
+						{ "option", "charset" },
+						{ "charset", ioptions["charset"].as<std::string>() }
+				}));
+			}
+		});
 	}
 
 	MySQLDatabase::~MySQLDatabase()

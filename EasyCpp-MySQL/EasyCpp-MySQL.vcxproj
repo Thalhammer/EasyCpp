@@ -148,6 +148,8 @@
   <ItemGroup>
     <ClInclude Include="MySQLDatabase.h" />
     <ClInclude Include="MySQLDatabaseDriver.h" />
+    <ClInclude Include="MySQLHandle.h" />
+    <ClInclude Include="MySQLStatement.h" />
     <ClInclude Include="PluginDatabaseProvider.h" />
     <ClInclude Include="PluginInterface.h" />
     <ClInclude Include="RefCounted.h" />
@@ -155,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="MySQLDatabase.cpp" />
     <ClCompile Include="MySQLDatabaseDriver.cpp" />
+    <ClCompile Include="MySQLStatement.cpp" />
     <ClCompile Include="PluginDatabaseProvider.cpp" />
     <ClCompile Include="PluginInterface.cpp" />
     <ClCompile Include="RefCounted.cpp" />

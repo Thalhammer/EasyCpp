@@ -1,9 +1,7 @@
 #pragma once
 #include "RefCounted.h"
+#include "MySQLHandle.h"
 #include <Database/Database.h>
-
-#include <my_global.h>
-#include <mysql.h>
 
 namespace EasyCppMySql
 {
@@ -26,7 +24,6 @@ namespace EasyCppMySql
 		virtual std::string lastInsertedId(const std::string & name = "") override;
 		virtual EasyCpp::Database::StatementPtr prepare(const std::string & sql, const EasyCpp::Bundle & driver_options = {}) override;
 	private:
-		std::shared_ptr<MYSQL> _hdl;
-		std::shared_ptr<bool> _in_transaction;
+		std::shared_ptr<MySQLHandle> _hdl;
 	};
 }
