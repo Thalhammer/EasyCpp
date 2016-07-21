@@ -459,6 +459,9 @@
     <ClInclude Include="VFS\VFSProviderManager.h">
       <Filter>Headerdateien\VFS</Filter>
     </ClInclude>
+    <ClInclude Include="Plugin\IPluginDatabaseProvider.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">

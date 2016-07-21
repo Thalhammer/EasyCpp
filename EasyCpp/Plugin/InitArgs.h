@@ -2,12 +2,13 @@
 #include <string>
 #include <vector>
 #include "Interface.h"
+#include "../DllExport.h"
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class InitArgs
+		class DLL_EXPORT InitArgs
 		{
 		public:
 			std::vector<InterfacePtr> getServerInterfaces();

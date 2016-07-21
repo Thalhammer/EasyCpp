@@ -104,6 +104,7 @@
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="Plugin\InitArgs.h" />
     <ClInclude Include="Plugin\IPluginCanUnload.h" />
+    <ClInclude Include="Plugin\IPluginDatabaseProvider.h" />
     <ClInclude Include="Plugin\Plugin.h" />
     <ClInclude Include="Plugin\Base.h" />
     <ClInclude Include="Plugin\BaseInterface.h" />

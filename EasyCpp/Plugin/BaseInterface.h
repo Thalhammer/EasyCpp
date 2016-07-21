@@ -14,5 +14,17 @@ namespace EasyCpp
 			virtual void init(InitArgs& args) = 0;
 			virtual void deinit(DeinitArgs& args) = 0;
 		};
+#define EASYCPP_PLUGIN_ENTRY(x) \
+extern "C" { \
+	DLL_EXPORT EasyCpp::Plugin::BaseInterface* createBaseInterface() \
+	{ \
+		return new x(); \
+	} \
+	\
+	DLL_EXPORT void deleteBaseInterface(EasyCpp::Plugin::BaseInterface* iface) \
+	{ \
+		delete ((x*)iface); \
+	}\
+}
 	}
 }

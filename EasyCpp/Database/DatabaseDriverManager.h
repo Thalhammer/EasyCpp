@@ -11,6 +11,7 @@ namespace EasyCpp
 		public:
 			static std::vector<std::string> getAvailableDrivers();
 			static void registerDriver(const std::string& name, DatabaseDriverPtr driver);
+			static void deregisterDriver(const std::string& name);
 			static DatabaseDriverPtr getDriver(const std::string& name);
 		private:
 			DatabaseDriverManager();

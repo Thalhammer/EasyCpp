@@ -19,12 +19,12 @@ namespace EasyCpp
 
 		Bundle & ResultSet::operator[](uint64_t idx)
 		{
-			return _rows[idx];
+			return _rows[(size_t)idx];
 		}
 
 		const Bundle & ResultSet::operator[](uint64_t idx) const
 		{
-			return _rows[idx];
+			return _rows[(size_t)idx];
 		}
 
 		const std::unordered_set<std::string> ResultSet::getColumns()

@@ -1,11 +1,12 @@
 #pragma once
 #include <string>
+#include "../DllExport.h"
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class DeinitArgs
+		class DLL_EXPORT DeinitArgs
 		{
 		public:
 			enum class Reason
