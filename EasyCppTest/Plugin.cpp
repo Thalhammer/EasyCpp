@@ -24,18 +24,19 @@ namespace EasyCppTest
 			// Try to use Database plugin
 			auto dbdriver = EasyCpp::Database::DatabaseDriverManager::getDriver("mysql");
 			auto db = dbdriver->createInstance("mysql:host=localhost;dbname=test", EasyCpp::Bundle({
-				{"user", "root"},
+				{"user", "unittest"},
 				{"pass", "secret"}
 			}));
 
-			auto stmt = db->prepare("SELECT * FROM `test_table`");
+			auto stmt = db->prepare("SELECT COUNT(*) FROM `test`");
+			auto val = stmt->executeScalar();
 
 			for (auto& i : provider->getDriverMap())
 			{
 				EasyCpp::Database::DatabaseDriverManager::deregisterDriver(i.first);
 			}
 		}
-		catch (std::exception& e) {
+		catch (std::exception&) {
 			for (auto& i : provider->getDriverMap())
 			{
 				EasyCpp::Database::DatabaseDriverManager::deregisterDriver(i.first);

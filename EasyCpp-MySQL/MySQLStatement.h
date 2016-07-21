@@ -22,8 +22,9 @@ namespace EasyCppMySql
 		virtual void bind(uint64_t id, EasyCpp::AnyValue value) override;
 		virtual void bind(const std::string & id, EasyCpp::AnyValue value) override;
 	private:
-		void setBind(unsigned long idx, enum_field_types type, void* data, unsigned long dlen, bool sign);
+		void setBind(uint64_t idx, enum_field_types type, void* data, unsigned long dlen, bool sign);
 
+		static EasyCpp::AnyValue bind2Result(MYSQL_BIND* bind);
 		static enum_field_types convertType(enum_field_types t);
 
 		MYSQL_STMT* _stmt;

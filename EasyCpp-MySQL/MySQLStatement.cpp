@@ -109,21 +109,179 @@ namespace EasyCppMySql
 
 	AnyValue MySQLStatement::executeScalar()
 	{
-		return AnyValue();
+		return _hdl->executeThreadSafe<AnyValue>([this](MySQLHandle::HandleAccessor& hdl) {
+			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
+				throw DatabaseException("Failed to bind parameters", {});
+			if (mysql_stmt_execute(_stmt) != 0)
+				throw DatabaseException("Failed to execute statement", {});
+
+			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
+			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
+
+			if (mysql_num_fields(meta.get()) != 1)
+				throw DatabaseException("Query returned more than 1 column", {});
+			auto err = mysql_stmt_fetch(_stmt);
+			if (err == 1)
+				throw DatabaseException("Failed to fetch column:" + std::string(mysql_stmt_error(_stmt)), {});
+			if (err == MYSQL_NO_DATA)
+				throw DatabaseException("Query returned no rows", {});
+			AnyValue res;
+			if (_result_meta_bind->buffer == nullptr)
+			{
+				_result_meta_bind->buffer = malloc(*(_result_meta_bind->length));
+				_result_meta_bind->buffer_length = *(_result_meta_bind->length);
+				if (mysql_stmt_fetch_column(_stmt, _result_meta_bind, 0, 0) != 0)
+				{
+					free(_result_meta_bind->buffer);
+					_result_meta_bind->buffer = 0;
+					_result_meta_bind->buffer_length = 0;
+					throw DatabaseException("Failed to retrieve result", {});
+				}
+				res = bind2Result(_result_meta_bind);
+				free(_result_meta_bind->buffer);
+				_result_meta_bind->buffer = 0;
+				_result_meta_bind->buffer_length = 0;
+			}
+			else
+				res = bind2Result(_result_meta_bind);
+
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement", {});
+
+			return res;
+		});
 	}
 
 	Bundle MySQLStatement::executeQueryRow()
 	{
-		return Bundle();
+		return _hdl->executeThreadSafe<Bundle>([this](MySQLHandle::HandleAccessor& hdl) {
+			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
+				throw DatabaseException("Failed to bind parameters", {});
+			if (mysql_stmt_execute(_stmt) != 0)
+				throw DatabaseException("Failed to execute statement", {});
+
+			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
+			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
+
+			unsigned int num_fields = mysql_num_fields(meta.get());
+
+			Bundle values;
+
+			int res = mysql_stmt_fetch(_stmt);
+			if (res == MYSQL_NO_DATA)
+				throw DatabaseException("No row returned", {});
+			if (res == 1)
+				throw DatabaseException("Failed to retrieve result", {});
+
+			for (unsigned int i = 0; i < num_fields; i++)
+			{
+				MYSQL_BIND* ptr = &_result_meta_bind[i];
+				if (ptr->buffer == nullptr)
+				{
+					ptr->buffer = malloc(*(ptr->length));
+					ptr->buffer_length = *(ptr->length);
+					if (mysql_stmt_fetch_column(_stmt, ptr, i, 0) != 0)
+					{
+						free(ptr->buffer);
+						ptr->buffer = 0;
+						ptr->buffer_length = 0;
+						throw DatabaseException("Failed to retrieve result", {});
+					}
+					values.set(_result_names[i], bind2Result(ptr));
+					free(ptr->buffer);
+					ptr->buffer = 0;
+					ptr->buffer_length = 0;
+				}
+				else {
+					values.set(_result_names[i], bind2Result(ptr));
+				}
+			}
+
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement", {});
+
+			return values;
+		});
 	}
 
 	ResultSet MySQLStatement::executeQuery()
 	{
-		return ResultSet();
+		return _hdl->executeThreadSafe<ResultSet>([this](MySQLHandle::HandleAccessor& hdl) {
+			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
+				throw DatabaseException("Failed to bind parameters", {});
+			if (mysql_stmt_execute(_stmt) != 0)
+				throw DatabaseException("Failed to execute statement", {});
+
+			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
+			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
+
+			unsigned int num_fields = mysql_num_fields(meta.get());
+			ResultSet result;
+			while (mysql_stmt_fetch(_stmt) != MYSQL_NO_DATA)
+			{
+				Bundle values;
+				for (unsigned int i = 0; i < num_fields; i++)
+				{
+					MYSQL_BIND* ptr = &_result_meta_bind[i];
+					if (ptr->buffer == nullptr)
+					{
+						ptr->buffer = malloc(*(ptr->length));
+						ptr->buffer_length = *(ptr->length);
+						if (mysql_stmt_fetch_column(_stmt, ptr, i, 0) != 0)
+						{
+							free(ptr->buffer);
+							ptr->buffer = 0;
+							ptr->buffer_length = 0;
+							throw DatabaseException("Failed to retrieve result", {});
+						}
+						values.set(_result_names[i], bind2Result(ptr));
+						free(ptr->buffer);
+						ptr->buffer = 0;
+						ptr->buffer_length = 0;
+					}
+					else {
+						values.set(_result_names[i], bind2Result(ptr));
+					}
+				}
+				result.appendRow(values);
+			}
+
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement", {});
+
+			return result;
+		});
 	}
 
 	void MySQLStatement::bind(uint64_t id, AnyValue value)
 	{
+		if (value.isType<std::vector<uint8_t>>()) {
+			auto v = value.as<std::vector<uint8_t>>();
+			void* data = malloc(v.size());
+			memcpy(data, v.data(), v.size());
+			this->setBind(id, MYSQL_TYPE_BLOB, data, v.size(), false);
+		}
+		else if (value.type_info().isIntegral()) {
+			auto v = value.as<int64_t>();
+			void* data = malloc(sizeof(int64_t));
+			memcpy(data, &v, sizeof(int64_t));
+			this->setBind(id, MYSQL_TYPE_LONGLONG, data, sizeof(int64_t), false);
+		}
+		else if (value.type_info().isFloatingPoint()) {
+			auto v = value.as<double>();
+			void* data = malloc(sizeof(double));
+			memcpy(data, &v, sizeof(double));
+			this->setBind(id, MYSQL_TYPE_DOUBLE, data, sizeof(double), false);
+		}
+		else if (value.isType<nullptr_t>()) {
+			this->setBind(id, MYSQL_TYPE_NULL, 0, 0, false);
+		}
+		else {
+			auto v = value.as<std::string>();
+			void* data = malloc(v.size());
+			memcpy(data, v.data(), v.size());
+			this->setBind(id, MYSQL_TYPE_STRING, data, v.size(), false);
+		}
 	}
 
 	void MySQLStatement::bind(const std::string & id, AnyValue value)
@@ -131,7 +289,7 @@ namespace EasyCppMySql
 		throw DatabaseException("Binding by name is not supported by this database", {});
 	}
 
-	void MySQLStatement::setBind(unsigned long idx, enum_field_types type, void * data, unsigned long dlen, bool sign)
+	void MySQLStatement::setBind(uint64_t idx, enum_field_types type, void * data, unsigned long dlen, bool sign)
 	{
 		if (idx >= _param_count)
 			throw DatabaseException("Invalid index", EasyCpp::Bundle({
@@ -149,6 +307,36 @@ namespace EasyCppMySql
 			bind->buffer = data;
 			bind->buffer_length = dlen;
 			bind->is_unsigned = sign;
+		}
+	}
+
+	AnyValue MySQLStatement::bind2Result(MYSQL_BIND * bind)
+	{
+		if (*bind->is_null)
+		{
+			return AnyValue();
+		}
+		else {
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wswitch" // We know nothing else is possible since we did set it.
+#endif
+			switch (bind->buffer_type)
+			{
+			case MYSQL_TYPE_LONGLONG:
+				return AnyValue(*((int64_t*)bind->buffer));
+			case MYSQL_TYPE_DOUBLE:
+				return AnyValue(*((double*)bind->buffer));
+			case MYSQL_TYPE_STRING:
+				return AnyValue(std::string((const char*)bind->buffer, (const char*)(bind->buffer) + *bind->length));
+			case MYSQL_TYPE_BLOB:
+				return AnyValue(std::vector<uint8_t>((uint8_t*)bind->buffer, (uint8_t*)(bind->buffer) + *bind->length));
+			default:
+				return AnyValue();
+			}
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 		}
 	}
 
