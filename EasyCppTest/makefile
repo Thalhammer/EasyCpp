@@ -8,7 +8,7 @@ DEP_DIR = .deps
 FLAGS = -fPIC -Wall -Wno-unknown-pragmas -O2 -march=native -Igoogletest/googletest/include -Igoogletest/googletest/ -I../EasyCpp
 CXXFLAGS = -std=c++14
 CFLAGS = 
-LINKFLAGS = -Wl,-R -Wl,. -L. -lEasyCpp -ldl -pthread -lcrypto
+LINKFLAGS = -Wl,-R -Wl,. -L../EasyCpp -lEasyCpp -ldl -pthread -lcrypto
 
 OUTFILE = EasyCppTest
 
