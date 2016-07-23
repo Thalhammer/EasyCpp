@@ -7,7 +7,7 @@ using namespace EasyCpp::Plugin;
 
 namespace EasyCppTest
 {
-	TEST(Plugin, LoadMySQLPlugin)
+	TEST(Plugin, DISABLED_LoadMySQLPlugin)
 	{
 		Manager mgr;
 		mgr.loadPlugin("Mysql", "EasyCpp-Mysql.dll");
