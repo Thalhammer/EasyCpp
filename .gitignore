@@ -7,3 +7,4 @@ Release
 .deps
 *.so
 EasyCppTest/EasyCppTest
+packages

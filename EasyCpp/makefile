@@ -8,7 +8,7 @@ DEP_DIR = .deps
 FLAGS = -fPIC -Wall -Wno-unknown-pragmas -Iexternal -O2 -march=native
 CXXFLAGS = -std=c++14
 CFLAGS = 
-LINKFLAGS = 
+LINKFLAGS = -lcurl -lssl
 
 OUTFILE = libEasyCpp.so
 
