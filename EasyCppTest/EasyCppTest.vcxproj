@@ -154,6 +154,7 @@
     <ClCompile Include="Bundle.cpp" />
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="Convert.cpp" />
+    <ClCompile Include="Curl.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="URI.cpp" />

@@ -129,6 +129,9 @@
     <ClCompile Include="URI.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Curl.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="googletest\googletest\src\gtest-internal-inl.h">

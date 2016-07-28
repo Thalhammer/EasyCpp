@@ -250,6 +250,10 @@
     <ClCompile Include="VFS\VFSVFSProvider\VFSVFSProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
+	<Content Include="curl-ca-bundle.crt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="curl-ca-bundle.crt" />
     <None Include="external\json\json_valueiterator.inl" />
     <None Include="packages.config" />
   </ItemGroup>

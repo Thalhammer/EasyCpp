@@ -758,5 +758,6 @@
       <Filter>external\json</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="curl-ca-bundle.crt" />
   </ItemGroup>
 </Project>

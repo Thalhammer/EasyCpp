@@ -1074,7 +1074,7 @@ namespace EasyCpp
 
 		void Curl::setIPResolve(IPResolve res)
 		{
-			long option;
+			long option = CURL_IPRESOLVE_WHATEVER;
 			switch (res)
 			{
 			case IPResolve::Whatever: option = CURL_IPRESOLVE_WHATEVER; break;
