@@ -471,6 +471,9 @@
     <ClInclude Include="Net\URI.h">
       <Filter>Headerdateien\Net</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Curl.h">
+      <Filter>Headerdateien\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -746,10 +749,14 @@
     <ClCompile Include="Net\URI.cpp">
       <Filter>Quelldateien\Net</Filter>
     </ClCompile>
+    <ClCompile Include="Net\Curl.cpp">
+      <Filter>Quelldateien\Net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="external\json\json_valueiterator.inl">
       <Filter>external\json</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
