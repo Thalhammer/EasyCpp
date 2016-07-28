@@ -133,6 +133,7 @@
     <ClInclude Include="ValueConverter.h" />
     <ClInclude Include="VarArgs.h" />
     <ClInclude Include="VFS\BinaryReader.h" />
+    <ClInclude Include="VFS\BinaryWriter.h" />
     <ClInclude Include="VFS\InputOutputStream.h" />
     <ClInclude Include="VFS\InputStream.h" />
     <ClInclude Include="VFS\OSVFSProvider\OSVFSInputOutputStream.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
     <ClCompile Include="VFS\BinaryReader.cpp" />
+    <ClCompile Include="VFS\BinaryWriter.cpp" />
     <ClCompile Include="VFS\OSVFSProvider\OSVFSInputOutputStream.cpp" />
     <ClCompile Include="VFS\OSVFSProvider\OSVFSInputStream.cpp" />
     <ClCompile Include="VFS\OSVFSProvider\OSVFSOutputStream.cpp" />

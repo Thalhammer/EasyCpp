@@ -477,6 +477,9 @@
     <ClInclude Include="VFS\BinaryReader.h">
       <Filter>Headerdateien\VFS</Filter>
     </ClInclude>
+    <ClInclude Include="VFS\BinaryWriter.h">
+      <Filter>Headerdateien\VFS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -756,6 +759,9 @@
       <Filter>Quelldateien\Net</Filter>
     </ClCompile>
     <ClCompile Include="VFS\BinaryReader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="VFS\BinaryWriter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
