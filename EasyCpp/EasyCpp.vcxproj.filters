@@ -91,6 +91,12 @@
     <Filter Include="Quelldateien\Hash">
       <UniqueIdentifier>{446b34e6-6d86-47c5-912f-025fb58850f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Net">
+      <UniqueIdentifier>{5ae7e871-fe6e-4487-bfeb-3a7e56455184}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Net">
+      <UniqueIdentifier>{690d86fc-9fb9-46d1-8da9-dbec3a2cdf06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -462,6 +468,9 @@
     <ClInclude Include="Plugin\IPluginDatabaseProvider.h">
       <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="Net\URI.h">
+      <Filter>Headerdateien\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -733,6 +742,9 @@
     </ClCompile>
     <ClCompile Include="VFS\VFSProviderManager.cpp">
       <Filter>Quelldateien\VFS</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\URI.cpp">
+      <Filter>Quelldateien\Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

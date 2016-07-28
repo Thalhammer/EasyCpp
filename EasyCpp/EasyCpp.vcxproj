@@ -100,6 +100,7 @@
     <ClInclude Include="Logging\ILoggerAware.h" />
     <ClInclude Include="Logging\NullLogger.h" />
     <ClInclude Include="Logging\Severity.h" />
+    <ClInclude Include="Net\URI.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="Plugin\InitArgs.h" />
@@ -216,6 +217,7 @@
     <ClCompile Include="Hash\SHA512.cpp" />
     <ClCompile Include="Logging\AbstractLogger.cpp" />
     <ClCompile Include="Logging\NullLogger.cpp" />
+    <ClCompile Include="Net\URI.cpp" />
     <ClCompile Include="Plugin\DeinitArgs.cpp" />
     <ClCompile Include="Plugin\InitArgs.cpp" />
     <ClCompile Include="Plugin\Plugin.cpp" />
