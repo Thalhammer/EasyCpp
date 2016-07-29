@@ -486,6 +486,12 @@
     <ClInclude Include="HexEncoding.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Hash\HOTP.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\TOTP.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -770,11 +776,17 @@
     <ClCompile Include="VFS\BinaryWriter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="Hash\HMAC.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="HexEncoding.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\HMAC.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\HOTP.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\TOTP.cpp">
+      <Filter>Quelldateien\Hash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -92,6 +92,7 @@
     <ClInclude Include="Hash\Hash.h" />
     <ClInclude Include="Hash\HashManager.h" />
     <ClInclude Include="Hash\HMAC.h" />
+    <ClInclude Include="Hash\HOTP.h" />
     <ClInclude Include="Hash\MD4.h" />
     <ClInclude Include="Hash\MD5.h" />
     <ClInclude Include="Hash\SHA1.h" />
@@ -99,6 +100,7 @@
     <ClInclude Include="Hash\SHA256.h" />
     <ClInclude Include="Hash\SHA384.h" />
     <ClInclude Include="Hash\SHA512.h" />
+    <ClInclude Include="Hash\TOTP.h" />
     <ClInclude Include="HexEncoding.h" />
     <ClInclude Include="LINQ.h" />
     <ClInclude Include="Logging\AbstractLogger.h" />
@@ -218,6 +220,7 @@
     <ClCompile Include="external\sqlite3\sqlite3.c" />
     <ClCompile Include="Hash\HashManager.cpp" />
     <ClCompile Include="Hash\HMAC.cpp" />
+    <ClCompile Include="Hash\HOTP.cpp" />
     <ClCompile Include="Hash\MD4.cpp" />
     <ClCompile Include="Hash\MD5.cpp" />
     <ClCompile Include="Hash\SHA1.cpp" />
@@ -225,6 +228,7 @@
     <ClCompile Include="Hash\SHA256.cpp" />
     <ClCompile Include="Hash\SHA384.cpp" />
     <ClCompile Include="Hash\SHA512.cpp" />
+    <ClCompile Include="Hash\TOTP.cpp" />
     <ClCompile Include="HexEncoding.cpp" />
     <ClCompile Include="Logging\AbstractLogger.cpp" />
     <ClCompile Include="Logging\NullLogger.cpp" />
