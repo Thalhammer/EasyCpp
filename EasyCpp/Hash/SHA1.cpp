@@ -1,9 +1,8 @@
 #include "SHA1.h"
 #include "HashManager.h"
 #include "../AutoInit.h"
-#include <sstream>
-#include <iomanip>
 #include <openssl/sha.h>
+#include "../HexEncoding.h"
 
 #pragma comment(lib,"libeay32.lib")
 
@@ -35,14 +34,9 @@ namespace EasyCpp
 
 		std::string SHA1::final()
 		{
-			unsigned char hash[SHA_DIGEST_LENGTH];
-			SHA1_Final(hash, (SHA_CTX*)sha1);
-			std::stringstream ss;
-			for (int i = 0; i < SHA_DIGEST_LENGTH; i++)
-			{
-				ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
-			}
-			return ss.str();
+			std::string res = std::string(SHA_DIGEST_LENGTH, 0x00);
+			SHA1_Final((unsigned char*)res.data(), (SHA_CTX*)sha1);
+			return HexEncoding::encode(res);
 		}
 
 		size_t SHA1::blocksize()

@@ -1,9 +1,8 @@
 #include "MD4.h"
 #include "HashManager.h"
 #include "../AutoInit.h"
-#include <sstream>
-#include <iomanip>
 #include <openssl/md4.h>
+#include "../HexEncoding.h"
 
 #pragma comment(lib,"libeay32.lib")
 
@@ -35,14 +34,9 @@ namespace EasyCpp
 
 		std::string MD4::final()
 		{
-			unsigned char hash[MD4_DIGEST_LENGTH];
-			MD4_Final(hash, (MD4_CTX*)md4);
-			std::stringstream ss;
-			for (int i = 0; i < MD4_DIGEST_LENGTH; i++)
-			{
-				ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
-			}
-			return ss.str();
+			std::string res = std::string(MD4_DIGEST_LENGTH, 0x00);
+			MD4_Final((unsigned char*)res.data(), (MD4_CTX*)md4);
+			return HexEncoding::encode(res);
 		}
 
 		size_t MD4::blocksize()

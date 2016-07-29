@@ -1,9 +1,8 @@
 #include "MD5.h"
 #include "HashManager.h"
 #include "../AutoInit.h"
-#include <sstream>
-#include <iomanip>
 #include <openssl/md5.h>
+#include "../HexEncoding.h"
 
 #pragma comment(lib,"libeay32.lib")
 
@@ -35,14 +34,9 @@ namespace EasyCpp
 
 		std::string MD5::final()
 		{
-			unsigned char hash[MD5_DIGEST_LENGTH];
-			MD5_Final(hash, (MD5_CTX*)md5);
-			std::stringstream ss;
-			for (int i = 0; i < MD5_DIGEST_LENGTH; i++)
-			{
-				ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
-			}
-			return ss.str();
+			std::string res = std::string(MD5_DIGEST_LENGTH, 0x00);
+			MD5_Final((unsigned char*)res.data(), (MD5_CTX*)md5);
+			return HexEncoding::encode(res);
 		}
 
 		size_t MD5::blocksize()
