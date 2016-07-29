@@ -92,6 +92,7 @@
     <ClInclude Include="Hash\Hash.h" />
     <ClInclude Include="Hash\HashManager.h" />
     <ClInclude Include="Hash\HMAC.h" />
+    <ClInclude Include="Hash\HOTP.h" />
     <ClInclude Include="Hash\MD4.h" />
     <ClInclude Include="Hash\MD5.h" />
     <ClInclude Include="Hash\SHA1.h" />
@@ -218,6 +219,7 @@
     <ClCompile Include="external\sqlite3\sqlite3.c" />
     <ClCompile Include="Hash\HashManager.cpp" />
     <ClCompile Include="Hash\HMAC.cpp" />
+    <ClCompile Include="Hash\HOTP.cpp" />
     <ClCompile Include="Hash\MD4.cpp" />
     <ClCompile Include="Hash\MD5.cpp" />
     <ClCompile Include="Hash\SHA1.cpp" />
