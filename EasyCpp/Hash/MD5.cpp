@@ -45,6 +45,11 @@ namespace EasyCpp
 			return ss.str();
 		}
 
+		size_t MD5::blocksize()
+		{
+			return MD5_CBLOCK;
+		}
+
 		std::string MD5::getString(const std::string & str)
 		{
 			MD5 md5;

@@ -45,11 +45,17 @@ namespace EasyCpp
 			return ss.str();
 		}
 
+		size_t MD4::blocksize()
+		{
+			return MD4_CBLOCK;
+		}
+
 		std::string MD4::getString(const std::string & str)
 		{
 			MD4 md4;
 			md4.update(str);
 			return md4.final();
 		}
+		
 	}
 }
