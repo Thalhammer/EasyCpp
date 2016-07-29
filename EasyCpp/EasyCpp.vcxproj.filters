@@ -492,6 +492,9 @@
     <ClInclude Include="Hash\TOTP.h">
       <Filter>Headerdateien\Hash</Filter>
     </ClInclude>
+    <ClInclude Include="Base32.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -787,6 +790,9 @@
     </ClCompile>
     <ClCompile Include="Hash\TOTP.cpp">
       <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Base32.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

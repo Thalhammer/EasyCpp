@@ -55,6 +55,7 @@ namespace EasyCpp
 	std::string Base64::toString(const std::vector<uint8_t>& data)
 	{
 		std::string res;
+		res.reserve((data.size() * 4) / 3);
 		for (size_t i = 0; i < data.size(); i += 3)
 		{
 			if (data.size() - i < 3)

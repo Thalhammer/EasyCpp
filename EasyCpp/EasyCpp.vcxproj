@@ -28,6 +28,7 @@
     <ClInclude Include="AnyValue.h" />
     <ClInclude Include="AutoInit.h" />
     <ClInclude Include="Backtrace.h" />
+    <ClInclude Include="Base32.h" />
     <ClInclude Include="Base64.h" />
     <ClInclude Include="Base64URL.h" />
     <ClInclude Include="BasicException.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="AnyFunction.cpp" />
     <ClCompile Include="AnyValue.cpp" />
     <ClCompile Include="Backtrace.cpp" />
+    <ClCompile Include="Base32.cpp" />
     <ClCompile Include="Base64.cpp" />
     <ClCompile Include="Base64URL.cpp" />
     <ClCompile Include="BasicException.cpp" />
