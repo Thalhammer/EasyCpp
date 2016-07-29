@@ -44,6 +44,13 @@ namespace EasyCpp
 			return SHA512_CBLOCK;
 		}
 
+		void SHA512::reset()
+		{
+			delete ((SHA512_CTX*)sha512);
+			sha512 = new SHA512_CTX();
+			SHA512_Init((SHA512_CTX*)sha512);
+		}
+
 		std::string SHA512::getString(const std::string & str)
 		{
 			SHA512 sha512;

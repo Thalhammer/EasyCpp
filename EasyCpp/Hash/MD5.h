@@ -18,6 +18,7 @@ namespace EasyCpp
 			/// <summary>Get the blocksize of this hashing algorithm</summary>
 			/// <returns>The blocksize</returns>
 			virtual size_t blocksize() override;
+			virtual void reset() override;
 
 			static std::string getString(const std::string& str);
 		private:

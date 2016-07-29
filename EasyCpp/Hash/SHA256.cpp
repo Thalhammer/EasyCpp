@@ -44,6 +44,13 @@ namespace EasyCpp
 			return SHA256_CBLOCK;
 		}
 
+		void SHA256::reset()
+		{
+			delete ((SHA256_CTX*)sha256);
+			sha256 = new SHA256_CTX();
+			SHA256_Init((SHA256_CTX*)sha256);
+		}
+
 		std::string SHA256::getString(const std::string & str)
 		{
 			SHA256 sha256;
