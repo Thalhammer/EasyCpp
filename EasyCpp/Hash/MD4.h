@@ -15,10 +15,13 @@ namespace EasyCpp
 
 			virtual void update(const std::string & str) override;
 			virtual std::string final() override;
+			virtual size_t blocksize() override;
 
 			static std::string getString(const std::string& str);
 		private:
 			void* md4;
+
+			
 		};
 	}
 }

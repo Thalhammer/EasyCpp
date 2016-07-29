@@ -15,6 +15,9 @@ namespace EasyCpp
 
 			virtual void update(const std::string & str) override;
 			virtual std::string final() override;
+			/// <summary>Get the blocksize of this hashing algorithm</summary>
+			/// <returns>The blocksize</returns>
+			virtual size_t blocksize() = 0;
 
 			static std::string getString(const std::string& str);
 		private:

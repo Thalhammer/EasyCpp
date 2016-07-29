@@ -45,6 +45,11 @@ namespace EasyCpp
 			return ss.str();
 		}
 
+		size_t EasyCpp::Hash::SHA224::blocksize()
+		{
+			return SHA256_CBLOCK;
+		}
+
 		std::string SHA224::getString(const std::string & str)
 		{
 			SHA224 sha224;

@@ -45,6 +45,11 @@ namespace EasyCpp
 			return ss.str();
 		}
 
+		size_t SHA1::blocksize()
+		{
+			return SHA_CBLOCK;
+		}
+
 		std::string SHA1::getString(const std::string & str)
 		{
 			SHA1 sha1;
