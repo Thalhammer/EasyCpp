@@ -39,6 +39,7 @@ namespace EasyCppTest
 		std::string md5 = MD5::getString(test);
 
 		ASSERT_EQ(std::string("8eaf78dea8b35409569144b5ca6aa691"), md5);
+		ASSERT_EQ(std::string("d41d8cd98f00b204e9800998ecf8427e"), MD5::getString(""));
 	}
 
 	TEST(Hash, MD4)

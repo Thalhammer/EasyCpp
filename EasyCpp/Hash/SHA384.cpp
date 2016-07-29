@@ -1,9 +1,8 @@
 #include "SHA384.h"
 #include "HashManager.h"
 #include "../AutoInit.h"
-#include <sstream>
-#include <iomanip>
 #include <openssl/sha.h>
+#include "../HexEncoding.h"
 
 #pragma comment(lib,"libeay32.lib")
 
@@ -35,14 +34,9 @@ namespace EasyCpp
 
 		std::string SHA384::final()
 		{
-			unsigned char hash[SHA384_DIGEST_LENGTH];
-			SHA384_Final(hash, (SHA512_CTX*)sha384);
-			std::stringstream ss;
-			for (int i = 0; i < SHA384_DIGEST_LENGTH; i++)
-			{
-				ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
-			}
-			return ss.str();
+			std::string res = std::string(SHA384_DIGEST_LENGTH, 0x00);
+			SHA384_Final((unsigned char*)res.data(), (SHA512_CTX*)sha384);
+			return HexEncoding::encode(res);
 		}
 
 		size_t EasyCpp::Hash::SHA384::blocksize()
