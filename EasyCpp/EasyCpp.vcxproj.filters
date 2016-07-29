@@ -489,6 +489,9 @@
     <ClInclude Include="Hash\HOTP.h">
       <Filter>Headerdateien\Hash</Filter>
     </ClInclude>
+    <ClInclude Include="Hash\TOTP.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -780,6 +783,9 @@
       <Filter>Quelldateien\Hash</Filter>
     </ClCompile>
     <ClCompile Include="Hash\HOTP.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\TOTP.cpp">
       <Filter>Quelldateien\Hash</Filter>
     </ClCompile>
   </ItemGroup>
