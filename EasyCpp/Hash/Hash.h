@@ -20,6 +20,8 @@ namespace EasyCpp
 			/// <summary>Get the blocksize of this hashing algorithm</summary>
 			/// <returns>The blocksize</returns>
 			virtual size_t blocksize() = 0;
+			/// <summary>Reset the hash instance. Afterwards the state should be the same as a freshly constructed object.</summary>
+			virtual void reset() = 0;
 		};
 		typedef std::shared_ptr<Hash> HashPtr;
 	}

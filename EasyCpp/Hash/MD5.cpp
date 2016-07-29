@@ -44,6 +44,13 @@ namespace EasyCpp
 			return MD5_CBLOCK;
 		}
 
+		void MD5::reset()
+		{
+			delete ((MD5_CTX*)md5);
+			md5 = new MD5_CTX();
+			MD5_Init((MD5_CTX*)md5);
+		}
+
 		std::string MD5::getString(const std::string & str)
 		{
 			MD5 md5;

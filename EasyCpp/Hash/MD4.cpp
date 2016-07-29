@@ -44,6 +44,13 @@ namespace EasyCpp
 			return MD4_CBLOCK;
 		}
 
+		void MD4::reset()
+		{
+			delete ((MD4_CTX*)md4);
+			md4 = new MD4_CTX();
+			MD4_Init((MD4_CTX*)md4);
+		}
+
 		std::string MD4::getString(const std::string & str)
 		{
 			MD4 md4;

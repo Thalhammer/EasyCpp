@@ -44,6 +44,13 @@ namespace EasyCpp
 			return SHA_CBLOCK;
 		}
 
+		void SHA1::reset()
+		{
+			delete ((SHA_CTX*)sha1);
+			sha1 = new SHA_CTX();
+			SHA1_Init((SHA_CTX*)sha1);
+		}
+
 		std::string SHA1::getString(const std::string & str)
 		{
 			SHA1 sha1;
