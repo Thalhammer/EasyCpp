@@ -480,6 +480,12 @@
     <ClInclude Include="VFS\BinaryWriter.h">
       <Filter>Headerdateien\VFS</Filter>
     </ClInclude>
+    <ClInclude Include="Hash\HMAC.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="HexEncoding.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -762,6 +768,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="VFS\BinaryWriter.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\HMAC.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="HexEncoding.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
