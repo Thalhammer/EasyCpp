@@ -149,6 +149,7 @@
     <ClCompile Include="AnyFunction.cpp" />
     <ClCompile Include="AnyValue.cpp" />
     <ClCompile Include="Backtrace.cpp" />
+    <ClCompile Include="Base32.cpp" />
     <ClCompile Include="Base64.cpp" />
     <ClCompile Include="BsonSerializer.cpp" />
     <ClCompile Include="Bundle.cpp" />
