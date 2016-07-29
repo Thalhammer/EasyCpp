@@ -9,10 +9,11 @@ namespace EasyCpp
 		{
 		public:
 			HMAC(std::string hash);
+			HMAC(HashPtr hash);
 
 			std::string run(const std::string& message, const std::string& key);
 		private:
-			std::string _hash;
+			HashPtr _hash;
 		};
 	}
 }

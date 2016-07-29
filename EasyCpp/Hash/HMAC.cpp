@@ -7,18 +7,22 @@ namespace EasyCpp
 	namespace Hash
 	{
 		HMAC::HMAC(std::string hash)
+			: HMAC(HashManager::getHash(hash))
+		{
+		}
+
+		HMAC::HMAC(HashPtr hash)
 			:_hash(hash)
 		{
 		}
 
 		std::string HMAC::run(const std::string & message, const std::string & key)
 		{
-			auto hash = HashManager::getHash(_hash);
 			std::string mkey = key;
-			auto blocksize = hash->blocksize();
+			auto blocksize = _hash->blocksize();
 			if (mkey.length() > blocksize) {
-				hash->update(mkey);
-				mkey = HexEncoding::decode(hash->final());
+				_hash->update(mkey);
+				mkey = HexEncoding::decode(_hash->final());
 			}
 			if (mkey.length() < blocksize) {
 				mkey = mkey + std::string((blocksize - mkey.length()), 0x00);
@@ -30,12 +34,12 @@ namespace EasyCpp
 				i_key_pad[i] = i_key_pad[i] ^ mkey[i];
 			}
 
-			hash = HashManager::getHash(_hash);
-			hash->update(i_key_pad + message);
-			std::string inner = HexEncoding::decode(hash->final());
-			hash = HashManager::getHash(_hash);
-			hash->update(o_key_pad + inner);
-			return hash->final();
+			_hash->reset();
+			_hash->update(i_key_pad + message);
+			std::string inner = HexEncoding::decode(_hash->final());
+			_hash->reset();
+			_hash->update(o_key_pad + inner);
+			return _hash->final();
 		}
 	}
 }
