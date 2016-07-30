@@ -105,6 +105,7 @@
     <ClInclude Include="HexEncoding.h" />
     <ClInclude Include="LINQ.h" />
     <ClInclude Include="Logging\AbstractLogger.h" />
+    <ClInclude Include="Logging\SystemLogger.h" />
     <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Logging\ILoggerAware.h" />
     <ClInclude Include="Logging\NullLogger.h" />
@@ -233,7 +234,9 @@
     <ClCompile Include="Hash\TOTP.cpp" />
     <ClCompile Include="HexEncoding.cpp" />
     <ClCompile Include="Logging\AbstractLogger.cpp" />
+    <ClCompile Include="Logging\SystemLoggerWin32.cpp" />
     <ClCompile Include="Logging\NullLogger.cpp" />
+    <ClCompile Include="Logging\SystemLoggerLinux.cpp" />
     <ClCompile Include="Net\Curl.cpp" />
     <ClCompile Include="Net\URI.cpp" />
     <ClCompile Include="Plugin\DeinitArgs.cpp" />

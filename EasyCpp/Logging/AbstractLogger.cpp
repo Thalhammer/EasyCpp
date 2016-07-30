@@ -4,6 +4,10 @@ namespace EasyCpp
 {
 	namespace Logging
 	{
+		AbstractLogger::~AbstractLogger()
+		{
+		}
+
 		void AbstractLogger::Emergency(std::string message, Bundle context)
 		{
 			this->Log(Severity::Emergency, message, context);

@@ -86,4 +86,14 @@ namespace EasyCpp
 	inline T &trim(T &s) {
 		return ltrim(rtrim(s));
 	}
+
+	inline std::string replaceAll(const std::string& input, const std::string& search, const std::string& replace) {
+		std::string res = input;
+		size_t pos = res.find(search, 0 );
+		while (pos != std::string::npos) {
+			res = res.replace(pos, search.length(), replace);
+			pos = res.find(search, pos);
+		}
+		return res;
+	}
 }
