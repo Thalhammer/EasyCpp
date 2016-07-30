@@ -11,7 +11,7 @@ namespace EasyCpp
 		SystemLogger::SystemLogger(const std::string & source)
 		{
 			openlog(source.c_str(), LOG_PID, LOG_USER);
-			_handle = std::shared_ptr<void>(nullptr, []() {
+			_handle = std::shared_ptr<void>(nullptr, [](void*) {
 				closelog();
 			});
 		}
