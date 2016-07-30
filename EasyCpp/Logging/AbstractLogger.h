@@ -5,9 +5,10 @@ namespace EasyCpp
 {
 	namespace Logging
 	{
-		class AbstractLogger : public ILogger
+		class DLL_EXPORT AbstractLogger : public ILogger
 		{
 		public:
+			virtual ~AbstractLogger();
 			// Geerbt über ILogger
 			virtual void Emergency(std::string message, Bundle context) override;
 			virtual void Alert(std::string message, Bundle context) override;

@@ -159,6 +159,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="HexEncoding.cpp" />
     <ClCompile Include="HMAC.cpp" />
+    <ClCompile Include="Logging.cpp" />
     <ClCompile Include="OTP.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="URI.cpp" />

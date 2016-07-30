@@ -7,9 +7,11 @@ namespace EasyCpp
 {
 	namespace Logging
 	{
-		class ILogger
+		class DLL_EXPORT ILogger
 		{
 		public:
+			virtual ~ILogger() {}
+
 			virtual void Emergency(std::string message, Bundle context = {}) = 0;
 			virtual void Alert(std::string message, Bundle context = {}) = 0;
 			virtual void Critical(std::string message, Bundle context = {}) = 0;

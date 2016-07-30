@@ -495,6 +495,9 @@
     <ClInclude Include="Base32.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Logging\SystemLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -793,6 +796,12 @@
     </ClCompile>
     <ClCompile Include="Base32.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\SystemLoggerLinux.cpp">
+      <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\SystemLoggerWin32.cpp">
+      <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
