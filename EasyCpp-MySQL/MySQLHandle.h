@@ -43,15 +43,16 @@ namespace EasyCppMySql
 		{
 			std::lock_guard<std::recursive_mutex> lck(_hdl_mutex);
 			initializer.dummy();
-			return fn(HandleAccessor(this));
+			HandleAccessor accessor(this);
+			return fn(accessor);
 		}
 
-		template<>
-		void executeThreadSafe<void>(std::function<void(HandleAccessor& hdl)> fn)
+		void executeThreadSafe(std::function<void(HandleAccessor& hdl)> fn)
 		{
 			std::lock_guard<std::recursive_mutex> lck(_hdl_mutex);
 			initializer.dummy();
-			fn(HandleAccessor(this));
+			HandleAccessor accessor(this);
+			fn(accessor);
 		}
 	private:
 		std::recursive_mutex _hdl_mutex;
