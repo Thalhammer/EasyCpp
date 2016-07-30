@@ -1,7 +1,10 @@
 #pragma once
 #include "AbstractLogger.h"
-#include "../Queue.h"
 #include <atomic>
+#include <mutex>
+#include <queue>
+#include <thread>
+#include <condition_variable>
 
 namespace EasyCpp
 {
