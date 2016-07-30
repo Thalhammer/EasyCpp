@@ -498,6 +498,12 @@
     <ClInclude Include="Logging\SystemLogger.h">
       <Filter>Headerdateien\Logging</Filter>
     </ClInclude>
+    <ClInclude Include="Logging\ConsoleLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="SafeTime.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -802,6 +808,12 @@
     </ClCompile>
     <ClCompile Include="Logging\SystemLoggerWin32.cpp">
       <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\ConsoleLogger.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="SafeTime.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

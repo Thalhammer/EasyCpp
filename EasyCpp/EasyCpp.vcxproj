@@ -105,6 +105,7 @@
     <ClInclude Include="HexEncoding.h" />
     <ClInclude Include="LINQ.h" />
     <ClInclude Include="Logging\AbstractLogger.h" />
+    <ClInclude Include="Logging\ConsoleLogger.h" />
     <ClInclude Include="Logging\SystemLogger.h" />
     <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Logging\ILoggerAware.h" />
@@ -135,6 +136,7 @@
     <ClInclude Include="Serialize\Serializer.h" />
     <ClInclude Include="Serialize\Vector.h" />
     <ClInclude Include="StringAlgorithm.h" />
+    <ClInclude Include="SafeTime.h" />
     <ClInclude Include="TypeInfo.h" />
     <ClInclude Include="ValueConverter.h" />
     <ClInclude Include="VarArgs.h" />
@@ -234,6 +236,7 @@
     <ClCompile Include="Hash\TOTP.cpp" />
     <ClCompile Include="HexEncoding.cpp" />
     <ClCompile Include="Logging\AbstractLogger.cpp" />
+    <ClCompile Include="Logging\ConsoleLogger.cpp" />
     <ClCompile Include="Logging\SystemLoggerWin32.cpp" />
     <ClCompile Include="Logging\NullLogger.cpp" />
     <ClCompile Include="Logging\SystemLoggerLinux.cpp" />
@@ -251,6 +254,7 @@
     <ClCompile Include="Serialize\JsonSerializer.cpp" />
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
+    <ClCompile Include="SafeTime.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
     <ClCompile Include="VFS\BinaryReader.cpp" />
     <ClCompile Include="VFS\BinaryWriter.cpp" />
