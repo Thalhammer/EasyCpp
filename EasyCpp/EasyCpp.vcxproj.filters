@@ -504,6 +504,9 @@
     <ClInclude Include="SafeTime.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Logging\AsyncLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -814,6 +817,9 @@
     </ClCompile>
     <ClCompile Include="SafeTime.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\AsyncLogger.cpp">
+      <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

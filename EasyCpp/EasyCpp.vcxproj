@@ -105,6 +105,7 @@
     <ClInclude Include="HexEncoding.h" />
     <ClInclude Include="LINQ.h" />
     <ClInclude Include="Logging\AbstractLogger.h" />
+    <ClInclude Include="Logging\AsyncLogger.h" />
     <ClInclude Include="Logging\ConsoleLogger.h" />
     <ClInclude Include="Logging\SystemLogger.h" />
     <ClInclude Include="Logging\ILogger.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="Hash\TOTP.cpp" />
     <ClCompile Include="HexEncoding.cpp" />
     <ClCompile Include="Logging\AbstractLogger.cpp" />
+    <ClCompile Include="Logging\AsyncLogger.cpp" />
     <ClCompile Include="Logging\ConsoleLogger.cpp" />
     <ClCompile Include="Logging\SystemLoggerWin32.cpp" />
     <ClCompile Include="Logging\NullLogger.cpp" />
