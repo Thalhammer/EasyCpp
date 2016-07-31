@@ -23,6 +23,16 @@ namespace EasyCppTest
 		ASSERT_EQ(30, res.as<int>());
 	}
 
+	TEST(AnyFunction, BasicWithParam)
+	{
+		std::function<int(int)> fn = [](int i1) { return i1; };
+		AnyFunction afn(fn);
+
+		AnyValue res = afn.call({ 10 });
+		ASSERT_TRUE(res.isType<int>());
+		ASSERT_EQ(10, res.as<int>());
+	}
+
 	TEST(AnyFunction, VoidFunction)
 	{
 		std::function<void()> fn = []() { };
@@ -37,7 +47,7 @@ namespace EasyCppTest
 		AnyFunction afn(fn);
 
 		ASSERT_THROW({
-			AnyValue res = afn.call({});
+			AnyValue res = afn.call({ 10});
 		}, std::out_of_range);
 	}
 
