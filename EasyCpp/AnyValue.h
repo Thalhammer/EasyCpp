@@ -27,10 +27,7 @@ namespace EasyCpp
 		/// <summary>Creates a AnyValue which contains the given value.</summary>
 		/// <param name="val">The value to store in this AnyValue</param>
 		template <typename T>
-		AnyValue(T val)
-		{
-			_value.reset((ValueBase*)new Value<T>(val));
-		}
+		AnyValue(T val);
 
 		/// <summary>Defaultdestructor</summary>
 		virtual ~AnyValue();
@@ -42,24 +39,7 @@ namespace EasyCpp
 		/// If all of these fails a std::runtime_error is thrown.</summary>
 		/// <returns>The stored value as type T</returns>
 		template <typename T>
-		T as() const
-		{
-			if (!_value)
-				throw std::runtime_error("Value is null!");
-			if (this->isType<T>())
-			{
-				return ((Value<T>*)_value.get())->value();
-			}
-			else if (ValueConverter::isConvertable(this->type(), typeid(T)))
-			{
-				T res;
-				ValueConverter::convert(this->type(), _value->void_value(), typeid(T), &res);
-				return res;
-			}
-			else {
-				return tryFromAnyValue<T>();
-			}
-		}
+		T as() const;
 
 		/// <summary>Implicit value conversation.</summary>
 		/// <see cref="as()"/>
@@ -214,4 +194,30 @@ namespace EasyCpp
 		T _value;
 		TypeInfo _info;
 	};
+
+	template <typename T>
+	AnyValue::AnyValue(T val)
+	{
+		_value.reset((ValueBase*)new Value<T>(val));
+	}
+
+	template <typename T>
+	T AnyValue::as() const
+	{
+		if (!_value)
+			throw std::runtime_error("Value is null!");
+		if (this->isType<T>())
+		{
+			return ((Value<T>*)_value.get())->value();
+		}
+		else if (ValueConverter::isConvertable(this->type(), typeid(T)))
+		{
+			T res;
+			ValueConverter::convert(this->type(), _value->void_value(), typeid(T), &res);
+			return res;
+		}
+		else {
+			return tryFromAnyValue<T>();
+		}
+	}
 }
