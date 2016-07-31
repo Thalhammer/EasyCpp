@@ -257,6 +257,7 @@
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
     <ClCompile Include="SafeTime.cpp" />
+    <ClCompile Include="TypeInfo.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
     <ClCompile Include="VFS\BinaryReader.cpp" />
     <ClCompile Include="VFS\BinaryWriter.cpp" />

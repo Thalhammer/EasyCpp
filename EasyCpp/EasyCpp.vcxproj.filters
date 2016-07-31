@@ -821,6 +821,9 @@
     <ClCompile Include="Logging\AsyncLogger.cpp">
       <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
+    <ClCompile Include="TypeInfo.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="external\json\json_valueiterator.inl">
