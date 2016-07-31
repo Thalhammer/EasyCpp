@@ -64,4 +64,30 @@ namespace EasyCppTest
 		ASSERT_EQ(typeid(int), params[0].getStdTypeInfo());
 		ASSERT_EQ(typeid(unsigned int), params[1].getStdTypeInfo());
 	}
+
+	class TestClass {
+	public:
+		static int smethod(int i) { return 1; }
+		int method(int i) { return 1; }
+	};
+
+	TEST(AnyFunction, FunctionPointer)
+	{
+		auto member = AnyFunction(&TestClass::method);
+		auto ret_type = member.getReturnType();
+		auto params = member.getParameterTypes();
+
+		ASSERT_EQ(typeid(int), ret_type.getStdTypeInfo());
+		ASSERT_EQ(2, params.size());
+		ASSERT_EQ(typeid(TestClass*), params[0].getStdTypeInfo());
+		ASSERT_EQ(typeid(int), params[1].getStdTypeInfo());
+
+		auto stati = AnyFunction(&TestClass::smethod);
+		ret_type = stati.getReturnType();
+		params = stati.getParameterTypes();
+
+		ASSERT_EQ(typeid(int), ret_type.getStdTypeInfo());
+		ASSERT_EQ(1, params.size());
+		ASSERT_EQ(typeid(int), params[0].getStdTypeInfo());
+	}
 }
