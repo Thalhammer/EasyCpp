@@ -10,97 +10,16 @@
 namespace EasyCpp
 {
 	class Bundle;
+	class TypeInfo;
 
 	/// <summary>Class for passing dynamic typed values</summary>
 	class DLL_EXPORT AnyValue
 	{
 	private:
-		class ValueBase
-		{
-		public:
-			virtual ~ValueBase() {}
-
-			virtual const TypeInfo& type_info() const = 0;
-			virtual void* void_value() const = 0;
-
-			virtual AnyValue copy() const = 0;
-
-			virtual bool isSerializable() const = 0;
-			virtual const Serialize::Serializable& asSerializable() const = 0;
-		};
+		class ValueBase;
 
 		template <typename T>
-		class Value : ValueBase
-		{
-		public:
-			Value(T val)
-				:_value(val), _info(TypeInfo::CreateInfo<T>())
-			{}
-
-			virtual ~Value() {}
-
-			virtual const TypeInfo& type_info() const
-			{
-				return _info;
-			}
-
-			virtual void* void_value() const
-			{
-				return (void*)&_value;
-			}
-
-			virtual AnyValue copy() const
-			{
-				return AnyValue(_value);
-			}
-
-			virtual bool isSerializable() const
-			{
-				return isSerializableImpl();
-			}
-
-			template<typename U = T>
-			typename std::enable_if<std::is_base_of<Serialize::Serializable, U>::value, bool>::type
-				isSerializableImpl() const
-			{
-				return true;
-			}
-
-			template<typename U = T>
-			typename std::enable_if<!std::is_base_of<Serialize::Serializable, U>::value, bool>::type
-				isSerializableImpl() const
-			{
-				return false;
-			}
-
-			virtual const Serialize::Serializable& asSerializable() const
-			{
-				return asSerializableImpl();
-			}
-
-			template<typename U = T>
-			typename std::enable_if<std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
-				asSerializableImpl() const
-			{
-				return dynamic_cast<const Serialize::Serializable&>(_value);
-			}
-
-			template<typename U = T>
-			typename std::enable_if<!std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
-				asSerializableImpl() const
-			{
-				throw std::runtime_error("This Anyvalue does not implement Serializable");
-			}
-
-			T value() const
-			{
-				return _value;
-			}
-
-		private:
-			T _value;
-			TypeInfo _info;
-		};
+		class Value;
 	public:
 		/// <summary>Defaultconstruktor, creates a AnyValue containing nullptr.</summary>
 		AnyValue();
@@ -207,5 +126,92 @@ namespace EasyCpp
 		}
 
 		std::shared_ptr<ValueBase> _value;
+	};
+
+	class AnyValue::ValueBase
+	{
+	public:
+		virtual ~ValueBase() {}
+
+		virtual const TypeInfo& type_info() const = 0;
+		virtual void* void_value() const = 0;
+
+		virtual AnyValue copy() const = 0;
+
+		virtual bool isSerializable() const = 0;
+		virtual const Serialize::Serializable& asSerializable() const = 0;
+	};
+
+	template <typename T>
+	class AnyValue::Value: AnyValue::ValueBase
+	{
+	public:
+		Value(T val)
+			:_value(val), _info(TypeInfo::CreateInfo<T>())
+		{}
+
+		virtual ~Value() {}
+
+		virtual const TypeInfo& type_info() const
+		{
+			return _info;
+		}
+
+		virtual void* void_value() const
+		{
+			return (void*)&_value;
+		}
+
+		virtual AnyValue copy() const
+		{
+			return AnyValue(_value);
+		}
+
+		virtual bool isSerializable() const
+		{
+			return isSerializableImpl();
+		}
+
+		template<typename U = T>
+		typename std::enable_if<std::is_base_of<Serialize::Serializable, U>::value, bool>::type
+			isSerializableImpl() const
+		{
+			return true;
+		}
+
+		template<typename U = T>
+		typename std::enable_if<!std::is_base_of<Serialize::Serializable, U>::value, bool>::type
+			isSerializableImpl() const
+		{
+			return false;
+		}
+
+		virtual const Serialize::Serializable& asSerializable() const
+		{
+			return asSerializableImpl();
+		}
+
+		template<typename U = T>
+		typename std::enable_if<std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
+			asSerializableImpl() const
+		{
+			return dynamic_cast<const Serialize::Serializable&>(_value);
+		}
+
+		template<typename U = T>
+		typename std::enable_if<!std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
+			asSerializableImpl() const
+		{
+			throw std::runtime_error("This Anyvalue does not implement Serializable");
+		}
+
+		T value() const
+		{
+			return _value;
+		}
+
+	private:
+		T _value;
+		TypeInfo _info;
 	};
 }

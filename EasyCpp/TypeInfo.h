@@ -16,25 +16,47 @@ namespace EasyCpp
 			return TypeInfo(std::shared_ptr<TypeBase>((TypeBase*)new Type<T>()));
 		}
 
-		//! An abstract class is a class that has at least one pure virtual function.
-		//! @return true if this is a abstract class.
+		/// <summary>An abstract class is a class that has at least one pure virtual function.</summary>
+		/// <returns>true if this is a abstract class.</returns>
 		bool isAbstract() const { return _info->isAbstract(); }
-		//! An arithmetic type is a type is a fundamental type that is either a integer or a float.
-		//! @return true if this is an arithmetic type.
+		/// <summary>An arithmetic type is a type is a fundamental type that is either a integer or a float.</summary>
+		/// <returns>true if this is an arithmetic type.</returns>
 		bool isArithmetic() const { return _info->isArithmetic(); }
-		//! @return true if this is an array.
+		/// <summary>Check if this is a array</summary>
+		/// <returns>true if this is an array.</returns>
 		bool isArray() const { return _info->isArray(); }
-		//! @return true if this is a class.
+		/// <summary>Check if this is a class</summary>
+		/// <returns>true if this is a class.</returns>
 		bool isClass() const { return _info->isClass(); }
+		/// <summary>Check if this is a compound type</summary>
+		/// <returns>true if this is a compound type.</returns>
 		bool isCompound() const { return _info->isCompound(); }
+		/// <summary>Check if this type is const</summary>
+		/// <returns>true if this type is const</returns>
 		bool isConst() const { return _info->isConst(); }
+		/// <summary>Check if this class is empty (no vtable, no data members).</summary>
+		/// <returns>true if this class is empty.</returns>
 		bool isEmpty() const { return _info->isEmpty(); }
+		/// <summary>Check if this is a enumeration</summary>
+		/// <returns>true if this is a enum.</returns>
 		bool isEnum() const { return _info->isEnum(); }
+		/// <summary>Check if this is a floatingpoint number</summary>
+		/// <returns>true if this is a floatingpoint type.</returns>
 		bool isFloatingPoint() const { return _info->isFloatingPoint(); }
+		/// <summary>Check if this is a function</summary>
+		/// <returns>true if this is a function.</returns>
 		bool isFunction() const { return _info->isFunction(); }
+		/// <summary>Check if this is a fundamental type</summary>
+		/// <returns>true if this is a fundamental type.</returns>
 		bool isFundamental() const { return _info->isFundamental(); }
+		/// <summary>Check if this is a integer type</summary>
+		/// <returns>true if this is a integer.</returns>
 		bool isIntegral() const { return _info->isIntegral(); }
+		/// <summary>Check if this is a class</summary>
+		/// <returns>true if this is a class.</returns>
 		bool isLiteralType() const { return _info->isLiteralType(); }
+		/// <summary>Check if this is a scalar type</summary>
+		/// <returns>true if this is a scalar type.</returns>
 		bool isScalar() const { return _info->isScalar(); }
 		bool isSigned() const { return _info->isSigned(); }
 		bool isUnsigned() const { return _info->isUnsigned(); }
