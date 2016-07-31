@@ -50,6 +50,22 @@ namespace EasyCpp
 			_fn = std::make_shared<Function<Result, Args...>>(fn);
 		}
 
+		template<typename Obj, typename Result, typename ...Args>
+		AnyFunction(Result(Obj::*fn)(Args...))
+		{
+			_fn = std::make_shared<Function<Result, Obj*, Args...>>([fn](Obj* obj, Args&&... args) {
+				return (*obj.*fn)(std::forward<Args>(args)...);
+			});
+		}
+
+		template<typename Result, typename ...Args>
+		AnyFunction(Result(*fn)(Args...))
+		{
+			_fn = std::make_shared<Function<Result, Args...>>([fn](Args&&... args) {
+				return (*fn)(std::forward<Args>(args)...);
+			});
+		}
+
 		///<summary>Try to call function using supplied arguments.</summary>
 		AnyValue call(const AnyArray& args);
 		///<summary>Get parameter information</summary>

@@ -47,24 +47,27 @@ namespace EasyCpp
 		template<typename Result>
 		static Result call_detail(std::function<Result()> fn, const AnyArray& a, size_t i)
 		{
+			if (a.size() < i)
+				throw std::out_of_range("Not enough parameters");
 			return fn();
 		}
 
 		template<typename Result, typename Arg1>
 		static Result call_detail(std::function<Result(Arg1)> fn, const AnyArray& a, size_t i)
 		{
-			if (a.size() <= i)
-				throw std::out_of_range("Not enough parameters");
-			return fn(a[i].as<Arg1>());
+			auto nfn = [a, fn, i]() {
+				return fn(a[i].as<Arg1>());
+			};
+			return call_detail<Result>(nfn, a, i + 1);
 		}
 
-		template<typename Result, typename Arg1, typename... Args>
-		static Result call_detail(std::function<Result(Arg1, Args...)> fn, const AnyArray& a, size_t i)
+		template<typename Result, typename Arg1, typename Arg2, typename... Args>
+		static Result call_detail(std::function<Result(Arg1, Arg2, Args...)> fn, const AnyArray& a, size_t i)
 		{
 			auto nfn = [a, fn, i](Args... args) {
-				return fn(a[i].as<Arg1>(), args...);
+				return fn(a[i].as<Arg1>(), a[i+1].as<Arg2>(), args...);
 			};
-			return call_detail<Result, Args...>(nfn, a, i + 1);
+			return call_detail<Result, Args...>(nfn, a, i + 2);
 		}
 	public:
 		template<typename... Args>
