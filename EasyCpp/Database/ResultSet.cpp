@@ -27,7 +27,7 @@ namespace EasyCpp
 			return _rows[(size_t)idx];
 		}
 
-		const std::unordered_set<std::string> ResultSet::getColumns()
+		const std::unordered_set<std::string>& ResultSet::getColumns()
 		{
 			return _columns;
 		}
