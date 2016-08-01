@@ -9,6 +9,7 @@ namespace EasyCpp
 	namespace Logging
 	{
 		SystemLogger::SystemLogger(const std::string & source)
+			:_source(source)
 		{
 			_handle = std::shared_ptr<void>(RegisterEventSourceA(NULL, source.c_str()), [](void* handle) {
 				if (handle != nullptr) {
