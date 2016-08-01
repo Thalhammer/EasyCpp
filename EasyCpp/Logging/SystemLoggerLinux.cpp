@@ -3,17 +3,15 @@
 #include "../RuntimeException.h"
 #include "../StringAlgorithm.h"
 #include <syslog.h>
+#include <mutex>
 
 namespace EasyCpp
 {
 	namespace Logging
 	{
 		SystemLogger::SystemLogger(const std::string & source)
+			:_source(source)
 		{
-			openlog(source.c_str(), LOG_PID, LOG_USER);
-			_handle = std::shared_ptr<void>(nullptr, [](void*) {
-				closelog();
-			});
 		}
 
 		SystemLogger::~SystemLogger()
@@ -22,6 +20,7 @@ namespace EasyCpp
 
 		void SystemLogger::Log(Severity severity, std::string message, Bundle context)
 		{
+			static std::mutex _log_mtx;
 			int priority = LOG_EMERG;
 			switch (severity) {
 			case Severity::Debug:
@@ -46,7 +45,12 @@ namespace EasyCpp
 				message = replaceAll(message, "{" + elem.first + "}", elem.second.as<std::string>());
 			}
 
-			syslog(priority, message.c_str());
+			{
+				std::lock_guard<std::mutex> lck(_log_mtx);
+				openlog(_source.c_str(), LOG_PID, LOG_USER);
+				syslog(priority, message.c_str());
+				closelog();
+			}
 		}
 	}
 }

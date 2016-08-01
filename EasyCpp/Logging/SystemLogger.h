@@ -15,6 +15,7 @@ namespace EasyCpp
 			virtual void Log(Severity severity, std::string message, Bundle context) override;
 		private:
 			std::shared_ptr<void> _handle;
+			std::string _source;
 		};
 	}
 }
