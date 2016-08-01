@@ -3,6 +3,7 @@
 
 namespace EasyCpp
 {
+	/// <summary>A runtime exception with backtrace.</summary>
 	class DLL_EXPORT RuntimeException :
 		public BasicException
 	{
