@@ -1,7 +1,9 @@
 #include <gtest/gtest.h>
 #include <Hash/HOTP.h>
 #include <Hash/TOTP.h>
+#include <HexEncoding.h>
 
+using namespace EasyCpp;
 using namespace EasyCpp::Hash;
 
 namespace EasyCppTest
@@ -9,7 +11,7 @@ namespace EasyCppTest
 	TEST(OTP, HOTP)
 	{
 		std::string secret = "3132333435363738393031323334353637383930";
-		auto hotp = HOTP(secret);
+		auto hotp = HOTP(HexEncoding::decode(secret));
 
 		std::string token6 = hotp.generate(0, 6);
 		std::string token8 = hotp.generate(0, 8);
@@ -25,7 +27,7 @@ namespace EasyCppTest
 	TEST(OTP, TOTP)
 	{
 		std::string secret = "3132333435363738393031323334353637383930";
-		auto totp = TOTP(secret);
+		auto totp = TOTP(HexEncoding::decode(secret));
 
 		std::vector<std::string> keys;
 		for (int i = -5; i < 6; i++)

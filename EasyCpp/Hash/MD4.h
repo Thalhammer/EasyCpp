@@ -21,8 +21,6 @@ namespace EasyCpp
 			static std::string getString(const std::string& str);
 		private:
 			void* md4;
-
-			
 		};
 	}
 }

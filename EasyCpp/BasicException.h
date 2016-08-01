@@ -9,9 +9,7 @@
 #endif
 namespace EasyCpp
 {
-	//! \ingroup Util
-	//! \class BasicException
-	//! \brief Basisklasse für Exceptions, die eine Backtrace enthält.
+	/// <summary>Baseclass for exceptions which contains a Backtrace.</summary>
 	class DLL_EXPORT BasicException :
 		public std::exception
 	{
@@ -20,8 +18,8 @@ namespace EasyCpp
 		virtual ~BasicException();
 		virtual const char* what() const noexcept;
 
-		//! \brief Gibt einen Backtrace zur Funktion zurück die diese Exception instanziert hat.
-		//! \return Eine Referenz auf eine Instanz der Klasse Backtrace.
+		/// <summary>Get a backtrace to the moment where this exception was instanciated.</summary>
+		/// <returns>A reference to a backtrace.</returns>
 		const Backtrace& backtrace() const;
 	private:
 		Backtrace _trace;
