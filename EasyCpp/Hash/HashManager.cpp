@@ -28,6 +28,12 @@ namespace EasyCpp
 			instance._providers.insert({ hash, createfn });
 		}
 
+		void HashManager::deregisterHash(const std::string & hash)
+		{
+			auto& instance = getInstance();
+			instance._providers.erase(hash);
+		}
+
 		HashManager::HashManager()
 		{
 		}
