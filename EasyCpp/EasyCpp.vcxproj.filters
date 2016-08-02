@@ -507,6 +507,9 @@
     <ClInclude Include="Logging\AsyncLogger.h">
       <Filter>Headerdateien\Logging</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadSafe.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
