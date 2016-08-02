@@ -138,6 +138,7 @@
     <ClInclude Include="Serialize\Vector.h" />
     <ClInclude Include="StringAlgorithm.h" />
     <ClInclude Include="SafeTime.h" />
+    <ClInclude Include="ThreadSafe.h" />
     <ClInclude Include="TypeInfo.h" />
     <ClInclude Include="ValueConverter.h" />
     <ClInclude Include="VarArgs.h" />
