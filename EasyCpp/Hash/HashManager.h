@@ -18,6 +18,8 @@ namespace EasyCpp
 			static HashPtr getHash(const std::string& hash);
 			/// <summary>Register a hashing engine.</summary>
 			static void registerHash(const std::string& hash, HashProviderFn createfn);
+			/// <summary>Deregister hashing engine.</summary>
+			static void deregisterHash(const std::string& hash);
 		private:
 			HashManager();
 			static HashManager& getInstance();
