@@ -15,12 +15,11 @@ namespace EasyCpp
 		{
 			std::unique_lock<MutexType> _lock;
 			T& _data;
-
+		public:
 			ThreadSafeLock(MutexType& mtx, T& data)
 				: _lock(mtx), _data(data)
 			{}
 			friend class ThreadSafe<T>;
-		public:
 			ThreadSafeLock(ThreadSafeLock&&) = default;
 			~ThreadSafeLock() {}
 

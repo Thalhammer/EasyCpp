@@ -6,34 +6,30 @@ namespace EasyCpp
 	{
 		std::vector<std::string> VFSProviderManager::getAvailableProviders()
 		{
-			auto& instance = getInstance();
+			auto data = getInstance()._providers.lock();
 			std::vector<std::string> res;
-			for (auto& i : instance._providers) res.push_back(i.first);
+			for (auto& i : *data) res.push_back(i.first);
 			return res;
 		}
 
 		bool VFSProviderManager::hasProvider(const std::string & name)
 		{
-			auto& instance = getInstance();
-			return instance._providers.count(name) != 0;
+			return getInstance()._providers->count(name) != 0;
 		}
 
 		void VFSProviderManager::registerProvider(const std::string & name, VFSProviderFn driver)
 		{
-			auto& instance = getInstance();
-			instance._providers.insert({ name, driver });
+			getInstance()._providers->insert({ name, driver });
 		}
 
 		void VFSProviderManager::deregisterProvider(const std::string & name)
 		{
-			auto& instance = getInstance();
-			instance._providers.erase(name);
+			getInstance()._providers->erase(name);
 		}
 
 		VFSProviderPtr VFSProviderManager::getProvider(const std::string & name, const Bundle & options)
 		{
-			auto& instance = getInstance();
-			return instance._providers.at(name)(options);
+			return getInstance()._providers->at(name)(options);
 		}
 
 		VFSProviderManager::VFSProviderManager()

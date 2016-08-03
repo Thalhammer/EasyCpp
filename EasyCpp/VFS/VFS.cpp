@@ -27,43 +27,48 @@ namespace EasyCpp
 
 		void VFS::addMountPoint(const Path & base, VFSProviderPtr provider)
 		{
-			_mountpoints[base.getDirName()] = provider;
+			_mountpoints->insert({ base.getDirName(), provider });
 		}
 
 		void VFS::removeMountPoint(const Path & base)
 		{
-			if (_mountpoints.count(base.getDirName()) != 1)
+			auto mount = _mountpoints.lock();
+			if (mount->count(base.getDirName()) != 1)
 				throw std::runtime_error("Mountpoint not found");
-			_mountpoints.erase(base.getDirName());
+			mount->erase(base.getDirName());
 		}
 
 		std::unordered_map<std::string, VFSProviderPtr> VFS::getMountPoints() const
 		{
-			return _mountpoints;
+			std::unordered_map<std::string, VFSProviderPtr> points = *_mountpoints;
+			return points;
 		}
 
 		bool VFS::exists(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(path);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
 			Path relpath(path.getString().substr(mnt.size() - 1));
-			VFSProviderPtr provider = _mountpoints.at(mnt);
+			VFSProviderPtr provider = lock->at(mnt);
 			return provider->exists(relpath);
 		}
 
 		void VFS::remove(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(path);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
 			Path relpath(path.getString().substr(mnt.size() - 1));
-			VFSProviderPtr provider = _mountpoints.at(mnt);
+			VFSProviderPtr provider = lock->at(mnt);
 			provider->remove(relpath);
 		}
 
 		void VFS::rename(const Path & p, const Path & target) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(p);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
@@ -74,12 +79,12 @@ namespace EasyCpp
 			Path relpath2(target.getString().substr(mnt2.size() - 1));
 			if (mnt == mnt2)
 			{
-				VFSProviderPtr provider = _mountpoints.at(mnt);
+				VFSProviderPtr provider = lock->at(mnt);
 				provider->rename(relpath1, relpath2);
 			}
 			else {
-				VFSProviderPtr provider1 = _mountpoints.at(mnt);
-				VFSProviderPtr provider2 = _mountpoints.at(mnt);
+				VFSProviderPtr provider1 = lock->at(mnt);
+				VFSProviderPtr provider2 = lock->at(mnt);
 				auto is = provider1->openInput(relpath1);
 				auto os = provider2->openOutput(relpath2);
 				while (is->isGood() && os->isGood())
@@ -92,11 +97,12 @@ namespace EasyCpp
 
 		std::vector<Path> VFS::getFiles(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(path);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
 			Path relpath(path.getString().substr(mnt.size() - 1));
-			VFSProviderPtr provider = _mountpoints.at(mnt);
+			VFSProviderPtr provider = lock->at(mnt);
 			auto files = provider->getFiles(relpath);
 			std::vector<Path> res;
 			for (const auto& e : files)
@@ -108,39 +114,43 @@ namespace EasyCpp
 
 		InputOutputStreamPtr VFS::openIO(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(path);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
 			Path relpath(path.getString().substr(mnt.size() - 1));
-			VFSProviderPtr provider = _mountpoints.at(mnt);
+			VFSProviderPtr provider = lock->at(mnt);
 			return provider->openIO(relpath);
 		}
 
 		InputStreamPtr VFS::openInput(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(path);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
 			Path relpath(path.getString().substr(mnt.size() - 1));
-			VFSProviderPtr provider = _mountpoints.at(mnt);
+			VFSProviderPtr provider = lock->at(mnt);
 			return provider->openInput(relpath);
 		}
 
 		OutputStreamPtr VFS::openOutput(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			std::string mnt = matchMountPoint(path);
 			if (mnt == "")
 				throw std::runtime_error("Failed to find mountpoint");
 			Path relpath(path.getString().substr(mnt.size() - 1));
-			VFSProviderPtr provider = _mountpoints.at(mnt);
+			VFSProviderPtr provider = lock->at(mnt);
 			return provider->openOutput(relpath);
 		}
 
 		std::string VFS::matchMountPoint(const Path & path) const
 		{
+			auto lock = _mountpoints.lock();
 			auto parts = stringSplit("/", path.getDirName());
 			std::string match = "";
-			for (auto& e : _mountpoints)
+			for (auto& e : *lock)
 			{
 				auto mnt_parts = stringSplit("/", e.first);
 				mnt_parts.erase(mnt_parts.begin() + mnt_parts.size() - 1);
