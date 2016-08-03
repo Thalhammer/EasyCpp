@@ -17,32 +17,32 @@ namespace EasyCpp
 
 		std::vector<std::string> DatabaseDriverManager::getAvailableDrivers()
 		{
-			auto& instance = getInstance();
+			auto data = getInstance()._drivers.lock();
 			std::vector<std::string> res;
-			for (const auto& i : instance._drivers) res.push_back(i.first);
+			for (const auto& i : *data) res.push_back(i.first);
 			return res;
 		}
 
 		void DatabaseDriverManager::registerDriver(const std::string & name, DatabaseDriverPtr driver)
 		{
-			auto& instance = getInstance();
-			if (instance._drivers.count(name) != 0)
+			auto data = getInstance()._drivers.lock();
+			if (data->count(name) != 0)
 				throw std::invalid_argument("A driver with this name is already registered");
-			instance._drivers.insert({ name, driver });
+			data->insert({ name, driver });
 		}
 
 		void DatabaseDriverManager::deregisterDriver(const std::string & name)
 		{
 			auto& instance = getInstance();
-			instance._drivers.erase(name);
+			instance._drivers->erase(name);
 		}
 
 		DatabaseDriverPtr DatabaseDriverManager::getDriver(const std::string & name)
 		{
-			auto& instance = getInstance();
-			if (instance._drivers.count(name) != 1)
+			auto data = getInstance()._drivers.lock();
+			if (data->count(name) != 1)
 				throw std::out_of_range("Driver not found");
-			return instance._drivers.at(name);
+			return data->at(name);
 		}
 	}
 }

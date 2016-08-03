@@ -2,6 +2,7 @@
 #include "../DllExport.h"
 #include "Path.h"
 #include "VFSProvider.h"
+#include "../ThreadSafe.h"
 #include <unordered_map>
 
 namespace EasyCpp
@@ -16,6 +17,8 @@ namespace EasyCpp
 			static VFSPtr getDefaultVFS();
 
 			VFS();
+			VFS(const VFS&) = default;
+			VFS(VFS&&) = default;
 			virtual ~VFS();
 
 			void addMountPoint(const Path& base, VFSProviderPtr provider);
@@ -32,7 +35,7 @@ namespace EasyCpp
 			OutputStreamPtr openOutput(const Path& path) const;
 		private:
 			std::string matchMountPoint(const Path& path) const;
-			std::unordered_map<std::string, VFSProviderPtr> _mountpoints;
+			ThreadSafe<std::unordered_map<std::string, VFSProviderPtr>, std::recursive_mutex> _mountpoints;
 		};
 	}
 }

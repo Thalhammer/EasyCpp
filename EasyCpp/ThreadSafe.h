@@ -8,36 +8,43 @@ namespace EasyCpp
 	class ThreadSafe
 	{
 	private:
-		T _object;
-		MutexType _mutex;
+		mutable T _object;
+		mutable MutexType _mutex;
 
 		class ThreadSafeLock
 		{
 			std::unique_lock<MutexType> _lock;
 			T& _data;
-
+		public:
 			ThreadSafeLock(MutexType& mtx, T& data)
 				: _lock(mtx), _data(data)
 			{}
 			friend class ThreadSafe<T>;
-		public:
 			ThreadSafeLock(ThreadSafeLock&&) = default;
 			~ThreadSafeLock() {}
 
-			T* operator->() { return &_data; }
-			T& operator*() { return _data; }
+			T* operator->() const { return &_data; }
+			T& operator*() const { return _data; }
 		};
-
 	public:
 		template<typename ...Args>
 		ThreadSafe(Args... args)
 			:_object(std::forward<Args>(args)...)
-		{
+		{}
+		ThreadSafe()
+		{}
+		ThreadSafe(ThreadSafe<T>&& obj)
+			:_object(std::move(*(obj)))
+		{}
+		ThreadSafe(const ThreadSafe<T>& obj)
+			:_object(*(obj))
+		{}
+		ThreadSafe(const T& obj)
+			:_object(obj)
+		{}
 
-		}
-
-		ThreadSafeLock lock() { return ThreadSafeLock(_mutex, _object); }
-		ThreadSafeLock operator->() { return lock(); }
-		T& operator*() { return *lock(); }
+		ThreadSafeLock lock() const { return ThreadSafeLock(_mutex, _object); }
+		ThreadSafeLock operator->() const { return lock(); }
+		T& operator*() const { return *lock(); }
 	};
 }

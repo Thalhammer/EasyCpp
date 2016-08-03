@@ -21,11 +21,6 @@ namespace EasyCpp
 			});
 		})
 
-		VFSVFSProvider::VFSVFSProvider(VFS vfs, Path base)
-			: VFSVFSProvider(std::make_shared<VFS>(vfs), base)
-		{
-		}
-
 		VFSVFSProvider::VFSVFSProvider(VFSPtr ptr, Path base)
 			: _base(base), _vfs(ptr)
 		{

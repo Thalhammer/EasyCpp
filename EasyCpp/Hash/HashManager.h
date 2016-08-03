@@ -1,5 +1,6 @@
 #pragma once
 #include "Hash.h"
+#include "../ThreadSafe.h"
 #include <vector>
 #include <map>
 #include <functional>
@@ -24,7 +25,7 @@ namespace EasyCpp
 			HashManager();
 			static HashManager& getInstance();
 
-			std::map<std::string, HashProviderFn> _providers;
+			ThreadSafe<std::map<std::string, HashProviderFn>> _providers;
 		};
 	}
 }

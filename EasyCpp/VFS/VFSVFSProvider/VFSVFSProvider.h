@@ -9,7 +9,6 @@ namespace EasyCpp
 		class DLL_EXPORT VFSVFSProvider : public VFSProvider
 		{
 		public:
-			VFSVFSProvider(VFS vfs, Path base = Path("/"));
 			VFSVFSProvider(VFSPtr ptr, Path base = Path("/"));
 			virtual ~VFSVFSProvider();
 			// Geerbt über VFSProvider

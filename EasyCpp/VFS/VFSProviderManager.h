@@ -1,6 +1,7 @@
 #pragma once
 #include "VFSProvider.h"
 #include "../Bundle.h"
+#include "../ThreadSafe.h"
 #include <functional>
 
 namespace EasyCpp
@@ -19,7 +20,7 @@ namespace EasyCpp
 		private:
 			VFSProviderManager();
 			static VFSProviderManager& getInstance();
-			std::map<std::string, VFSProviderFn> _providers;
+			ThreadSafe<std::map<std::string, VFSProviderFn>> _providers;
 		};
 	}
 }

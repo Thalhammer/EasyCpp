@@ -1,6 +1,7 @@
 #pragma once
 #include "DatabaseDriver.h"
 #include <vector>
+#include "../ThreadSafe.h"
 
 namespace EasyCpp
 {
@@ -20,7 +21,7 @@ namespace EasyCpp
 		private:
 			DatabaseDriverManager();
 			static DatabaseDriverManager& getInstance();
-			std::map<std::string, DatabaseDriverPtr> _drivers;
+			ThreadSafe<std::map<std::string, DatabaseDriverPtr>> _drivers;
 		};
 	}
 }
