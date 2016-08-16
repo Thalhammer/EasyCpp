@@ -30,4 +30,17 @@ namespace EasyCpp
 			throw std::runtime_error("Function is empty");
 		return _fn->getReturnType();
 	}
+
+	bool AnyFunction::hasVarArgs()
+	{
+		if (!_fn)
+			throw std::runtime_error("Function is empty");
+		return _fn->hasVarArgs();
+	}
+	bool AnyFunction::hasVarReturnValue()
+	{
+		if (!_fn)
+			throw std::runtime_error("Function is empty");
+		return _fn->hasVarReturnValue();
+	}
 }
