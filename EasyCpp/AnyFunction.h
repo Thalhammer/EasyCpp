@@ -64,7 +64,7 @@ namespace EasyCpp
 			}
 			virtual TypeInfo getReturnType() override
 			{
-				return TypeInfo::CreateInfo<nullptr_t>();
+				return TypeInfo::CreateInfo<std::nullptr_t>();
 			}
 			virtual bool hasVarArgs() override
 			{
