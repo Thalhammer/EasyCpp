@@ -9,6 +9,7 @@ namespace EasyCpp
 	class DLL_EXPORT DynamicObject
 	{
 	public:
+		virtual ~DynamicObject() {}
 		virtual AnyValue getProperty(const std::string& name) = 0;
 		virtual std::vector<std::string> getProperties() = 0;
 		virtual void setProperty(const std::string& name, AnyValue value) = 0;

@@ -97,6 +97,9 @@
     <Filter Include="Quelldateien\Net">
       <UniqueIdentifier>{690d86fc-9fb9-46d1-8da9-dbec3a2cdf06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Scripting\Lua">
+      <UniqueIdentifier>{cced9bc3-7abe-4b7b-a318-daf8c0fb9403}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -305,12 +308,6 @@
     </ClInclude>
     <ClInclude Include="Serialize\JsonSerializer.h">
       <Filter>Headerdateien\Serialize</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripting\LuaState.h">
-      <Filter>Headerdateien\Scripting</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripting\LuaException.h">
-      <Filter>Headerdateien\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="Plugin\Plugin.h">
       <Filter>Headerdateien\Plugin</Filter>
@@ -521,6 +518,18 @@
     </ClInclude>
     <ClInclude Include="Scripting\ScriptEngineFactory.h">
       <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\LuaState.h">
+      <Filter>Headerdateien\Scripting\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\LuaException.h">
+      <Filter>Headerdateien\Scripting\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\LuaScriptEngineFactory.h">
+      <Filter>Headerdateien\Scripting\Lua</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\LuaScriptEngine.h">
+      <Filter>Headerdateien\Scripting\Lua</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -835,6 +844,12 @@
     </ClCompile>
     <ClCompile Include="Logging\AsyncLogger.cpp">
       <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\LuaScriptEngineFactory.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\LuaScriptEngine.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

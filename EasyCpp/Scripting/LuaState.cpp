@@ -38,6 +38,11 @@ namespace EasyCpp
 			return LUA_REGISTRYINDEX;
 		}
 
+		std::string LuaState::getVersion()
+		{
+			return std::string(LUA_VERSION);
+		}
+
 		LuaState::~LuaState()
 		{
 		}
@@ -208,7 +213,17 @@ namespace EasyCpp
 			lua_pushcclosure(_state.get(), [](lua_State* s)->int {
 				auto ptr = (std::function<int(LuaState&)>*)lua_touserdata(s, lua_upvalueindex(1));
 				LuaState state(s);
-				return (*ptr)(state);
+				try {
+					return (*ptr)(state);
+				}
+				catch (std::exception& e)
+				{
+					luaL_error(s, e.what());
+				}
+				// any other exception as lua_error with no description
+				catch (...) {
+					luaL_error(s, "Unknown error");
+				}
 			}, 1);
 		}
 
@@ -216,6 +231,12 @@ namespace EasyCpp
 		{
 			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
 			lua_pushcfunction(_state.get(), fn);
+		}
+
+		void LuaState::pushGlobalTable()
+		{
+			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
+			lua_pushglobaltable(_state.get());
 		}
 
 		void LuaState::pop(int num)

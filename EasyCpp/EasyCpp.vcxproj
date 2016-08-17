@@ -128,6 +128,8 @@
     <ClInclude Include="Plugin\Manager.h" />
     <ClInclude Include="Preprocessor.h" />
     <ClInclude Include="RuntimeException.h" />
+    <ClInclude Include="Scripting\LuaScriptEngine.h" />
+    <ClInclude Include="Scripting\LuaScriptEngineFactory.h" />
     <ClInclude Include="Scripting\ScriptEngineFactory.h" />
     <ClInclude Include="Scripting\LuaException.h" />
     <ClInclude Include="Scripting\LuaState.h" />
@@ -256,6 +258,8 @@
     <ClCompile Include="Plugin\Manager.cpp" />
     <ClCompile Include="RuntimeException.cpp" />
     <ClCompile Include="Scripting\LuaException.cpp" />
+    <ClCompile Include="Scripting\LuaScriptEngine.cpp" />
+    <ClCompile Include="Scripting\LuaScriptEngineFactory.cpp" />
     <ClCompile Include="Scripting\LuaState.cpp" />
     <ClCompile Include="Serialize\BsonSerializer.cpp" />
     <ClCompile Include="Serialize\JsonSerializer.cpp" />

@@ -122,6 +122,9 @@ namespace EasyCpp
 			// Pushes a C function onto the stack.
 			void pushCFunction(int(*fn)(lua_State*));
 
+			// Pushes Global table
+			void pushGlobalTable();
+
 			// Pops num elements from the stack.
 			void pop(int num);
 			// Removes the element at the given valid index, shifting down the elements above this index to fill the gap.
@@ -270,6 +273,8 @@ namespace EasyCpp
 		public: // Constants
 			static int MULTRET();
 			static int REGISTRY_INDEX();
+
+			static std::string getVersion();
 		};
 
 		template<typename T, typename... Args>

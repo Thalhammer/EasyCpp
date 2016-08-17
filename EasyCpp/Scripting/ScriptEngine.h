@@ -8,9 +8,11 @@ namespace EasyCpp
 {
 	namespace Scripting
 	{
+		class ScriptEngineFactory;
 		class DLL_EXPORT ScriptEngine
 		{
 		public:
+			virtual ~ScriptEngine() {}
 			virtual AnyValue eval(VFS::InputStreamPtr) = 0;
 			virtual AnyValue eval(VFS::InputStreamPtr, const Bundle&) = 0;
 			virtual AnyValue eval(const std::string&) = 0;

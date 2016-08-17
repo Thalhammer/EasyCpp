@@ -9,6 +9,7 @@ namespace EasyCpp
 		class DLL_EXPORT ScriptEngineFactory
 		{
 		public:
+			virtual ~ScriptEngineFactory() {}
 			virtual std::string getEngineName() = 0;
 			virtual std::string getEngineVersion() = 0;
 			virtual std::vector<std::string> getExtensions() = 0;
