@@ -118,7 +118,7 @@ namespace EasyCpp
 						int num_args = state.getTop();
 						if (!v.hasVarArgs()) {
 							auto param_types = v.getParameterTypes();
-							if (num_args != param_types.size())
+							if ((size_t)num_args != param_types.size())
 								throw std::runtime_error("Wrong param count, got " + std::to_string(num_args) + " expected " + std::to_string(param_types.size()));
 						}
 
@@ -172,7 +172,7 @@ namespace EasyCpp
 							state.pushDouble(v);
 							return 1;
 						}
-						else if (result.isType<nullptr_t>()) {
+						else if (result.isType<std::nullptr_t>()) {
 							state.pushNil();
 							return 1;
 						}
@@ -197,7 +197,7 @@ namespace EasyCpp
 					auto v = value.as<double>();
 					_state.pushDouble(v);
 				}
-				else if (value.isType<nullptr_t>()) {
+				else if (value.isType<std::nullptr_t>()) {
 					_state.pushNil();
 				}
 				else if (value.isConvertibleTo<Bundle>()) {
