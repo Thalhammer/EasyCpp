@@ -69,4 +69,18 @@ namespace EasyCpp
 			throw std::runtime_error("Value is null!");
 		return _value->asSerializable().toAnyValue();
 	}
+
+	bool AnyValue::isDynamicObject() const
+	{
+		if (!_value)
+			throw std::runtime_error("Value is null!");
+		return _value->isDynamicObject();
+	}
+
+	const DynamicObject & AnyValue::asDynamicObject() const
+	{
+		if (!_value)
+			throw std::runtime_error("Value is null!");
+		return _value->asDynamicObject();
+	}
 }

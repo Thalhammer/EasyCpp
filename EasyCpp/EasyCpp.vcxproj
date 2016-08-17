@@ -48,6 +48,7 @@
     <ClInclude Include="Database\Sqlite3\Sqlite3Statement.h" />
     <ClInclude Include="Database\Statement.h" />
     <ClInclude Include="DllExport.h" />
+    <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="DynLib.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="external\json\allocator.h" />
@@ -127,8 +128,11 @@
     <ClInclude Include="Plugin\Manager.h" />
     <ClInclude Include="Preprocessor.h" />
     <ClInclude Include="RuntimeException.h" />
+    <ClInclude Include="Scripting\ScriptEngineFactory.h" />
     <ClInclude Include="Scripting\LuaException.h" />
     <ClInclude Include="Scripting\LuaState.h" />
+    <ClInclude Include="Scripting\ScriptEngine.h" />
+    <ClInclude Include="Scripting\ScriptObject.h" />
     <ClInclude Include="Serialize\BsonSerializer.h" />
     <ClInclude Include="Serialize\JsonSerializer.h" />
     <ClInclude Include="Serialize\MinistoreSerializer.h" />

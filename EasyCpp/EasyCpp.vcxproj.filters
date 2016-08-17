@@ -510,6 +510,18 @@
     <ClInclude Include="ThreadSafe.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Scripting\ScriptEngine.h">
+      <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\ScriptObject.h">
+      <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObject.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripting\ScriptEngineFactory.h">
+      <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
