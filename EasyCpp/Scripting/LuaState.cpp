@@ -1,6 +1,8 @@
 #include "LuaState.h"
 #include "LuaException.h"
 #include "../Bundle.h"
+#include "../AnyValue.h"
+#include "../AnyFunction.h"
 #include <lua/lua.hpp>
 
 namespace EasyCpp
@@ -36,6 +38,11 @@ namespace EasyCpp
 		int LuaState::REGISTRY_INDEX()
 		{
 			return LUA_REGISTRYINDEX;
+		}
+
+		std::string LuaState::getVersion()
+		{
+			return std::string(LUA_VERSION);
 		}
 
 		LuaState::~LuaState()
@@ -110,6 +117,42 @@ namespace EasyCpp
 			return res;
 		}
 
+		AnyValue LuaState::toAnyValue(int idx)
+		{
+			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
+			if (isTable(idx)) {
+				return toBundle(idx);
+			}
+			else if (isBoolean(idx))
+			{
+				return toBoolean(idx);
+			}
+			else if (isDouble(idx))
+			{
+				return toDouble(idx);
+			}
+			else if (isInteger(idx))
+			{
+				return toInteger(idx);
+			}
+			else if (isNoneOrNil(idx))
+			{
+				return AnyValue();
+			}
+			else if (isString(idx))
+			{
+				return toString(idx);
+			}
+			else if (isFunction(idx))
+			{
+				throw std::runtime_error("Converting to AnyFunction is not yet supported");
+			}
+			else
+			{
+				throw std::runtime_error("Unknown Lua type");
+			}
+		}
+
 		void* LuaState::toUserData(int idx)
 		{
 			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
@@ -144,6 +187,14 @@ namespace EasyCpp
 		{
 			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
 			double res = this->toDouble(-1);
+			this->pop(1);
+			return res;
+		}
+
+		AnyValue LuaState::popAnyValue()
+		{
+			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
+			auto res = this->toAnyValue(-1);
 			this->pop(1);
 			return res;
 		}
@@ -208,7 +259,18 @@ namespace EasyCpp
 			lua_pushcclosure(_state.get(), [](lua_State* s)->int {
 				auto ptr = (std::function<int(LuaState&)>*)lua_touserdata(s, lua_upvalueindex(1));
 				LuaState state(s);
-				return (*ptr)(state);
+				try {
+					return (*ptr)(state);
+				}
+				catch (std::exception& e)
+				{
+					luaL_error(s, e.what());
+				}
+				// any other exception as lua_error with no description
+				catch (...) {
+					luaL_error(s, "Unknown error");
+				}
+				return 0;
 			}, 1);
 		}
 
@@ -216,6 +278,163 @@ namespace EasyCpp
 		{
 			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
 			lua_pushcfunction(_state.get(), fn);
+		}
+
+		class LuaState::DynamicObjectWrapper
+		{
+		public:
+			AnyValue object;
+
+			static int s_index(lua_State* s) {
+				LuaState state(s);
+				DynamicObjectWrapper* wrapper = state.toUserData<DynamicObjectWrapper>(1);
+				auto& object = wrapper->object.asDynamicObject();
+				std::string index = state.toString(2);
+				for (auto& e : object.getProperties())
+				{
+					if (e == index) {
+						try {
+							state.pushAnyValue(object.getProperty(index));
+						}
+						catch (const std::exception&) {
+							state.pushNil();
+						}
+						return 1;
+					}
+				}
+				for (auto& e : object.getFunctions())
+				{
+					if (e == index) {
+						state.pushFunction([e](LuaState& state) {
+							int num_args = state.getTop();
+							DynamicObjectWrapper* wrapper = state.toUserData<DynamicObjectWrapper>(1);
+							auto& object = wrapper->object.asDynamicObject();
+							std::vector<AnyValue> params;
+							for (int i = 2; i <= num_args; i++)
+							{
+								params.push_back(state.toAnyValue(i));
+							}
+
+							AnyValue result = object.callFunction(e, params);
+
+							try {
+								state.pushAnyValue(result);
+							}
+							catch (const std::exception&) {
+								return 0;
+							}
+							return 1;
+						});
+						return 1;
+					}
+				}
+				state.pushNil();
+				return 1;
+			}
+			static int s_newindex(lua_State* s) {
+				LuaState state(s);
+				DynamicObjectWrapper* wrapper = state.toUserData<DynamicObjectWrapper>(1);
+				auto& object = wrapper->object.asDynamicObject();
+				std::string index = state.toString(2);
+				AnyValue value = state.toAnyValue(3);
+				for (auto& e : object.getProperties())
+				{
+					if (e == index) {
+						try {
+							object.setProperty(e, value);
+						}
+						catch (const std::exception&) {}
+					}
+				}
+				return 0;
+			}
+		};
+
+		void LuaState::pushAnyValue(AnyValue v)
+		{
+			if (v.type_info().isFundamental())
+			{
+				if (v.type_info().isArithmetic())
+				{
+					if (v.type_info().isFloatingPoint())
+						this->pushDouble(v.as<double>());
+					else this->pushInteger(v.as<int64_t>());
+				}
+				else if (v.isConvertibleTo<bool>())
+				{
+					this->pushBoolean(v.as<bool>());
+				}
+			}
+			else if (v.isType<nullptr_t>())
+			{
+				pushNil();
+			}
+			else if (v.isType<Bundle>())
+			{
+				pushBundle(v.as<Bundle>());
+			}
+			else if (v.isDynamicObject())
+			{
+				this->doTransaction([this, v]() mutable {
+					// Object
+					DynamicObjectWrapper* wrapper = newUserData<DynamicObjectWrapper>();
+					wrapper->object = v;
+					// Object, orig_meta
+					getMetaTable(-1); // Get Type metatable
+
+					// Object, orig_meta, fn
+					pushCFunction(&DynamicObjectWrapper::s_index);
+					// Object, orig_meta
+					setField(-2, "__index");
+
+					// Object, orig_meta, fn
+					pushCFunction(&DynamicObjectWrapper::s_newindex);
+					// Object, orig_meta
+					setField(-2, "__newindex");
+
+					// Pop metatable
+					pop(1);
+				});
+			}
+			else if (v.isType<AnyFunction>()) {
+				auto fn = v.as<AnyFunction>();
+				pushFunction([fn](EasyCpp::Scripting::LuaState& state) mutable {
+					int num_args = state.getTop();
+					if (!fn.hasVarArgs()) {
+						auto param_types = fn.getParameterTypes();
+						if ((size_t)num_args != param_types.size())
+							throw std::runtime_error("Wrong param count, got " + std::to_string(num_args) + " expected " + std::to_string(param_types.size()));
+					}
+
+					std::vector<AnyValue> params;
+					for (int i = 1; i <= num_args; i++)
+					{
+						params.push_back(state.toAnyValue(i));
+					}
+
+					AnyValue result = fn.call(params);
+
+					try {
+						state.pushAnyValue(result);
+					}catch(const std::exception&){
+						return 0;
+					}
+					return 1;
+				});
+			}
+			else if (v.isConvertibleTo<std::string>())
+			{
+				pushString(v.as<std::string>());
+			}
+			else {
+				throw std::runtime_error("Failed to convert Value");
+			}
+		}
+
+		void LuaState::pushGlobalTable()
+		{
+			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
+			lua_pushglobaltable(_state.get());
 		}
 
 		void LuaState::pop(int num)
@@ -426,31 +645,7 @@ namespace EasyCpp
 				this->newTable();
 				for (auto e : b)
 				{
-					if (e.second.type_info().isFundamental())
-					{
-						if (e.second.type_info().isArithmetic())
-						{
-							if (e.second.type_info().isFloatingPoint())
-								this->pushDouble(e.second.as<double>());
-							else this->pushInteger(e.second.as<int64_t>());
-						}
-						else if (e.second.isConvertibleTo<bool>())
-						{
-							this->pushBoolean(e.second.as<bool>());
-						}
-					}
-					else if (e.second.isType<nullptr_t>())
-					{
-						pushNil();
-					}
-					else if (e.second.isType<Bundle>())
-					{
-						pushBundle(e.second.as<Bundle>());
-					}
-					else if (e.second.isConvertibleTo<std::string>())
-					{
-						pushString(e.second.as<std::string>());
-					}
+					this->pushAnyValue(e.second);
 					this->setField(-2, e.first);
 				}
 			});
@@ -462,30 +657,7 @@ namespace EasyCpp
 			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
 			this->iterateTable(idx, [this, &res]() {
 				std::string name = this->toString(-1);
-				if (this->isTable(-2)) {
-					res.set(name, toBundle(-2));
-				}
-				else if (this->isBoolean(-2))
-				{
-					res.set(name, this->toBoolean(-2));
-				}
-				else if (this->isDouble(-2))
-				{
-					res.set(name, this->toDouble(-2));
-				}
-				else if (this->isInteger(-2))
-				{
-					res.set(name, this->toInteger(-2));
-				}
-				else if (this->isNoneOrNil(-2))
-				{
-					res.set(name, nullptr);
-				}
-				else if (this->isString(-2))
-				{
-					res.set(name, this->toString(-2));
-				}
-				else {}
+				res.set(name, this->toAnyValue(-2));
 			});
 			return res;
 		}

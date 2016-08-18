@@ -9,6 +9,7 @@ struct lua_State;
 namespace EasyCpp
 {
 	class Bundle;
+	class AnyValue;
 	namespace Scripting
 	{
 		class LuaState;
@@ -43,6 +44,9 @@ namespace EasyCpp
 			// Converts the Lua value at the given index to a double.
 			// The Lua value must be an number, or a string convertible to a number, otherwise returns 0.
 			double toDouble(int idx);
+			// Converts the Lua value at the given index to a AnyValue.
+			// The AnyValue will store one of std::string, bool, int64_t, double, AnyFunction, nullptr_t, Bundle
+			AnyValue toAnyValue(int idx);
 			// If the value at the given index is a full userdata, returns its block address.
 			// Otherwise, returns NULL.
 			void* toUserData(int idx);
@@ -90,6 +94,8 @@ namespace EasyCpp
 			int64_t popInteger();
 			// Converts the Lua value at the top of the stack to a double value and pops it.
 			double popDouble();
+			// Converts the Lua value at the top of the stack to a AnyValue and pops it.
+			AnyValue popAnyValue();
 			// Converts the Lua value at the top of the stack to a userdata value and pops it.
 			// If the value is not a userdata returns NULL.
 			void* popUserData();
@@ -121,6 +127,11 @@ namespace EasyCpp
 			void pushFunction(std::function<int(LuaState&)> fn);
 			// Pushes a C function onto the stack.
 			void pushCFunction(int(*fn)(lua_State*));
+			// Push a anyvalue onto the stack trying to convert values as possible.
+			void pushAnyValue(AnyValue v);
+
+			// Pushes Global table
+			void pushGlobalTable();
 
 			// Pops num elements from the stack.
 			void pop(int num);
@@ -267,9 +278,12 @@ namespace EasyCpp
 			// Creates a wrapper around the supplied state.
 			// This disables autoclose and does not change the panic method.
 			LuaState(lua_State* state);
+			class DynamicObjectWrapper;
 		public: // Constants
 			static int MULTRET();
 			static int REGISTRY_INDEX();
+
+			static std::string getVersion();
 		};
 
 		template<typename T, typename... Args>
