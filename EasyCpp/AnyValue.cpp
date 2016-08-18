@@ -77,7 +77,7 @@ namespace EasyCpp
 		return _value->isDynamicObject();
 	}
 
-	const DynamicObject & AnyValue::asDynamicObject() const
+	DynamicObject & AnyValue::asDynamicObject()
 	{
 		if (!_value)
 			throw std::runtime_error("Value is null!");

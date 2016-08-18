@@ -846,10 +846,10 @@
       <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
     <ClCompile Include="Scripting\LuaScriptEngineFactory.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="Scripting\LuaScriptEngine.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

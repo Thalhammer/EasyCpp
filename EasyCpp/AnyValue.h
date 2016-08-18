@@ -30,7 +30,7 @@ namespace EasyCpp
 			virtual const Serialize::Serializable& asSerializable() const = 0;
 
 			virtual bool isDynamicObject() const = 0;
-			virtual const DynamicObject& asDynamicObject() const = 0;
+			virtual DynamicObject& asDynamicObject() = 0;
 		};
 
 		template <typename T>
@@ -87,21 +87,21 @@ namespace EasyCpp
 				return std::is_base_of<DynamicObject, T>::value;
 			}
 
-			virtual const DynamicObject& asDynamicObject() const override
+			virtual DynamicObject& asDynamicObject() override
 			{
 				return asDynamicObjectImpl();
 			}
 
 			template<typename U = T>
-			typename std::enable_if<std::is_base_of<DynamicObject, U>::value, const DynamicObject&>::type
-				asDynamicObjectImpl() const
+			typename std::enable_if<std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
+				asDynamicObjectImpl()
 			{
-				return dynamic_cast<const DynamicObject&>(_value);
+				return dynamic_cast<DynamicObject&>(_value);
 			}
 
 			template<typename U = T>
-			typename std::enable_if<!std::is_base_of<DynamicObject, U>::value, const DynamicObject&>::type
-				asDynamicObjectImpl() const
+			typename std::enable_if<!std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
+				asDynamicObjectImpl()
 			{
 				throw std::runtime_error("This Anyvalue does not implement DynamicObject");
 			}
@@ -206,8 +206,7 @@ namespace EasyCpp
 		/// <summary>Check if the contained value implements dynamic object.</summary>
 		bool isDynamicObject() const;
 		/// <summary>Return contained value as a dynamic object if possible.</summary>
-		const DynamicObject& asDynamicObject() const;
-	private:
+		DynamicObject& asDynamicObject();
 		template<typename T>
 		typename std::enable_if<!std::is_base_of<Serialize::Serializable, T>::value, T>::type
 			tryFromAnyValue() const

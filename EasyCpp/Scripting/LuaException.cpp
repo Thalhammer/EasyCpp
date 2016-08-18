@@ -6,7 +6,7 @@ namespace EasyCpp
 	{
 
 		LuaException::LuaException(const std::string& msg)
-			:_what(msg)
+			:_what("LuaException(" + msg + ")")
 		{
 		}
 
@@ -17,7 +17,7 @@ namespace EasyCpp
 
 		const char * LuaException::what() const noexcept
 		{
-			return (std::string("LuaException(") + _what + ")").c_str();
+			return _what.c_str();
 		}
 
 	}

@@ -53,6 +53,35 @@ namespace UtilTest
 		state.pcall(0, 0);
 	}
 
+	class SampleDynamicObject: public EasyCpp::DynamicObject
+	{
+		int test = 100;
+	public:
+		// Geerbt über DynamicObject
+		virtual EasyCpp::AnyValue getProperty(const std::string & name) override
+		{
+			if(name == "test"){return test;}
+			throw std::runtime_error("Property not found");
+		}
+		virtual std::vector<std::string> getProperties() override
+		{
+			return{ "test" };
+		}
+		virtual void setProperty(const std::string & name, EasyCpp::AnyValue value) override
+		{
+			if (name == "test") { test = value.as<int>(); }
+		}
+		virtual EasyCpp::AnyValue callFunction(const std::string & name, const std::vector<EasyCpp::AnyValue>& params) override
+		{
+			if (name == "testfn") return 100;
+			throw std::runtime_error("Function not found");
+		}
+		virtual std::vector<std::string> getFunctions() override
+		{
+			return{ "testfn" };
+		}
+	};
+
 	TEST(Lua, ScriptEngine)
 	{
 		auto factory = std::make_shared<LuaScriptEngineFactory>();
@@ -81,6 +110,14 @@ namespace UtilTest
 			engine->eval("y = fn(100, 1000)");
 			auto x = engine->get("y");
 			ASSERT_EQ(1000, x.as<int>());
+		}
+		{
+			auto engine = factory->getScriptEngine();
+			engine->put("x", SampleDynamicObject());
+			engine->eval("x.test = 200");
+			engine->eval("y = x:testfn() + x.test");
+			auto x = engine->get("y");
+			ASSERT_EQ(300, x.as<int>());
 		}
 	}
 }
