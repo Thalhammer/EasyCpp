@@ -2,11 +2,17 @@
 #include "LuaScriptEngine.h"
 #include "LuaState.h"
 #include "../StringAlgorithm.h"
+#include "../AutoInit.h"
+#include "ScriptEngineManager.h"
 
 namespace EasyCpp
 {
 	namespace Scripting
 	{
+		AUTO_INIT({
+			ScriptEngineManager::registerEngineFactory(std::make_shared<LuaScriptEngineFactory>());
+		});
+
 		std::string LuaScriptEngineFactory::getEngineName()
 		{
 			return "Lua";

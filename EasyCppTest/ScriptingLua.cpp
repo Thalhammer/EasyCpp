@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <Scripting/LuaState.h>
 #include <Scripting/LuaException.h>
-#include <Scripting/LuaScriptEngineFactory.h>
+#include <Scripting/ScriptEngineManager.h>
 #include <Bundle.h>
 #include <AnyFunction.h>
 
@@ -84,16 +84,15 @@ namespace UtilTest
 
 	TEST(Lua, ScriptEngine)
 	{
-		auto factory = std::make_shared<LuaScriptEngineFactory>();
 		{
-			auto engine = factory->getScriptEngine();
+			auto engine = ScriptEngineManager::getEngineByName("lua");
 			engine->put("x", 100);
 			engine->eval("x = x*x");
 			auto x = engine->get("x");
 			ASSERT_EQ(10000, x.as<int>());
 		}
 		{
-			auto engine = factory->getScriptEngine();
+			auto engine = ScriptEngineManager::getEngineByName("lua");
 			engine->put("x", EasyCpp::Bundle({
 				{"num1", 100},
 				{"num2", 200}
@@ -103,7 +102,7 @@ namespace UtilTest
 			ASSERT_EQ(300, x.as<int>());
 		}
 		{
-			auto engine = factory->getScriptEngine();
+			auto engine = ScriptEngineManager::getEngineByName("lua");
 			engine->put("fn", EasyCpp::AnyFunction::fromFunction(std::function<int(int,int)>([](int a, int b) {
 				return a > b ? a : b;
 			})));
@@ -112,7 +111,7 @@ namespace UtilTest
 			ASSERT_EQ(1000, x.as<int>());
 		}
 		{
-			auto engine = factory->getScriptEngine();
+			auto engine = ScriptEngineManager::getEngineByName("lua");
 			engine->put("x", SampleDynamicObject());
 			engine->eval("x.test = 200");
 			engine->eval("y = x:testfn() + x.test");

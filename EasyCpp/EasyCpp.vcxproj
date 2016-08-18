@@ -134,6 +134,7 @@
     <ClInclude Include="Scripting\LuaException.h" />
     <ClInclude Include="Scripting\LuaState.h" />
     <ClInclude Include="Scripting\ScriptEngine.h" />
+    <ClInclude Include="Scripting\ScriptEngineManager.h" />
     <ClInclude Include="Scripting\ScriptObject.h" />
     <ClInclude Include="Serialize\BsonSerializer.h" />
     <ClInclude Include="Serialize\JsonSerializer.h" />
@@ -261,6 +262,7 @@
     <ClCompile Include="Scripting\LuaScriptEngine.cpp" />
     <ClCompile Include="Scripting\LuaScriptEngineFactory.cpp" />
     <ClCompile Include="Scripting\LuaState.cpp" />
+    <ClCompile Include="Scripting\ScriptEngineManager.cpp" />
     <ClCompile Include="Serialize\BsonSerializer.cpp" />
     <ClCompile Include="Serialize\JsonSerializer.cpp" />
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />

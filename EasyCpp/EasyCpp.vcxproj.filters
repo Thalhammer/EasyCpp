@@ -531,6 +531,9 @@
     <ClInclude Include="Scripting\LuaScriptEngine.h">
       <Filter>Headerdateien\Scripting\Lua</Filter>
     </ClInclude>
+    <ClInclude Include="Scripting\ScriptEngineManager.h">
+      <Filter>Headerdateien\Scripting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -849,6 +852,9 @@
       <Filter>Quelldateien\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="Scripting\LuaScriptEngine.cpp">
+      <Filter>Quelldateien\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripting\ScriptEngineManager.cpp">
       <Filter>Quelldateien\Scripting</Filter>
     </ClCompile>
   </ItemGroup>
