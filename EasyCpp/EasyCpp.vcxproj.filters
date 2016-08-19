@@ -534,6 +534,9 @@
     <ClInclude Include="Scripting\ScriptEngineManager.h">
       <Filter>Headerdateien\Scripting</Filter>
     </ClInclude>
+    <ClInclude Include="Logging\VFSLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -839,9 +842,6 @@
     <ClCompile Include="Logging\SystemLoggerWin32.cpp">
       <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
-    <ClCompile Include="Logging\ConsoleLogger.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="SafeTime.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -856,6 +856,12 @@
     </ClCompile>
     <ClCompile Include="Scripting\ScriptEngineManager.cpp">
       <Filter>Quelldateien\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\VFSLogger.cpp">
+      <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\ConsoleLogger.cpp">
+      <Filter>Quelldateien\Logging</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
