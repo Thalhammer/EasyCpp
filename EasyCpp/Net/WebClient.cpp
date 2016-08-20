@@ -2,6 +2,7 @@
 #include "Curl.h"
 #include "../RuntimeException.h"
 #include "../StringAlgorithm.h"
+#include <cstring>
 
 namespace EasyCpp
 {
@@ -179,12 +180,14 @@ namespace EasyCpp
 				curl.setPassword(_password);
 			}
 			std::multimap<std::string, std::string> headers;
-			for (auto& e : _headers) headers.insert({ e.first, e.second });
+			for (auto& e : _headers) headers.insert({ e.first, e.second.as<std::string>() });
 			curl.setHeaders(headers);
 			curl.setHeaderFunction([this](std::string header) {
 				size_t pos = header.find(':');
 				if (pos != std::string::npos) {
-					_response_headers.set(trim(header.substr(0, pos)), trim(header.substr(pos + 1)));
+					std::string key = header.substr(0, pos);
+					std::string value = header.substr(pos + 1);
+					_response_headers.set(trim(key), trim(value));
 				}
 			});
 			curl.perform();
@@ -214,12 +217,14 @@ namespace EasyCpp
 				curl.setPassword(_password);
 			}
 			std::multimap<std::string, std::string> headers;
-			for (auto& e : _headers) headers.insert({ e.first, e.second });
+			for (auto& e : _headers) headers.insert({ e.first, e.second.as<std::string>() });
 			curl.setHeaders(headers);
 			curl.setHeaderFunction([this](std::string header) {
 				size_t pos = header.find(':');
 				if (pos != std::string::npos) {
-					_response_headers.set(trim(header.substr(0, pos)), trim(header.substr(pos + 1)));
+					std::string key = header.substr(0, pos);
+					std::string value = header.substr(pos + 1);
+					_response_headers.set(trim(key), trim(value));
 				}
 			});
 			curl.perform();
@@ -244,12 +249,14 @@ namespace EasyCpp
 				curl.setPassword(_password);
 			}
 			std::multimap<std::string, std::string> headers;
-			for (auto& e : _headers) headers.insert({ e.first, e.second });
+			for (auto& e : _headers) headers.insert({ e.first, e.second.as<std::string>() });
 			curl.setHeaders(headers);
 			curl.setHeaderFunction([this](std::string header) {
 				size_t pos = header.find(':');
 				if (pos != std::string::npos) {
-					_response_headers.set(trim(header.substr(0, pos)), trim(header.substr(pos + 1)));
+					std::string key = header.substr(0, pos);
+					std::string value = header.substr(pos + 1);
+					_response_headers.set(trim(key), trim(value));
 				}
 			});
 			curl.perform();
