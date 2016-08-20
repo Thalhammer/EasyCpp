@@ -149,7 +149,7 @@ namespace EasyCpp
 				curl.setPassword(_password);
 			}
 			std::multimap<std::string, std::string> headers;
-			for (auto& e : _headers) headers.insert({ e.first, e.second });
+			for (auto& e : _headers) headers.insert({ e.first, e.second.as<std::string>() });
 			curl.setHeaders(headers);
 			curl.setHeaderFunction([this](std::string header) {
 				size_t pos = header.find(':');
