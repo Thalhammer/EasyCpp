@@ -154,7 +154,9 @@ namespace EasyCpp
 			curl.setHeaderFunction([this](std::string header) {
 				size_t pos = header.find(':');
 				if (pos != std::string::npos) {
-					_response_headers.set(trim(header.substr(0, pos)), trim(header.substr(pos + 1)));
+					std::string key = header.substr(0, pos);
+					std::string value = header.substr(pos + 1);
+					_response_headers.set(trim(key), trim(value));
 				}
 			});
 			curl.perform();
