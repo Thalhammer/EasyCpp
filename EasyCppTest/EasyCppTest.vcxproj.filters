@@ -150,6 +150,9 @@
     <ClCompile Include="ThreadSafe.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="WebClient.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="googletest\googletest\src\gtest-internal-inl.h">
