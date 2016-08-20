@@ -116,6 +116,7 @@
     <ClInclude Include="Logging\VFSLogger.h" />
     <ClInclude Include="Net\Curl.h" />
     <ClInclude Include="Net\URI.h" />
+    <ClInclude Include="Net\WebClient.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="Plugin\InitArgs.h" />
@@ -254,6 +255,7 @@
     <ClCompile Include="Logging\VFSLogger.cpp" />
     <ClCompile Include="Net\Curl.cpp" />
     <ClCompile Include="Net\URI.cpp" />
+    <ClCompile Include="Net\WebClient.cpp" />
     <ClCompile Include="Plugin\DeinitArgs.cpp" />
     <ClCompile Include="Plugin\InitArgs.cpp" />
     <ClCompile Include="Plugin\Plugin.cpp" />

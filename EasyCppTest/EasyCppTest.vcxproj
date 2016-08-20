@@ -224,6 +224,7 @@
     <ClCompile Include="StringAlgorithm.cpp" />
     <ClCompile Include="TypeInfo.cpp" />
     <ClCompile Include="VFS_Path.cpp" />
+    <ClCompile Include="WebClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="googletest\googletest\include\gtest\gtest-death-test.h" />
