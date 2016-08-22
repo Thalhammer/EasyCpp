@@ -84,7 +84,7 @@ namespace EasyCpp
 
 			virtual bool isDynamicObject() const override
 			{
-				return std::is_base_of<DynamicObject, T>::value;
+				return std::is_base_of<DynamicObject, std::remove_pointer<T>::type>::value;
 			}
 
 			virtual DynamicObject& asDynamicObject() override
@@ -93,14 +93,21 @@ namespace EasyCpp
 			}
 
 			template<typename U = T>
-			typename std::enable_if<std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
+			typename std::enable_if<!std::is_pointer<U>::value && std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
 				asDynamicObjectImpl()
 			{
 				return dynamic_cast<DynamicObject&>(_value);
 			}
 
 			template<typename U = T>
-			typename std::enable_if<!std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
+			typename std::enable_if<std::is_pointer<U>::value && std::is_base_of<DynamicObject, typename std::remove_pointer<U>::type>::value, DynamicObject&>::type
+				asDynamicObjectImpl()
+			{
+				return dynamic_cast<DynamicObject&>(*_value);
+			}
+
+			template<typename U = T>
+			typename std::enable_if<!std::is_base_of<DynamicObject, U>::value && !std::is_base_of<DynamicObject, typename std::remove_pointer<U>::type>::value, DynamicObject&>::type
 				asDynamicObjectImpl()
 			{
 				throw std::runtime_error("This Anyvalue does not implement DynamicObject");
