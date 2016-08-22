@@ -58,7 +58,7 @@ namespace EasyCpp
 		void LuaState::loadString(const std::string & line)
 		{
 			std::unique_lock<std::recursive_mutex> lck(_state_mtx);
-			int res = luaL_loadstring(_state.get(), line.c_str());
+			int res = luaL_loadbuffer(_state.get(), line.data(), line.size(), "loadString");
 			if (res != 0)
 				throw LuaException("Failed to load string:" + this->popString());
 		}

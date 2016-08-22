@@ -4,6 +4,7 @@
 #include <Scripting/ScriptEngineManager.h>
 #include <Bundle.h>
 #include <AnyFunction.h>
+#include <Net/WebClient.h>
 
 using namespace EasyCpp::Scripting;
 
@@ -117,6 +118,14 @@ namespace UtilTest
 			engine->eval("y = x:testfn() + x.test");
 			auto x = engine->get("y");
 			ASSERT_EQ(300, x.as<int>());
+		}
+		{
+			auto engine = ScriptEngineManager::getEngineByName("lua");
+			engine->put("wc", EasyCpp::Net::WebClient());
+			engine->eval("wc:setBaseAddress(\"http://example.org/\")");
+			engine->eval("response = wc:Download(\"/\")");
+			auto res = engine->get("response");
+			ASSERT_TRUE(res.isType<std::string>());
 		}
 	}
 }

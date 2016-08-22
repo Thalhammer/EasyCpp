@@ -65,12 +65,31 @@ namespace EasyCpp
 		AnyValue WebClient::callFunction(const std::string & name, const std::vector<AnyValue>& params)
 		{
 			if (name == "DownloadFile") {
-
+				if (params.size() != 2) {
+					throw RuntimeException("Missing parameter");
+				}
+				this->DownloadFile(params[0].as<std::string>(), params[1].as<VFS::OutputStreamPtr>());
 			}
 			else if (name == "Download") {
+				if (params.size() != 1) {
+					throw RuntimeException("Missing parameter");
+				}
+				return this->Download(params[0].as<std::string>());
 			}
 			else if (name == "Upload") {
-
+				if (params.size() != 2) {
+					throw RuntimeException("Missing parameter");
+				}
+				if (params[1].isType<VFS::InputStreamPtr>()) {
+					return this->Upload(params[0].as<std::string>(), params[1].as<VFS::InputStreamPtr>());
+				}
+				else if (params[1].isType<Bundle>()) {
+					return this->Upload(params[0].as<std::string>(), params[1].as<Bundle>());
+				}
+				else if (params[1].isConvertibleTo<std::string>()) {
+					return this->Upload(params[0].as<std::string>(), params[1].as<std::string>());
+				}
+				else throw RuntimeException("No valid function to match parameters");
 			}
 			else if (name == "setBaseAddress") {
 				if (params.size() != 1) {
