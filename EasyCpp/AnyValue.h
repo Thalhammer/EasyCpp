@@ -84,7 +84,7 @@ namespace EasyCpp
 
 			virtual bool isDynamicObject() const override
 			{
-				return std::is_base_of<DynamicObject, std::remove_pointer<T>::type>::value;
+				return std::is_base_of<DynamicObject, typename std::remove_pointer<T>::type>::value;
 			}
 
 			virtual DynamicObject& asDynamicObject() override
