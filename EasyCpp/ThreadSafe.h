@@ -8,8 +8,8 @@ namespace EasyCpp
 	class ThreadSafe
 	{
 	public:
-		typedef typename T member_type;
-		typedef typename MutexType mutex_type;
+		typedef T member_type;
+		typedef MutexType mutex_type;
 	private:
 		mutable T _object;
 		mutable MutexType _mutex;
