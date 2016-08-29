@@ -7,6 +7,9 @@ namespace EasyCpp
 	template<typename T, typename MutexType = std::mutex>
 	class ThreadSafe
 	{
+	public:
+		typedef typename T member_type;
+		typedef typename MutexType mutex_type;
 	private:
 		mutable T _object;
 		mutable MutexType _mutex;
