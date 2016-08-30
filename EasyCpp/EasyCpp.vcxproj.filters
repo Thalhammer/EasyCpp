@@ -540,6 +540,9 @@
     <ClInclude Include="Net\WebClient.h">
       <Filter>Headerdateien\Net</Filter>
     </ClInclude>
+    <ClInclude Include="Logging\FilterLogger.h">
+      <Filter>Headerdateien\Logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -868,6 +871,9 @@
     </ClCompile>
     <ClCompile Include="Net\WebClient.cpp">
       <Filter>Quelldateien\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\FilterLogger.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

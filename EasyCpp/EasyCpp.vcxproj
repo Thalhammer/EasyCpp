@@ -108,6 +108,7 @@
     <ClInclude Include="Logging\AbstractLogger.h" />
     <ClInclude Include="Logging\AsyncLogger.h" />
     <ClInclude Include="Logging\ConsoleLogger.h" />
+    <ClInclude Include="Logging\FilterLogger.h" />
     <ClInclude Include="Logging\SystemLogger.h" />
     <ClInclude Include="Logging\ILogger.h" />
     <ClInclude Include="Logging\ILoggerAware.h" />
@@ -249,6 +250,7 @@
     <ClCompile Include="Logging\AbstractLogger.cpp" />
     <ClCompile Include="Logging\AsyncLogger.cpp" />
     <ClCompile Include="Logging\ConsoleLogger.cpp" />
+    <ClCompile Include="Logging\FilterLogger.cpp" />
     <ClCompile Include="Logging\SystemLoggerWin32.cpp" />
     <ClCompile Include="Logging\NullLogger.cpp" />
     <ClCompile Include="Logging\SystemLoggerLinux.cpp" />
