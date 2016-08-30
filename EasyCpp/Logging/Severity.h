@@ -13,7 +13,10 @@ namespace EasyCpp
 			Warning,
 			Notice,
 			Informational,
-			Debug
+			Debug,
+
+			MAX = Debug,
+			MIN = Emergency
 		};
 	}
 }
