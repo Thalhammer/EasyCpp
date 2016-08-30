@@ -5,6 +5,7 @@ namespace EasyCpp
 	namespace Logging
 	{
 		FilterLogger::FilterLogger(ILoggerPtr logger)
+			: _logger(logger)
 		{
 			this->setMaxLevel(Severity::MAX);
 		}
@@ -35,7 +36,7 @@ namespace EasyCpp
 			for (int i = (int)Severity::MIN; i <= (int)severity; i++) {
 				this->enableLevel((Severity)i);
 			}
-			for (int i = (int)severity; i <= (int)Severity::MAX; i++) {
+			for (int i = (int)severity + 1; i < (int)Severity::MAX + 1; i++) {
 				this->disableLevel((Severity)i);
 			}
 		}
