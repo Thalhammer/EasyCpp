@@ -43,7 +43,7 @@ namespace EasyCpp
 
 		void operator()(Args... args) const
 		{
-			std::lock_guard<std::mutex> lck(_thread_lock);
+			std::lock_guard<std::recursive_mutex> lck(_thread_lock);
 			for (auto& con : _connections)
 			{
 				try {
@@ -62,7 +62,7 @@ namespace EasyCpp
 
 		ConnectionType registerConnection()
 		{
-			std::lock_guard<std::mutex> lck(_thread_lock);
+			std::lock_guard<std::recursive_mutex> lck(_thread_lock);
 			auto con = std::make_shared<EventConnection<Args...>>(this->shared_from_this());
 			_connections.push_back(con);
 			return con;
@@ -70,7 +70,7 @@ namespace EasyCpp
 
 		void deregisterConnection(EventConnection<Args...>* ev)
 		{
-			std::lock_guard<std::mutex> lck(_thread_lock);
+			std::lock_guard<std::recursive_mutex> lck(_thread_lock);
 			for (size_t i = 0; i < _connections.size(); i++)
 			{
 				try {
@@ -90,12 +90,12 @@ namespace EasyCpp
 
 		size_t getNumConnections() const
 		{
-			std::lock_guard<std::mutex> lck(_thread_lock);
+			std::lock_guard<std::recursive_mutex> lck(_thread_lock);
 			return _connections.size();
 		}
 
 	private:
-		mutable std::mutex _thread_lock;
+		mutable std::recursive_mutex _thread_lock;
 		std::vector<std::weak_ptr<EventConnection<Args...>>> _connections;
 	};
 
