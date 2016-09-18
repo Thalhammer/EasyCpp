@@ -543,6 +543,9 @@
     <ClInclude Include="Logging\FilterLogger.h">
       <Filter>Headerdateien\Logging</Filter>
     </ClInclude>
+    <ClInclude Include="DynamicObjectHelper.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -873,6 +876,9 @@
       <Filter>Quelldateien\Net</Filter>
     </ClCompile>
     <ClCompile Include="Logging\FilterLogger.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicObjectHelper.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

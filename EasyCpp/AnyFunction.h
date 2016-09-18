@@ -100,6 +100,14 @@ namespace EasyCpp
 			}));
 		}
 
+		template<typename Obj, typename Result, typename ...Args>
+		static AnyFunction fromFunction(Result(Obj::*fn)(Args...) const)
+		{
+			return AnyFunction(std::make_shared<Function<Result, Obj*, Args...>>([fn](Obj* obj, Args&&... args) {
+				return (*obj.*fn)(std::forward<Args>(args)...);
+			}));
+		}
+
 		template<typename Result, typename ...Args>
 		static AnyFunction fromFunction(Result(*fn)(Args...))
 		{

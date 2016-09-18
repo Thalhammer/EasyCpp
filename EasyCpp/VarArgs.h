@@ -56,7 +56,8 @@ namespace EasyCpp
 		static Result call_detail(std::function<Result(Arg1)> fn, const AnyArray& a, size_t i)
 		{
 			auto nfn = [a, fn, i]() {
-				return fn(a[i].as<Arg1>());
+				auto arg1 = a[i].as<Arg1>();
+				return fn(arg1);
 			};
 			return call_detail<Result>(nfn, a, i + 1);
 		}
@@ -65,7 +66,9 @@ namespace EasyCpp
 		static Result call_detail(std::function<Result(Arg1, Arg2, Args...)> fn, const AnyArray& a, size_t i)
 		{
 			auto nfn = [a, fn, i](Args... args) {
-				return fn(a[i].as<Arg1>(), a[i+1].as<Arg2>(), args...);
+				auto arg1 = a[i].as<Arg1>();
+				auto arg2 = a[i + 1].as<Arg2>();
+				return fn(arg1, arg2, args...);
 			};
 			return call_detail<Result, Args...>(nfn, a, i + 2);
 		}

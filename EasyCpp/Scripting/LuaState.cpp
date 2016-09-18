@@ -145,7 +145,28 @@ namespace EasyCpp
 			}
 			else if (isFunction(idx))
 			{
-				throw std::runtime_error("Converting to AnyFunction is not yet supported");
+				this->pushValue(idx);
+				std::shared_ptr<int> ref(new int(this->ref(REGISTRY_INDEX())), [this](int* ref) {
+					this->unref(REGISTRY_INDEX(), *ref);
+					delete ref;
+				});
+				auto fn = EasyCpp::AnyFunction::fromDynamicFunction([this, ref](const EasyCpp::AnyArray& params) {
+					int top = this->getTop();
+					this->rawGet(REGISTRY_INDEX(), *ref);
+					for (auto& e : params) {
+						this->pushAnyValue(e);
+					}
+					this->pcall(params.size(), MULTRET());
+					int num_rets = this->getTop() - top;
+					if (num_rets == 0) return AnyValue();
+					if (num_rets == 1) return this->popAnyValue();
+					EasyCpp::AnyArray results;
+					for (int i = 0; i < num_rets; i++) {
+						results.insert(results.begin(), this->popAnyValue());
+					}
+					return AnyValue(results);
+				});
+				return fn;
 			}
 			else
 			{
