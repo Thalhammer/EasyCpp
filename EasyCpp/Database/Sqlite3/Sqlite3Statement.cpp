@@ -168,7 +168,9 @@ namespace EasyCpp
 				}
 				else if (dtype == SQLITE3_TEXT)
 				{
-					return AnyValue(std::string((const char*)sqlite3_column_text(_stmt, i)));
+					int length = sqlite3_column_bytes(_stmt, i);
+					auto ptr = (const char*)sqlite3_column_text(_stmt, i);
+					return AnyValue(std::string(ptr, ptr + length));
 				}
 				else if (dtype == SQLITE_NULL)
 				{
