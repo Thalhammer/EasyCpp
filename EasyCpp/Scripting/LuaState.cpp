@@ -146,26 +146,28 @@ namespace EasyCpp
 			else if (isFunction(idx))
 			{
 				this->pushValue(idx);
-				std::shared_ptr<int> ref(new int(this->ref(REGISTRY_INDEX())), [this](int* ref) {
-					this->unref(REGISTRY_INDEX(), *ref);
+				auto t = _state.get();
+				std::shared_ptr<int> ref(new int(this->ref(REGISTRY_INDEX())), [t](int* ref) {
+					LuaState(t).unref(REGISTRY_INDEX(), *ref);
 					delete ref;
 				});
-				auto fn = EasyCpp::AnyFunction::fromDynamicFunction([this, ref](const EasyCpp::AnyArray& params) {
+				auto fn = EasyCpp::AnyFunction::fromDynamicFunction([t, ref](const EasyCpp::AnyArray& params) {
 					AnyValue result;
-					this->doTransaction([this, params, ref, &result]() {
-						int top = this->getTop();
-						this->rawGet(REGISTRY_INDEX(), *ref);
+					LuaState state(t);
+					state.doTransaction([&state, params, ref, &result]() {
+						int top = state.getTop();
+						state.rawGet(REGISTRY_INDEX(), *ref);
 						for (auto& e : params) {
-							this->pushAnyValue(e);
+							state.pushAnyValue(e);
 						}
-						this->pcall(params.size(), MULTRET());
-						int num_rets = this->getTop() - top;
+						state.pcall(params.size(), MULTRET());
+						int num_rets = state.getTop() - top;
 						if (num_rets == 0) result = AnyValue();
-						else if (num_rets == 1) result = this->popAnyValue();
+						else if (num_rets == 1) result = state.popAnyValue();
 						else {
 							EasyCpp::AnyArray results;
 							for (int i = 0; i < num_rets; i++) {
-								results.insert(results.begin(), this->popAnyValue());
+								results.insert(results.begin(), state.popAnyValue());
 							}
 							result = results;
 						}
@@ -381,15 +383,14 @@ namespace EasyCpp
 		{
 			if (v.type_info().isFundamental())
 			{
-				if (v.type_info().isArithmetic())
+				if (v.isType<bool>())
+				{
+					this->pushBoolean(v.as<bool>());
+				} else if (v.type_info().isArithmetic())
 				{
 					if (v.type_info().isFloatingPoint())
 						this->pushDouble(v.as<double>());
 					else this->pushInteger(v.as<int64_t>());
-				}
-				else if (v.isConvertibleTo<bool>())
-				{
-					this->pushBoolean(v.as<bool>());
 				}
 			}
 			else if (v.isType<nullptr_t>())

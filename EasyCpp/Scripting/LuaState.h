@@ -13,11 +13,14 @@ namespace EasyCpp
 	namespace Scripting
 	{
 		class LuaState;
-		class DLL_EXPORT LuaState
+		class DLL_EXPORT LuaState: public std::enable_shared_from_this<LuaState>
 		{
 		public:
 			LuaState();
 			~LuaState();
+
+			LuaState(LuaState const&) = delete;
+			LuaState& operator=(LuaState const&) = delete;
 
 			// Opens all standard libraries of lua.
 			void openStandardLibs();

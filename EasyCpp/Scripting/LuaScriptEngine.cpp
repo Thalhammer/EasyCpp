@@ -10,7 +10,8 @@ namespace EasyCpp
 		LuaScriptEngine::LuaScriptEngine(std::weak_ptr<ScriptEngineFactory> factory)
 			: _factory(factory)
 		{
-			_state.openStandardLibs();
+			_state = std::make_shared<LuaState>();
+			_state->openStandardLibs();
 		}
 
 		LuaScriptEngine::~LuaScriptEngine()
@@ -36,13 +37,13 @@ namespace EasyCpp
 		AnyValue EasyCpp::Scripting::LuaScriptEngine::eval(const std::string & script, const Bundle & bindings)
 		{
 			std::vector<AnyValue> res;
-			_state.doTransaction([this, &script, &bindings, &res] {
-				_state.loadString(script);
+			_state->doTransaction([this, &script, &bindings, &res] {
+				_state->loadString(script);
 				this->setBindings(bindings);
-				_state.pcall(0, LuaState::MULTRET());
-				for (int i = 0; i < _state.getTop(); i++)
+				_state->pcall(0, LuaState::MULTRET());
+				for (int i = 0; i < _state->getTop(); i++)
 				{
-					res.push_back(_state.toAnyValue(-i));
+					res.push_back(_state->toAnyValue(-i));
 				}
 			});
 			return res;
@@ -51,28 +52,28 @@ namespace EasyCpp
 		AnyValue EasyCpp::Scripting::LuaScriptEngine::get(const std::string & name)
 		{
 			AnyValue val;
-			_state.doTransaction([this, &val, &name](){
-				_state.getGlobal(name);
-				val = _state.popAnyValue();
+			_state->doTransaction([this, &val, &name](){
+				_state->getGlobal(name);
+				val = _state->popAnyValue();
 			});
 			return val;
 		}
 
 		void EasyCpp::Scripting::LuaScriptEngine::put(const std::string & name, AnyValue value)
 		{
-			_state.doTransaction([this, &name, &value]() {
-				_state.pushAnyValue(value);
-				_state.setGlobal(name);
+			_state->doTransaction([this, &name, &value]() {
+				_state->pushAnyValue(value);
+				_state->setGlobal(name);
 			});
 		}
 
 		Bundle EasyCpp::Scripting::LuaScriptEngine::getBindings()
 		{
 			Bundle res;
-			_state.doTransaction([this, &res]() {
-				_state.pushGlobalTable();
-				res = _state.toBundle(-1);
-				_state.pop(1);
+			_state->doTransaction([this, &res]() {
+				_state->pushGlobalTable();
+				res = _state->toBundle(-1);
+				_state->pop(1);
 			});
 			return res;
 		}

@@ -8,13 +8,15 @@
 #include <atomic>
 #include <condition_variable>
 #include <memory>
+#include <stdexcept>
+#include "DllExport.h"
 
 namespace EasyCpp
 {
-	class Timer
+	class DLL_EXPORT Timer
 	{
 	public:
-		class Task
+		class DLL_EXPORT Task
 		{
 		public:
 			virtual ~Task() {}
@@ -24,7 +26,7 @@ namespace EasyCpp
 			virtual void execute() = 0;
 		};
 		typedef std::shared_ptr<Task> TaskPtr;
-		class SimpleTask: public Task
+		class DLL_EXPORT SimpleTask: public Task
 		{
 		public:
 			SimpleTask(std::chrono::steady_clock::time_point tp, std::function<void()> fn);
@@ -38,7 +40,7 @@ namespace EasyCpp
 			std::function<void()> _fn;
 			std::chrono::steady_clock::time_point _tp;
 		};
-		class RecurringTask : public Task
+		class DLL_EXPORT RecurringTask : public Task
 		{
 		public:
 			RecurringTask(std::chrono::steady_clock::time_point start_tp, std::chrono::steady_clock::duration dur, std::function<void()> fn);
@@ -85,6 +87,7 @@ namespace EasyCpp
 		};
 
 		std::priority_queue<TaskWrapper> _tasks;
+		std::function<void(std::exception_ptr)> _on_exception;
 		std::thread _thread;
 		std::atomic<bool> _thread_exit;
 		std::mutex _mtx;
@@ -92,6 +95,8 @@ namespace EasyCpp
 	public:
 		Timer();
 		virtual ~Timer();
+
+		void setExceptionHandler(std::function<void(std::exception_ptr)> fn);
 
 		TaskPtr schedule(std::chrono::steady_clock::time_point tp, std::function<void()> fn);
 		TaskPtr schedule(TaskPtr task);
@@ -101,7 +106,7 @@ namespace EasyCpp
 		{
 			if (!recuring) return this->schedule(std::chrono::steady_clock::now() + dur, fn);
 			else {
-				return this->schedule(std::make_shared<RecurringTask>(std::chrono::steady_clock::now(), std::chrono::duration<std::chrono::steady_clock::duration>(dur), fn));
+				return this->schedule(std::make_shared<RecurringTask>(std::chrono::steady_clock::now(), std::chrono::duration_cast<std::chrono::steady_clock::duration>(dur), fn));
 			}
 		}
 

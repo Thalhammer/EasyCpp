@@ -63,27 +63,35 @@ namespace EasyCpp
 		_thread_exit.store(false);
 		_thread = std::thread([this]() {
 			while (!_thread_exit.load()) {
-				std::unique_lock<std::mutex> lck(_mtx);
-				if (_tasks.empty()) {
-					_cv.wait(lck);
-				}
-				else {
-					if (std::chrono::steady_clock::now() >= _tasks.top().time_point()) {
-						auto task = _tasks.top();
-						_tasks.pop();
-						lck.unlock();
-						task.execute();
-						if (task.schouldReschedule()) {
-							task.next_time_point();
-							std::unique_lock<std::mutex> lck(_mtx);
-							_tasks.push(task);
-						}
+				try {
+					std::unique_lock<std::mutex> lck(_mtx);
+					if (_tasks.empty()) {
+						_cv.wait(lck);
 					}
 					else {
-						_cv.wait_until(lck, _tasks.top().time_point());
+						if (std::chrono::steady_clock::now() >= _tasks.top().time_point()) {
+							auto task = _tasks.top();
+							_tasks.pop();
+							lck.unlock();
+							task.execute();
+							if (task.schouldReschedule()) {
+								task.next_time_point();
+								std::unique_lock<std::mutex> lck(_mtx);
+								_tasks.push(task);
+							}
+						}
+						else {
+							_cv.wait_until(lck, _tasks.top().time_point());
+						}
 					}
+				}catch(...) {
+					std::unique_lock<std::mutex> lck(_mtx);
+					_on_exception(std::current_exception());
 				}
 			}
+		});
+		setExceptionHandler([](auto ex) {
+			std::rethrow_exception(ex);
 		});
 	}
 
@@ -95,6 +103,12 @@ namespace EasyCpp
 			_cv.notify_all();
 		}
 		_thread.join();
+	}
+
+	void Timer::setExceptionHandler(std::function<void(std::exception_ptr)> fn)
+	{
+		std::unique_lock<std::mutex> lck(_mtx);
+		_on_exception = fn;
 	}
 
 	Timer::TaskPtr Timer::schedule(std::chrono::steady_clock::time_point tp, std::function<void()> fn)

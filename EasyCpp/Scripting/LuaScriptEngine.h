@@ -22,7 +22,7 @@ namespace EasyCpp
 			virtual std::shared_ptr<ScriptEngineFactory> getFactory() override;
 		private:
 			std::weak_ptr<ScriptEngineFactory> _factory;
-			LuaState _state;
+			std::shared_ptr<LuaState> _state;
 		};
 	}
 }
