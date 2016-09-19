@@ -151,20 +151,26 @@ namespace EasyCpp
 					delete ref;
 				});
 				auto fn = EasyCpp::AnyFunction::fromDynamicFunction([this, ref](const EasyCpp::AnyArray& params) {
-					int top = this->getTop();
-					this->rawGet(REGISTRY_INDEX(), *ref);
-					for (auto& e : params) {
-						this->pushAnyValue(e);
-					}
-					this->pcall(params.size(), MULTRET());
-					int num_rets = this->getTop() - top;
-					if (num_rets == 0) return AnyValue();
-					if (num_rets == 1) return this->popAnyValue();
-					EasyCpp::AnyArray results;
-					for (int i = 0; i < num_rets; i++) {
-						results.insert(results.begin(), this->popAnyValue());
-					}
-					return AnyValue(results);
+					AnyValue result;
+					this->doTransaction([this, params, ref, &result]() {
+						int top = this->getTop();
+						this->rawGet(REGISTRY_INDEX(), *ref);
+						for (auto& e : params) {
+							this->pushAnyValue(e);
+						}
+						this->pcall(params.size(), MULTRET());
+						int num_rets = this->getTop() - top;
+						if (num_rets == 0) result = AnyValue();
+						else if (num_rets == 1) result = this->popAnyValue();
+						else {
+							EasyCpp::AnyArray results;
+							for (int i = 0; i < num_rets; i++) {
+								results.insert(results.begin(), this->popAnyValue());
+							}
+							result = results;
+						}
+					});
+					return result;
 				});
 				return fn;
 			}

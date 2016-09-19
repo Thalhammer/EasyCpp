@@ -150,6 +150,7 @@
     <ClInclude Include="StringAlgorithm.h" />
     <ClInclude Include="SafeTime.h" />
     <ClInclude Include="ThreadSafe.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="TypeInfo.h" />
     <ClInclude Include="ValueConverter.h" />
     <ClInclude Include="VarArgs.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
     <ClCompile Include="SafeTime.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
     <ClCompile Include="VFS\BinaryReader.cpp" />
     <ClCompile Include="VFS\BinaryWriter.cpp" />

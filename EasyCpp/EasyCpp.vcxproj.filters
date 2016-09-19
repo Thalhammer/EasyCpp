@@ -546,6 +546,9 @@
     <ClInclude Include="DynamicObjectHelper.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -879,6 +882,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="DynamicObjectHelper.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
