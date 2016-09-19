@@ -33,7 +33,7 @@ namespace EasyCpp
 		if (c >= '2' && c <= '7')
 			return c - '2' + 26;
 		if (c == '=') return 0;
-		throw std::runtime_error("Invalid character " + c);
+		throw std::runtime_error(std::string("Invalid character ") + c);
 	}
 
 	std::string Base32::toString(const std::string& str)
