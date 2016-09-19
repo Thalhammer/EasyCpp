@@ -13,7 +13,7 @@ namespace EasyCpp
 		template<typename T>
 		static TypeInfo CreateInfo()
 		{
-			return TypeInfo(std::shared_ptr<TypeBase>((TypeBase*)new Type<T>()));
+			return TypeInfo(std::shared_ptr<TypeBase>(new Type<T>()));
 		}
 
 		//! An abstract class is a class that has at least one pure virtual function.

@@ -41,6 +41,7 @@ namespace EasyCpp
 		_converters[from.hash_code()][to.hash_code()] = fn;
 	}
 
+	// cppcheck-suppress variableScope
 	void ValueConverter::Init()
 	{
 		std::lock_guard<std::recursive_mutex> lck(_mtx);
