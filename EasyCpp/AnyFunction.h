@@ -23,7 +23,9 @@ namespace EasyCpp
 		class Function : public FunctionBase
 		{
 		public:
-			Function(std::function<Result(Args...)> fn) { _function = fn; }
+			Function(std::function<Result(Args...)> fn)
+                :_function(fn)
+            {}
 			virtual ~Function() {}
 			virtual AnyValue call(const AnyArray & args) override
 			{
@@ -52,7 +54,9 @@ namespace EasyCpp
 		class DynamicFunction : public FunctionBase
 		{
 		public:
-			DynamicFunction(std::function<AnyValue(const AnyArray&)> fn) { _function = fn; }
+			DynamicFunction(std::function<AnyValue(const AnyArray&)> fn)
+                :_function(fn)
+            {}
 			virtual ~DynamicFunction() {}
 			virtual AnyValue call(const AnyArray & args) override
 			{
