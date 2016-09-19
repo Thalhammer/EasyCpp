@@ -40,7 +40,7 @@ namespace EasyCpp
 			:_object(std::move(*(obj)))
 		{}
 		ThreadSafe(const ThreadSafe<T>& obj)
-			:_object(*(obj))
+			:_object(*(obj)), _mutex()
 		{}
 		ThreadSafe(const T& obj)
 			:_object(obj)

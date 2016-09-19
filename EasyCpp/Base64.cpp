@@ -44,7 +44,7 @@ namespace EasyCpp
 			return 63;
 		if (c == '=')
 			return 0;
-		throw std::runtime_error("Invalid character " + c);
+		throw std::runtime_error(std::string("Invalid character ") + c);
 	}
 
 	std::string Base64::toString(const std::string& str)

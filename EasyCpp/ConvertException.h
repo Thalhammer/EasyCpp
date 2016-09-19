@@ -8,7 +8,7 @@ namespace EasyCpp
 		public RuntimeException
 	{
 	public:
-		ConvertException(const std::string& what);
+		explicit ConvertException(const std::string& what);
 		virtual ~ConvertException();
 	};
 }
