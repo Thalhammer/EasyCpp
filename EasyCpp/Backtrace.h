@@ -12,7 +12,7 @@ namespace EasyCpp
 	public:
 		Backtrace();
 #ifdef _WIN32
-		Backtrace(void* context);
+		explicit Backtrace(void* context);
 #endif
 		~Backtrace();
 

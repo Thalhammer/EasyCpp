@@ -8,7 +8,7 @@ namespace EasyCpp
 		public BasicException
 	{
 	public:
-		RuntimeException(const std::string& what);
+		explicit RuntimeException(const std::string& what);
 		virtual ~RuntimeException();
 		virtual const char* what() const noexcept;
 	private:

@@ -180,7 +180,7 @@ namespace EasyCpp
 		};
 
 		template <typename T>
-		class Value : ValueBase
+		class Value : public ValueBase
 		{
 		public:
 			Value(T val)
@@ -242,7 +242,7 @@ namespace EasyCpp
 		template <typename T>
 		AnyValue(T val)
 		{
-			_value.reset((ValueBase*)new Value<T>(val));
+			_value.reset(new Value<T>(val));
 		}
 
 		/// <summary>Defaultdestructor</summary>
