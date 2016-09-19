@@ -73,7 +73,7 @@ namespace EasyCpp
 		};
 
 		template <class T>
-		struct TypeCheck<std::shared_ptr<typename T>>
+		struct TypeCheck<std::shared_ptr<T>>
 		{
 			typedef T Type;
 			static bool IsSerializable()
