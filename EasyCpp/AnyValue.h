@@ -110,25 +110,25 @@ namespace EasyCpp
 			}
 
 			template<typename U = T>
-			static typename std::enable_if<std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
+			static typename std::enable_if<std::is_base_of<Serialize::Serializable, typename std::remove_pointer<U>::type>::value, const Serialize::Serializable&>::type
 				AsSerializable(U& value)
 			{
 				return dynamic_cast<const Serialize::Serializable&>(*value);
 			}
 			template<typename U = T>
-			static typename std::enable_if<!std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
+			static typename std::enable_if<!std::is_base_of<Serialize::Serializable, typename std::remove_pointer<U>::type>::value, const Serialize::Serializable&>::type
 				AsSerializable(U& value)
 			{
 				throw std::runtime_error("This Anyvalue does not implement Serializable");
 			}
 			template<typename U = T>
-			static typename std::enable_if<std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
+			static typename std::enable_if<std::is_base_of<DynamicObject, typename std::remove_pointer<U>::type>::value, DynamicObject&>::type
 				AsDynamicObject(U& value)
 			{
 				return dynamic_cast<DynamicObject&>(*value);
 			}
 			template<typename U = T>
-			static typename std::enable_if<!std::is_base_of<DynamicObject, U>::value, DynamicObject&>::type
+			static typename std::enable_if<!std::is_base_of<DynamicObject, typename std::remove_pointer<U>::type>::value, DynamicObject&>::type
 				AsDynamicObject(U& value)
 			{
 				throw std::runtime_error("This Anyvalue does not implement DynamicObject");
