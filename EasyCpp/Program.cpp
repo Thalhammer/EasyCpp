@@ -397,13 +397,16 @@ namespace EasyCpp
 
 #elif defined(__linux__)
 	Program::Impl::Impl()
+		:_child_pid(0)
 	{
-
 	}
 
 	Program::Impl::~Impl()
 	{
-
+		if (_child_pid != 0) {
+			// Clean up resources
+			waitid(P_PID, _child_pid, &info, WEXITED | WNOHANG);
+		}
 	}
 
 	void Program::Impl::open(const std::string & path, const args_t & args, const env_t & env)
@@ -417,13 +420,13 @@ namespace EasyCpp
 		int child_stderr[2];
 		int child_exec_check[2];
 
-		if (!pipe(child_stdout))
+		if (pipe(child_stdout) == -1)
 			throw std::runtime_error("pipe failed");
-		if (!pipe(child_stdin))
+		if (pipe(child_stdin) == -1)
 			throw std::runtime_error("pipe failed");
-		if (!pipe(child_stderr))
+		if (pipe(child_stderr) == -1)
 			throw std::runtime_error("pipe failed");
-		if (!pipe(child_exec_check))
+		if (pipe(child_exec_check) == -1)
 			throw std::runtime_error("pipe failed");
 
 		// Split
@@ -528,7 +531,7 @@ namespace EasyCpp
 	{
 		siginfo_t info;
 		memset(&info, 0x00, sizeof(siginfo_t));
-		int res = waitid(P_PID, _child_pid, &info, WEXITED);
+		int res = waitid(P_PID, _child_pid, &info, WEXITED | WNOWAIT);
 		if (res == -1)
 			throw std::runtime_error("waitid failed");
 		if (info.si_pid != _child_pid)
@@ -539,7 +542,7 @@ namespace EasyCpp
 	{
 		siginfo_t info;
 		memset(&info, 0x00, sizeof(siginfo_t));
-		int res = waitid(P_PID, _child_pid, &info, WNOHANG | WEXITED);
+		int res = waitid(P_PID, _child_pid, &info, WNOHANG | WEXITED | WNOWAIT);
 		if (res == -1)
 			throw std::runtime_error("waitid failed");
 		if (info.si_pid == 0) return true;
@@ -551,7 +554,7 @@ namespace EasyCpp
 	{
 		siginfo_t info;
 		memset(&info, 0x00, sizeof(siginfo_t));
-		int res = waitid(P_PID, _child_pid, &info, WNOHANG | WEXITED);
+		int res = waitid(P_PID, _child_pid, &info, WNOHANG | WEXITED | WNOWAIT);
 		if (res == -1)
 			throw std::runtime_error("waitid failed");
 		if (info.si_pid == 0) throw std::runtime_error("Still alive");
