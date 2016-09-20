@@ -23,15 +23,16 @@ namespace EasyCpp
 		void open(const std::string& path, const args_t& args, const env_t& env);
 		void kill();
 		void wait();
+		bool isAlive();
 
-		VFS::InputStreamPtr getStdin();
-		VFS::OutputStreamPtr getStdout();
-		VFS::OutputStreamPtr getStderr();
+		VFS::OutputStreamPtr getStdin();
+		VFS::InputStreamPtr getStdout();
+		VFS::InputStreamPtr getStderr();
 
 		uint32_t getExitCode() const;
 		uint64_t getHandle() const;
 	private:
 		class Impl;
-		//std::unique_ptr<Impl> _impl;
+		std::unique_ptr<Impl> _impl;
 	};
 }
