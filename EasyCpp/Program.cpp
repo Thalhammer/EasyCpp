@@ -460,12 +460,13 @@ namespace EasyCpp
 
 			// Setup argv and environment arrays
 			char** argv = new char*[args.size() + 2];
-			argv[args.size()] = NULL;
-			argv[0] = path.c_str();
+			argv[args.size() + 1] = NULL;
+			argv[0] = new char[path.size() + 1];
+			memcpy(argv[0], path.c_str(), path.size());
 			for (size_t i=0; i< args.size(); i++)
 			{
 				argv[i+1] = new char[args[i].size() + 1];
-				memcpy(argv[i+1], args[i].c_str(), args.size() + 1);
+				memcpy(argv[i+1], args[i].c_str(), args[i].size() + 1);
 			}
 			size_t env_cnt = 0;
 			for (auto& e : env)
