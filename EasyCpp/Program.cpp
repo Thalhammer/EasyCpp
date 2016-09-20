@@ -7,6 +7,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <limits.h>
+#include <cstring>
 #endif
 #include <atomic>
 
@@ -517,7 +520,7 @@ namespace EasyCpp
 	void Program::Impl::kill()
 	{
 		if (isAlive())
-			if (!kill(_child_pid, SIGKILL))
+			if (!::kill(_child_pid, SIGKILL))
 				throw std::runtime_error("Kill failed");
 	}
 
@@ -578,7 +581,7 @@ namespace EasyCpp
 			len = SSIZE_MAX;
 		std::vector<uint8_t> res;
 		res.resize(len);
-		ssize_t bread = read(_fd, (void*)res.data(), res.size());
+		ssize_t bread = ::read(_fd, (void*)res.data(), res.size());
 		_read.fetch_add(bread);
 		res.resize(bread);
 		return res;
@@ -600,7 +603,7 @@ namespace EasyCpp
 		size_t len = data.size();
 		if (len > SSIZE_MAX)
 			len = SSIZE_MAX;
-		ssize_t res = write(_fd, data.data(), len);
+		ssize_t res = ::write(_fd, data.data(), len);
 		_written.fetch_add(res);
 		return res;
 	}
