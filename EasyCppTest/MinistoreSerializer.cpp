@@ -66,15 +66,4 @@ namespace EasyCppTest
 		// Size                    type  refid strl string
 		ASSERT_EQ(std::string({ 0x08, 0x00, 0x00, 0x00, (char)0x9A, 0x00, 0x01, (char)0x80 }), result);
 	}
-
-	TEST(MinistoreSerializer, ReadDocument)
-	{
-		/*std::vector<uint8_t> doc({ 0x16,0x00,0x00,0x00,0x02,'h','e','l','l','o',0x00,0x06,0x00,0x00,0x00,'w','o','r','l','d',0x00,0x00 });
-		Util::Bson bson;
-		auto b = bson.read(doc);
-		ASSERT_FALSE(b.isEmpty());
-		ASSERT_TRUE(b.isSet("hello"));
-		ASSERT_TRUE(b.get("hello").isType<std::string>());
-		ASSERT_EQ(b.get<std::string>("hello"), std::string("world"));*/
-	}
 }

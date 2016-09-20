@@ -549,6 +549,9 @@
     <ClInclude Include="Timer.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Program.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -885,6 +888,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Program.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

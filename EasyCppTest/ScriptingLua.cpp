@@ -8,7 +8,7 @@
 
 using namespace EasyCpp::Scripting;
 
-namespace UtilTest
+namespace EasyCppTest
 {
 	TEST(Lua, State)
 	{
