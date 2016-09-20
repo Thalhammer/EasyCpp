@@ -405,6 +405,8 @@ namespace EasyCpp
 	{
 		if (_child_pid != 0) {
 			// Clean up resources
+			siginfo_t info;
+			memset(&info, 0x00, sizeof(siginfo_t));
 			waitid(P_PID, _child_pid, &info, WEXITED | WNOHANG);
 		}
 	}
