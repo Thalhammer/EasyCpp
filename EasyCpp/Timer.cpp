@@ -3,7 +3,7 @@
 namespace EasyCpp
 {
 	Timer::SimpleTask::SimpleTask(std::chrono::steady_clock::time_point tp, std::function<void()> fn)
-		: _tp(tp), _fn(fn)
+		: _fn(fn), _tp(tp)
 	{
 	}
 
@@ -31,7 +31,7 @@ namespace EasyCpp
 	}
 
 	Timer::RecurringTask::RecurringTask(std::chrono::steady_clock::time_point start_tp, std::chrono::steady_clock::duration dur, std::function<void()> fn)
-		: _tp(start_tp), _dur(dur), _fn(fn)
+		: _fn(fn), _tp(start_tp), _dur(dur)
 	{
 	}
 

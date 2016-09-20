@@ -165,6 +165,7 @@
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="OTP.cpp" />
     <ClCompile Include="Plugin.cpp" />
+    <ClCompile Include="Program.cpp" />
     <ClCompile Include="ThreadSafe.cpp" />
     <ClCompile Include="URI.cpp" />
     <ClCompile Include="VarArgs.cpp" />
