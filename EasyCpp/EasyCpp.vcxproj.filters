@@ -100,6 +100,18 @@
     <Filter Include="Headerdateien\Scripting\Lua">
       <UniqueIdentifier>{cced9bc3-7abe-4b7b-a318-daf8c0fb9403}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Net\Services">
+      <UniqueIdentifier>{662d9831-7440-4cb3-80c1-aa4311bf57c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Net\Services\Spotify">
+      <UniqueIdentifier>{3d3f763d-c8f5-43c1-b018-816e7cf2da9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Net\Services">
+      <UniqueIdentifier>{281b4a23-06f3-4f23-8027-794568206af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Net\Services\Spotify">
+      <UniqueIdentifier>{13cdbbe4-e287-4d98-bbe0-b31e110f65a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -552,6 +564,66 @@
     <ClInclude Include="Program.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Copyright.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Image.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\ProductType.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\AudioFeatures.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Exception.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\TrackLink.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Artist.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Followers.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Track.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\FullArtist.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Paging.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Album.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\FullAlbum.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\FullTrack.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\PublicUser.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\User.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Client.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Nullable.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\AuthorizeResult.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Authorization.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -892,6 +964,57 @@
     </ClCompile>
     <ClCompile Include="Program.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Copyright.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Image.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\AudioFeatures.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Exception.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\TrackLink.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Artist.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Album.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Client.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Followers.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\FullAlbum.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\FullArtist.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\FullTrack.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\PublicUser.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Track.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\User.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\AuthorizeResult.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Authorization.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

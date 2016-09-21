@@ -166,6 +166,7 @@
     <ClCompile Include="OTP.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Spotify.cpp" />
     <ClCompile Include="ThreadSafe.cpp" />
     <ClCompile Include="URI.cpp" />
     <ClCompile Include="VarArgs.cpp" />
