@@ -1,6 +1,6 @@
 #pragma once
 #include "../../../Serialize/Serializable.h"
-#include "../../../dllexport.h"
+#include "../../../DllExport.h"
 #include <string>
 #include <vector>
 #include <cstddef>
