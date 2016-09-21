@@ -1,7 +1,11 @@
 #include "Backtrace.h"
 #include <sstream>
 #if defined(__linux__)
-
+#include <execinfo.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <cxxabi.h>
+#include <memory>
 #elif defined(_WIN32)
 #include <Windows.h>
 #ifdef _MSC_VER
@@ -20,7 +24,42 @@ namespace EasyCpp
 	Backtrace::Backtrace()
 	{
 #if defined(__linux__)
-		_trace.push_back("Backtrace is not yet supported on this Platform.");
+		std::vector<void*> buf;
+		buf.resize(64);
+		while (true)
+		{
+			int num = backtrace((void**)buf.data(), buf.size());
+			if (num < buf.size())
+			{
+				buf.resize(num);
+				break;
+			}
+			buf.resize(buf.size() * 2);
+		}
+		auto strings = std::unique_ptr<char*, decltype(&free)>(backtrace_symbols(buf.data(), buf.size()), &free);
+		for (size_t i = 0; i < buf.size(); i++)
+		{
+			std::string raw(strings.get()[i]);
+			size_t start = raw.find("(");
+			size_t end = raw.find(")");
+			if (start != std::string::npos && end != std::string::npos)
+			{
+				std::string fname = raw.substr(start + 1, end - start - 1);
+				if (fname != "")
+				{
+					fname = fname.substr(0, fname.find_last_of("+"));
+					int status = 1;
+					std::unique_ptr<char, decltype(&free)> name(abi::__cxa_demangle(fname.c_str(), 0, 0, &status), &free);
+					if (status == 0)
+					{
+						raw.replace(start + 1, end - start - 1, name.get());
+						_trace.push_back(raw);
+						continue;
+					}
+				}
+			}
+			_trace.push_back(raw);
+		}
 #elif defined(_WIN32)
 		CONTEXT ctx;
 		RtlCaptureContext(&ctx);
