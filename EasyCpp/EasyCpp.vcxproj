@@ -126,6 +126,7 @@
     <ClInclude Include="Net\Services\Spotify\Client.h" />
     <ClInclude Include="Net\Services\Spotify\Copyright.h" />
     <ClInclude Include="Net\Services\Spotify\Exception.h" />
+    <ClInclude Include="Net\Services\Spotify\FeaturedPlaylists.h" />
     <ClInclude Include="Net\Services\Spotify\Followers.h" />
     <ClInclude Include="Net\Services\Spotify\FullAlbum.h" />
     <ClInclude Include="Net\Services\Spotify\FullArtist.h" />
@@ -300,6 +301,7 @@
     <ClCompile Include="Net\Services\Spotify\Client.cpp" />
     <ClCompile Include="Net\Services\Spotify\Copyright.cpp" />
     <ClCompile Include="Net\Services\Spotify\Exception.cpp" />
+    <ClCompile Include="Net\Services\Spotify\FeaturedPlaylists.cpp" />
     <ClCompile Include="Net\Services\Spotify\Followers.cpp" />
     <ClCompile Include="Net\Services\Spotify\FullAlbum.cpp" />
     <ClCompile Include="Net\Services\Spotify\FullArtist.cpp" />

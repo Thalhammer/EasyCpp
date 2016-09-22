@@ -44,7 +44,7 @@ namespace EasyCpp
 				{
 					Playlist::fromAnyValue(state);
 					Bundle b = state.as<Bundle>();
-					_description = b.get<std::string>("description");
+					_description = b.get("description").isType<nullptr_t>() ? "" : b.get<std::string>("description");
 					_followers = b.get<Followers>("followers");
 					_tracks = b.get<Paging<PlaylistTrack>>("tracks");
 				}

@@ -6,13 +6,25 @@ using namespace EasyCpp::Net::Services::Spotify;
 
 namespace EasyCppTest
 {
-	const std::string access_token =
-		"BQAYRaKBADL6fo6pOmH9qkxzapedlvTAHWk9FO8jgiJQaxdbFGeH5WgvdJ_1zZIQB8pmpOfgZitThckYDNsfXoHmW641XT0W9J-IdZ5mlqY3EjWxPJIw_zp8qAHNLR19vy7S897HW2Y8lvInAEOJ3-vnfBnosn10JVgXURv_6QUxrpoPczNTXs9vtiRKGvugM3qDEuvj9LCz3R-WGDsu-cCHSLk1GPXGbC-YS7inWdhPUfZXF9DcgW-oPaCvmZf6A5LI6tnYtK6g9CZ3w7tIyVZIxlavQ_xA9LvrAZzk06lGG-7NTuoh5oAEJRpB";
+	std::string access_token = "";
+	const std::string refresh_token = "AQDolrLKpDtIRYLRqg8tkV3mnCODZswhPkar67ZpkhqxDMGCiKMcvrFrB4mApEaWwg-yStvB8ulR0zUT-Fb0ffXwFuAmSrqJ6yDYC_pUqrOa9M9V-KUA_VDWnS2hs6JgDHs";
 
-	TEST(Spotify, DISABLED_CurrentUser)
+	std::string GetAccessToken()
+	{
+		if (access_token == "") {
+			Authorization auth;
+			auth.setClientID("7a99705fff7042e18c61d03b8335b28e");
+			auth.setClientSecret("8491c78d36da48808e2b6493573363d8");
+			auto n = auth.refreshToken(refresh_token);
+			access_token = n.getAccessToken();
+		}
+		return access_token;
+	}
+
+	TEST(Spotify, CurrentUser)
 	{
 		Client sp;
-		sp.setAccessToken(access_token);
+		sp.setAccessToken(GetAccessToken());
 		auto user = sp.getCurrentUser();
 		ASSERT_EQ("th-dev", user.getID());
 	}
@@ -104,31 +116,54 @@ namespace EasyCppTest
 		});
 	}
 
-	TEST(Spotify, DISABLED_GetAudioFeatures)
+	TEST(Spotify, AddAlbum)
 	{
 		Client sp;
-		sp.setAccessToken(access_token);
+		sp.setAccessToken(GetAccessToken());
+		sp.addMyAlbums("4g8AOBMFKeuthiXpj6Kxmr");
+	}
+
+	TEST(Spotify, CreatePlaylist)
+	{
+		Client sp;
+		sp.setAccessToken(GetAccessToken());
+		auto me = sp.getCurrentUser();
+		sp.createUserPlaylist(me.getID(), "Testplaylist");
+	}
+
+	TEST(Spotify, GetAudioFeatures)
+	{
+		Client sp;
+		sp.setAccessToken(GetAccessToken());
 		auto features = sp.getAudioFeatures("7ouMYWpwJ422jRcDASZB7P");
 	}
 
-	TEST(Spotify, DISABLED_Authorize)
+	TEST(Spotify, Authorize)
 	{
 		Authorization auth;
 		auth.setClientID("7a99705fff7042e18c61d03b8335b28e");
 		auth.setClientSecret("8491c78d36da48808e2b6493573363d8");
 		auth.setRedirectURI("http://localhost/");
 		auth.setScopes({
+			"playlist-read-private",
+			"playlist-read-collaborative",
+			"playlist-modify-public",
+			"playlist-modify-private",
+			"user-follow-modify",
+			"user-follow-read",
+			"user-library-read",
+			"user-library-modify",
 			"user-read-private",
 			"user-read-birthdate",
-			"user-read-email"
+			"user-read-email",
+			"user-top-read"
 		});
 		auth.setShowDialog(true);
 
 		std::string url = auth.getAuthURL();
 
 
-		std::string code = "AQCh6fYdZRTD9GS0E1vcvBiN0C99BDQ1u7iNEVryzPk_EfoL93NLohamorGKt6YAmUFHNGQMTvk4WKRUu3dBFtyKYshrHWVEBKgQ_nDz3IXNFnU0B2pMItxiGd8xN6D15U4TBEAYzyy9gkVkYEBPq_XScgTwAtDHvNx7x1HUcxctrbv9eBYmJVYZ1SgFtjlzqK6hqjU51TKVFhw-apTcUoTFceBs-B_zPSeVviNulalbEfdlq8XUogfe_9Z4JHNK";
-
+		std::string code = "AQCQ4QNTur80TYRj8GEMm-8Qg0m5MaQV6-I6tJDTVpsQy5Iq1U6-kaTXC-9Z3db5pta4miqhGTP-H1Y8h8GVvqIuqqvIv9oj7V9i9wvcyjbrlwp5NQ9AY866u7kk9a5VI5N1ZH-HZqEaOLkA_i7OBoIA4mKB1PlUjBdKov5M4k95W60iKDPV7RMoCnkdRzDYeh7bqf2vHF61xzt-p57t7ua0_72-eOkl7kxHv1Ie0i3XydfDb2IQ_ylWO3Thk1XArQXByxIH64hAzMFr3J-nMAwYo77OoWFvvcOJv_CREadBF5GbuiJGh_nl5ntS7f0qX8OS2CLUhms9LnYlNfjWPgzNoIBQ7pW5d2inf3Gpy07V7-LNwgxBDHQiFZplX7UeahZmJYOGfRKw36-eqKrs1QHQkR2wP413zGhAtVyrAN6DLjHfJPCFor7H16JZ-ZDK6KyAZX6RtstAQDhF_-mwQBtq_GVWHrfzw5ethBgWNC3wuJvYRLAqw0xEfnbRZrnq_J4";
 		auto token = auth.requestToken(code);
 		auto token2 = auth.refreshToken(token.getRefreshToken());
 	}

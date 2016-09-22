@@ -1,6 +1,7 @@
 #include "Playlist.h"
 #include "../../../Bundle.h"
 #include "../../../AnyArray.h"
+#include <cstddef>
 
 namespace EasyCpp
 {

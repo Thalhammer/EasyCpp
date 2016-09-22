@@ -169,7 +169,7 @@ namespace EasyCpp
 					params += (_market != "" ? ("&country=" + _market) : "");
 					params += (locale != "" ? ("&locale=" + locale) : "");
 
-					Bundle bundle = doGET("/browse/categories"  + params, true);
+					Bundle bundle = doGET("/browse/categories" + params, true);
 
 					Paging<Category> res("categories");
 					res.fromAnyValue(bundle);
@@ -186,6 +186,19 @@ namespace EasyCpp
 
 					Category res;
 					res.fromAnyValue(bundle);
+					return res;
+				}
+
+				Paging<Playlist> Client::getCategoryPlaylists(const std::string & catid, int limit, int offset)
+				{
+					std::string params;
+					params += "?limit=" + std::to_string(limit);
+					params += "&offset=" + std::to_string(offset);
+					params += (_market != "" ? ("&country=" + _market) : "");
+					Bundle bundle = doGET("/browse/categories/" + catid + params, true);
+
+					Paging<Playlist> res;
+					res.fromAnyValue(bundle.get<Bundle>("playlists"));
 					return res;
 				}
 
@@ -270,7 +283,7 @@ namespace EasyCpp
 
 				FullPlaylist Client::getUserPlaylist(const std::string & uid, const std::string & pid)
 				{
-					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + (_market != ""?("?market="+_market):""), true);
+					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + (_market != "" ? ("?market=" + _market) : ""), true);
 
 					FullPlaylist res;
 					res.fromAnyValue(bundle);
@@ -295,7 +308,278 @@ namespace EasyCpp
 					return res;
 				}
 
-				Bundle Client::doGET(const std::string & url, bool req_auth)
+				Paging<PlaylistTrack> Client::getUserPlaylistTracks(const std::string & uid, const std::string & pid, int limit, int offset)
+				{
+					std::string params = "?limit=" + std::to_string(limit);
+					params += "&offset=" + std::to_string(offset);
+					if (!_market.empty()) params += "&market=" + _market;
+					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + "/tracks" + params, true);
+
+					Paging<PlaylistTrack> res;
+					res.fromAnyValue(bundle);
+					return res;
+				}
+
+				FeaturedPlaylists Client::getFeaturedPlaylists(const std::string & locale, int limit, int offset, const std::string & timestamp)
+				{
+					std::string params = "?limit=" + std::to_string(limit);
+					params += "&offset=" + std::to_string(offset);
+					params += "&locale=" + locale;
+					if (_market != "") params += "&country=" + _market;
+					if (timestamp != "") params += "&timestamp=" + timestamp;
+					Bundle bundle = doGET("/browse/featured-playlists" + params, true);
+
+					FeaturedPlaylists res;
+					res.fromAnyValue(bundle);
+					return res;
+				}
+
+				void Client::addMyAlbums(const std::vector<std::string>& ids)
+				{
+					this->doPUT("/me/albums", toAnyArray(ids));
+				}
+
+				void Client::addMyAlbums(const std::string & id)
+				{
+					this->addMyAlbums(std::vector<std::string>({ id }));
+				}
+
+				void Client::deleteMyAlbums(const std::vector<std::string>& ids)
+				{
+					this->doDELETE("/me/albums", toAnyArray(ids));
+				}
+
+				void Client::deleteMyAlbums(const std::string & id)
+				{
+					this->deleteMyAlbums(std::vector<std::string>({ id }));
+				}
+
+				void Client::addMyTracks(const std::vector<std::string>& ids)
+				{
+					this->doPUT("/me/tracks", toAnyArray(ids));
+				}
+
+				void Client::addMyTracks(const std::string & id)
+				{
+					this->addMyTracks(std::vector<std::string>({ id }));
+				}
+
+				void Client::deleteMyTracks(const std::vector<std::string>& ids)
+				{
+					this->doDELETE("/me/tracks", toAnyArray(ids));
+				}
+
+				void Client::deleteMyTracks(const std::string & id)
+				{
+					this->deleteMyTracks(std::vector<std::string>({ id }));
+				}
+
+				void Client::addUserPlaylistTracks(const std::string & uid, const std::string & pid, const std::vector<std::string>& ids, int position)
+				{
+					std::string params = (position != -1 ? ("?position=" + std::to_string(position)) : "");
+					this->doPOST("/users/" + uid + "/playlists/" + pid + "/tracks" + params, Bundle({
+						{"uris", toAnyArray(ids)}
+					}));
+				}
+
+				std::string Client::deleteUserPlaylistTracks(const std::string & uid, const std::string & pid, const std::vector<std::string>& ids)
+				{
+					AnyArray array;
+					for (auto& e : ids) {
+						array.push_back(Bundle({
+							{"uri", e}
+						}));
+					}
+					auto res = this->doDELETE("/users/" + uid + "/playlists/" + pid + "/tracks", Bundle({
+						{ "tracks", array }
+					}));
+
+					return res.as<Bundle>().get<std::string>("snapshot_id");
+				}
+
+				std::string Client::deleteUserPlaylistTracks(const std::string& uid, const std::string& pid, const std::vector<std::pair<std::string, std::vector<size_t>>>& uris, const std::string& snapshot)
+				{
+					AnyArray array;
+					for (auto& e : uris) {
+						array.push_back(Bundle({
+							{ "uri", e.first },
+							{ "positions", toAnyArray(e.second)}
+						}));
+					}
+					Bundle data({
+						{ "tracks", array }
+					});
+					if (snapshot != "") data.set("snapshot_id", snapshot);
+					auto res = this->doDELETE("/users/" + uid + "/playlists/" + pid + "/tracks", data);
+
+					return res.as<Bundle>().get<std::string>("snapshot_id");
+				}
+
+				std::string Client::deleteUserPlaylistTracks(const std::string & uid, const std::string & pid, const std::vector<size_t>& positions, const std::string & snapshot)
+				{
+					auto res = this->doDELETE("/users/" + uid + "/playlists/" + pid + "/tracks", Bundle({
+						{"positions", toAnyArray(positions)},
+						{"snapshot_id", snapshot}
+					}));
+
+					return res.as<Bundle>().get<std::string>("snapshot_id");
+				}
+
+				std::string Client::reorderUserPlaylistTracks(const std::string & uid, const std::string & pid, size_t range_start, size_t insert_before, size_t range_length, const std::string & snapshot)
+				{
+					Bundle data({
+						{"range_start", range_start},
+						{"range_length", range_length},
+						{"insert_before", insert_before}
+					});
+					if (snapshot != "") data.set("snapshot", snapshot);
+					auto res = this->doPUT("/users/" + uid + "/playlists/" + pid + "/tracks", data);
+					return res.as<Bundle>().get<std::string>("snapshot_id");
+				}
+
+				void Client::replaceUserPlaylistTracks(const std::string & uid, const std::string & pid, const std::vector<std::string>& uris)
+				{
+					this->doPUT("/users/" + uid + "/playlists/" + pid + "/tracks", Bundle({
+						{"uris", toAnyArray(uris)}
+					}));
+				}
+
+				FullPlaylist Client::createUserPlaylist(const std::string & uid, const std::string & name, bool pub)
+				{
+					auto bundle = this->doPOST("/users/" + uid + "/playlists", Bundle({
+						{ "name", name },
+						{ "public", pub }
+					}));
+
+					FullPlaylist res;
+					res.fromAnyValue(bundle);
+					return res;
+				}
+
+				void Client::updateUserPlaylist(const std::string & uid, const std::string & pid, const std::string & new_name, bool new_public)
+				{
+					this->doPUT("/users/" + uid + "/playlists/" + pid, Bundle({
+						{"name", new_name},
+						{"public", new_public}
+					}));
+				}
+
+				void Client::followArtist(const std::vector<std::string>& ids)
+				{
+					this->doPUT("/me/following?type=artist", Bundle({
+						{"ids", toAnyArray(ids)}
+					}));
+				}
+
+				void Client::followArtist(const std::string & id)
+				{
+					this->followArtist(std::vector<std::string>({ id }));
+				}
+
+				void Client::followUser(const std::vector<std::string>& ids)
+				{
+					this->doPUT("/me/following?type=user", Bundle({
+						{ "ids", toAnyArray(ids) }
+					}));
+				}
+
+				void Client::followUser(const std::string & id)
+				{
+					this->followUser(std::vector<std::string>({ id }));
+				}
+
+				void Client::followPlaylist(const std::string & puid, const std::string & pid, bool pub)
+				{
+					this->doPUT("/users/" + puid + "/playlists/" + pid + "/followers", Bundle({
+						{ "public", pub }
+					}));
+				}
+
+				void Client::unfollowArtist(const std::vector<std::string>& ids)
+				{
+					this->doDELETE("/me/following?type=artist", Bundle({
+						{"ids", toAnyArray(ids)}
+					}));
+				}
+
+				void Client::unfollowArtist(const std::string & id)
+				{
+					this->unfollowArtist(std::vector<std::string>({ id }));
+				}
+
+				void Client::unfollowUser(const std::vector<std::string>& ids)
+				{
+					this->doDELETE("/me/following?type=user", Bundle({
+						{ "ids", toAnyArray(ids) }
+					}));
+				}
+
+				void Client::unfollowUser(const std::string & id)
+				{
+					this->unfollowUser(std::vector<std::string>({ id }));
+				}
+
+				void Client::unfollowPlaylist(const std::string & puid, const std::string & pid)
+				{
+					this->doDELETE("/users/" + puid + "/playlists/" + pid + "/followers", AnyValue());
+				}
+
+				std::vector<bool> Client::userFollowsPlaylist(const std::string & puid, const std::string & pid, const std::vector<std::string>& ids)
+				{
+					auto info = this->doGET("/users/" + puid + "/playlists/" + pid + "/followers/contains?ids=" + implode<std::string>(",", ids));
+					return fromAnyArray<bool>(info);
+				}
+
+				bool Client::userFollowsPlaylist(const std::string & puid, const std::string & pid, const std::string & id)
+				{
+					return this->userFollowsPlaylist(puid, pid, std::vector<std::string>({ id }))[0];
+				}
+
+				std::vector<bool> Client::userFollowsArtist(const std::vector<std::string>& ids)
+				{
+					auto info = this->doGET("/me/following/contains?type=artist&ids=" + implode<std::string>(",", ids));
+					return fromAnyArray<bool>(info);
+				}
+
+				bool Client::userFollowsArtist(const std::string & id)
+				{
+					return this->userFollowsArtist(std::vector<std::string>({ id }))[0];
+				}
+
+				std::vector<bool> Client::userFollowsUser(const std::vector<std::string>& ids)
+				{
+					auto info = this->doGET("/me/following/contains?type=user&ids=" + implode<std::string>(",", ids));
+					return fromAnyArray<bool>(info);
+				}
+
+				bool Client::userFollowsUser(const std::string & id)
+				{
+					return this->userFollowsUser(std::vector<std::string>({ id }))[0];
+				}
+
+				std::vector<bool> Client::myTracksContains(const std::vector<std::string>& ids)
+				{
+					auto info = this->doGET("/me/tracks/contains?ids=" + implode<std::string>(",", ids));
+					return fromAnyArray<bool>(info);
+				}
+
+				bool Client::myTracksContains(const std::string & id)
+				{
+					return this->myTracksContains(std::vector<std::string>({ id }))[0];
+				}
+
+				std::vector<bool> Client::myAlbumsContains(const std::vector<std::string>& ids)
+				{
+					auto info = this->doGET("/me/albums/contains?ids=" + implode<std::string>(",", ids));
+					return fromAnyArray<bool>(info);
+				}
+
+				bool Client::myAlbumsContains(const std::string & id)
+				{
+					return this->myAlbumsContains(std::vector<std::string>({ id }))[0];
+				}
+
+				AnyValue Client::doGET(const std::string & url, bool req_auth)
 				{
 					std::string str;
 					Curl curl;
@@ -314,15 +598,119 @@ namespace EasyCpp
 					}
 					curl.perform();
 
-					Bundle bundle = Serialize::JsonSerializer().deserialize(str).as<Bundle>();
+					AnyValue res = Serialize::JsonSerializer().deserialize(str);
 
-					if (bundle.isSet("error"))
+					if (res.isType<Bundle>())
 					{
-						Bundle error = bundle.get<Bundle>("error");
-						throw Exception(error.get<int>("status"), error.get<std::string>("message"));
+						Bundle bundle = res.as<Bundle>();
+						if (bundle.isSet("error")) {
+							Bundle error = bundle.get<Bundle>("error");
+							throw Exception(error.get<int>("status"), error.get<std::string>("message"));
+						}
 					}
 
-					return bundle;
+					return res;
+				}
+
+				AnyValue Client::doPUT(const std::string & url, AnyValue body)
+				{
+					std::string input;
+					if (!body.isType<nullptr_t>()) {
+						input = Serialize::JsonSerializer().serialize(body);
+					}
+
+					std::string str;
+					Curl curl;
+					curl.setURL(_basepath + url);
+					curl.setPOST(true);
+					curl.setOutputString(str);
+					curl.setInputString(input);
+					curl.setSSLCABundle("curl-ca-bundle.crt");
+					curl.setHeaders({
+						{ "Authorization", "Bearer " + _token },
+						{ "Content-Type", "application/json"}
+					});
+					curl.setCustomRequest("PUT");
+					curl.perform();
+
+					if (curl.getResponseCode() != 200 && curl.getResponseCode() != 201 && curl.getResponseCode() != 204)
+					{
+						if (str != "") {
+							Bundle error = Serialize::JsonSerializer().deserialize(str).as<Bundle>().get<Bundle>("error");
+							throw Exception(error.get<int>("status"), error.get<std::string>("message"));
+						}
+						throw Exception(curl.getResponseCode(), "HTTP Error");
+					}
+					if(str != "")
+						return Serialize::JsonSerializer().deserialize(str);
+					else return AnyValue();
+				}
+
+				AnyValue Client::doPOST(const std::string & url, AnyValue body)
+				{
+					std::string input;
+					if (!body.isType<nullptr_t>()) {
+						input = Serialize::JsonSerializer().serialize(body);
+					}
+
+					std::string str;
+					Curl curl;
+					curl.setURL(_basepath + url);
+					curl.setPOST(true);
+					curl.setOutputString(str);
+					curl.setInputString(input);
+					curl.setSSLCABundle("curl-ca-bundle.crt");
+					curl.setHeaders({
+						{ "Authorization", "Bearer " + _token },
+						{ "Content-Type", "application/json" }
+					});
+					curl.perform();
+
+					if (curl.getResponseCode() != 200 && curl.getResponseCode() != 201 && curl.getResponseCode() != 204)
+					{
+						if (str != "") {
+							Bundle error = Serialize::JsonSerializer().deserialize(str).as<Bundle>().get<Bundle>("error");
+							throw Exception(error.get<int>("status"), error.get<std::string>("message"));
+						}
+						throw Exception(curl.getResponseCode(), "HTTP Error");
+					}
+					if (str != "")
+						return Serialize::JsonSerializer().deserialize(str);
+					else return AnyValue();
+				}
+
+				AnyValue Client::doDELETE(const std::string & url, AnyValue body)
+				{
+					std::string input;
+					if (!body.isType<nullptr_t>()) {
+						input = Serialize::JsonSerializer().serialize(body);
+					}
+
+					std::string str;
+					Curl curl;
+					curl.setURL(_basepath + url);
+					curl.setPOST(true);
+					curl.setOutputString(str);
+					curl.setInputString(input);
+					curl.setSSLCABundle("curl-ca-bundle.crt");
+					curl.setHeaders({
+						{ "Authorization", "Bearer " + _token },
+						{ "Content-Type", "application/json" }
+					});
+					curl.setCustomRequest("DELETE");
+					curl.perform();
+
+					if (curl.getResponseCode() != 200 && curl.getResponseCode() != 201 && curl.getResponseCode() != 204)
+					{
+						if (str != "") {
+							Bundle error = Serialize::JsonSerializer().deserialize(str).as<Bundle>().get<Bundle>("error");
+							throw Exception(error.get<int>("status"), error.get<std::string>("message"));
+						}
+						throw Exception(curl.getResponseCode(), "HTTP Error");
+					}
+					if (str != "")
+						return Serialize::JsonSerializer().deserialize(str);
+					else return AnyValue();
 				}
 			}
 		}

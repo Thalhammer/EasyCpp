@@ -68,10 +68,10 @@ namespace EasyCpp
 					Bundle bundle = state.as<Bundle>();
 					_display_name = bundle.get("display_name").isType<nullptr_t>() ? "" : bundle.get<std::string>("display_name");
 					_external_urls = bundle.get<Bundle>("external_urls").getMap<std::string>();
-					_followers.fromAnyValue(bundle.get("followers"));
+					if(bundle.isSet("followers")) _followers.fromAnyValue(bundle.get("followers"));
 					_href = bundle.get<std::string>("href");
 					_id = bundle.get<std::string>("id");
-					_images = fromAnyArray<Image>(bundle.get<AnyArray>("images"));
+					_images = bundle.isSet("images") ? fromAnyArray<Image>(bundle.get<AnyArray>("images")) : std::vector<Image>();
 					_uri = bundle.get<std::string>("uri");
 				}
 
