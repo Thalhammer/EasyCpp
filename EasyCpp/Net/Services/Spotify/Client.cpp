@@ -268,6 +268,33 @@ namespace EasyCpp
 					return res;
 				}
 
+				FullPlaylist Client::getUserPlaylist(const std::string & uid, const std::string & pid)
+				{
+					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + (_market != ""?("?market="+_market):""), true);
+
+					FullPlaylist res;
+					res.fromAnyValue(bundle);
+					return res;
+				}
+
+				Paging<Playlist> Client::getUserPlaylists(const std::string & uid, int limit, int offset)
+				{
+					Bundle bundle = doGET("/users/" + uid + "/playlists", true);
+
+					Paging<Playlist> res;
+					res.fromAnyValue(bundle);
+					return res;
+				}
+
+				Paging<Playlist> Client::getMyPlaylists(int limit, int offset)
+				{
+					Bundle bundle = doGET("/me/playlists", true);
+
+					Paging<Playlist> res;
+					res.fromAnyValue(bundle);
+					return res;
+				}
+
 				Bundle Client::doGET(const std::string & url, bool req_auth)
 				{
 					std::string str;

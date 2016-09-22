@@ -129,9 +129,12 @@
     <ClInclude Include="Net\Services\Spotify\Followers.h" />
     <ClInclude Include="Net\Services\Spotify\FullAlbum.h" />
     <ClInclude Include="Net\Services\Spotify\FullArtist.h" />
+    <ClInclude Include="Net\Services\Spotify\FullPlaylist.h" />
     <ClInclude Include="Net\Services\Spotify\FullTrack.h" />
     <ClInclude Include="Net\Services\Spotify\Image.h" />
     <ClInclude Include="Net\Services\Spotify\Paging.h" />
+    <ClInclude Include="Net\Services\Spotify\Playlist.h" />
+    <ClInclude Include="Net\Services\Spotify\PlaylistTrack.h" />
     <ClInclude Include="Net\Services\Spotify\ProductType.h" />
     <ClInclude Include="Net\Services\Spotify\PublicUser.h" />
     <ClInclude Include="Net\Services\Spotify\SavedAlbum.h" />
@@ -300,8 +303,11 @@
     <ClCompile Include="Net\Services\Spotify\Followers.cpp" />
     <ClCompile Include="Net\Services\Spotify\FullAlbum.cpp" />
     <ClCompile Include="Net\Services\Spotify\FullArtist.cpp" />
+    <ClCompile Include="Net\Services\Spotify\FullPlaylist.cpp" />
     <ClCompile Include="Net\Services\Spotify\FullTrack.cpp" />
     <ClCompile Include="Net\Services\Spotify\Image.cpp" />
+    <ClCompile Include="Net\Services\Spotify\Playlist.cpp" />
+    <ClCompile Include="Net\Services\Spotify\PlaylistTrack.cpp" />
     <ClCompile Include="Net\Services\Spotify\PublicUser.cpp" />
     <ClCompile Include="Net\Services\Spotify\SavedAlbum.cpp" />
     <ClCompile Include="Net\Services\Spotify\SavedTrack.cpp" />

@@ -5,25 +5,25 @@
 namespace EasyCpp
 {
 	template<typename... Args>
-        struct VarArgsTypeInfoImpl;
+	struct VarArgsTypeInfoImpl;
 
 	template<typename T, typename... Args>
-        struct VarArgsTypeInfoImpl<T, Args...>
-        {
-        	static void getTypeInfo(std::vector<TypeInfo>& vect)
-                {
-                	vect.push_back(TypeInfo::CreateInfo<T>());
-                        VarArgsTypeInfoImpl<Args...>::getTypeInfo(vect);
-                }
+	struct VarArgsTypeInfoImpl<T, Args...>
+	{
+		static void getTypeInfo(std::vector<TypeInfo>& vect)
+		{
+			vect.push_back(TypeInfo::CreateInfo<T>());
+			VarArgsTypeInfoImpl<Args...>::getTypeInfo(vect);
+		}
 	};
 
-        template<>
-        struct VarArgsTypeInfoImpl<>
-        {
-        	static void getTypeInfo(std::vector<TypeInfo>& vect)
-                {
-                }
-        };
+	template<>
+	struct VarArgsTypeInfoImpl<>
+	{
+		static void getTypeInfo(std::vector<TypeInfo>& vect)
+		{
+		}
+	};
 
 	class VarArgs
 	{

@@ -6,6 +6,7 @@
 #include "FullAlbum.h"
 #include "FullArtist.h"
 #include "FullTrack.h"
+#include "FullPlaylist.h"
 #include "AudioFeatures.h"
 #include "Category.h"
 #include "SavedAlbum.h"
@@ -59,6 +60,10 @@ namespace EasyCpp
 					Paging<FullTrack> getMyTopTracks(int limit = 20, int offset = 0, TimeRange range = TimeRange::MEDIUM);
 					Paging<FullArtist> getMyTopArtists(int limit = 20, int offset = 0, TimeRange range = TimeRange::MEDIUM);
 					Paging<FullArtist> getUserFollowedArtists(int limit = 20, int offset = 0);
+
+					FullPlaylist getUserPlaylist(const std::string& uid, const std::string& pid);
+					Paging<Playlist> getUserPlaylists(const std::string& uid, int limit = 20, int offset = 0);
+					Paging<Playlist> getMyPlaylists(int limit = 20, int offset = 0);
 					/* TODO:
 					 * addMyAlbums
 					 * addMyTracks
@@ -77,11 +82,8 @@ namespace EasyCpp
 					 * getCategoryPlaylists
 					 * getFeaturedPlaylists
 					 * getGenreSeeds
-					 * getMyPlaylists
 					 * getRecommendations
-					 * getUserPlaylist
 					 * updateUserPlaylist
-					 * getUserPlaylists
 					 * getUserPlaylistTracks
 					 * myAlbumsContains
 					 * myTracksContains
