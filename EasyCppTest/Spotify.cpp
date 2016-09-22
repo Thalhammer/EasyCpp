@@ -26,14 +26,14 @@ namespace EasyCppTest
 		Client sp;
 		sp.setAccessToken(GetAccessToken());
 		auto user = sp.getCurrentUser();
-		ASSERT_EQ("th-dev", user.getID());
+		ASSERT_EQ("experimental_user", user.getID());
 	}
 
 	TEST(Spotify, GetUser)
 	{
 		Client sp;
-		auto user = sp.getUser("th-dev");
-		ASSERT_EQ("th-dev", user.getID());
+		auto user = sp.getUser("experimental_user");
+		ASSERT_EQ("experimental_user", user.getID());
 	}
 
 	TEST(Spotify, GetAlbum)
@@ -138,7 +138,7 @@ namespace EasyCppTest
 		auto features = sp.getAudioFeatures("7ouMYWpwJ422jRcDASZB7P");
 	}
 
-	TEST(Spotify, Authorize)
+	TEST(Spotify, DISABLED_Authorize)
 	{
 		Authorization auth;
 		auth.setClientID("7a99705fff7042e18c61d03b8335b28e");
