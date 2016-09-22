@@ -72,20 +72,20 @@ namespace EasyCppTest
 	TEST(Spotify, GetArtistsAlbums)
 	{
 		Client sp;
-		auto albums = sp.getArtistsAlbums("0OdUWJ0sBjDrqHygGUXeCF");
+		auto albums = sp.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetArtistsTopTracks)
 	{
 		Client sp;
 		sp.setMarket("DE");
-		auto tracks = sp.getArtistsTopTracks("0OdUWJ0sBjDrqHygGUXeCF");
+		auto tracks = sp.getArtistTopTracks("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetArtistsRelatedTracks)
 	{
 		Client sp;
-		auto artists = sp.getArtistsRelatedArtists("0OdUWJ0sBjDrqHygGUXeCF");
+		auto artists = sp.getArtistRelatedArtists("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetTrack)

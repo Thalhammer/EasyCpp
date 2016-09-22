@@ -19,7 +19,8 @@ namespace EasyCpp
 				class Paging : public Serialize::Serializable
 				{
 				public:
-					Paging() {}
+					Paging() : _item_key("items") {}
+					Paging(const std::string& item_key) : _item_key(item_key) {}
 					virtual ~Paging() {}
 
 					const std::string& getHref() const { return _href; }
@@ -29,6 +30,7 @@ namespace EasyCpp
 					int getOffset() const { return _offset; }
 					const std::string& getPrevious() const { return _previous; }
 					int getTotal() const { return _total; }
+					const std::string& getAfter() const { return _after; }
 
 					// Geerbt über Serializable
 					virtual AnyValue toAnyValue() const override
@@ -36,29 +38,43 @@ namespace EasyCpp
 						std::vector<AnyValue> items;
 						for (auto e : _items)
 							items.push_back(e.toAnyValue());
-						return Bundle({
+						Bundle res({
 							{ "href", _href },
-							{ "items", _items },
+							{ _item_key, _items },
 							{ "limit", _limit },
 							{ "next", _next },
-							{ "offset", _offset },
-							{ "previous", _previous },
 							{ "total", _total }
 						});
+						if (_after == "") {
+							res.set("offset", _offset);
+							res.set("previous", _previous);
+						} else {
+							res.set("cursors", Bundle({
+								{"after", _after}
+							}));
+						}
+						return res;
 					}
 
 					virtual void fromAnyValue(const AnyValue & state) override
 					{
 						Bundle b = state.as<Bundle>();
 						_href = b.get<std::string>("href");
-						_items = fromAnyArray<T>(b.get<AnyArray>("items"));
+						_items = fromAnyArray<T>(b.get<AnyArray>(_item_key));
 						_limit = b.get<int>("limit");
 						_next = b.get("next").isType<nullptr_t>() ? "" : b.get<std::string>("next");
-						_offset = b.get<int>("offset");
-						_previous = b.get("previous").isType<nullptr_t>() ? "" : b.get<std::string>("previous");
+						if (b.isSet("cursors")) {
+							_after = b.get<Bundle>("cursors").get<std::string>("after");
+						}
+						else {
+							_offset = b.get<int>("offset");
+							_previous = b.get("previous").isType<nullptr_t>() ? "" : b.get<std::string>("previous");
+						}
 						_total = b.get<int>("total");
 					}
 				private:
+					std::string _item_key;
+
 					std::string _href;
 					std::vector<T> _items;
 					int _limit;
@@ -66,6 +82,8 @@ namespace EasyCpp
 					int _offset;
 					std::string _previous;
 					int _total;
+
+					std::string _after;
 				};
 			}
 		}

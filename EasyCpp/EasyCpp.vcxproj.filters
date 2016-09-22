@@ -624,6 +624,18 @@
     <ClInclude Include="Net\Services\Spotify\Authorization.h">
       <Filter>Headerdateien\Net\Services\Spotify</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Category.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\SavedAlbum.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\SavedTrack.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\TimeRange.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1014,6 +1026,15 @@
       <Filter>Quelldateien\Net\Services\Spotify</Filter>
     </ClCompile>
     <ClCompile Include="Net\Services\Spotify\Authorization.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\SavedAlbum.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Category.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\SavedTrack.cpp">
       <Filter>Quelldateien\Net\Services\Spotify</Filter>
     </ClCompile>
   </ItemGroup>

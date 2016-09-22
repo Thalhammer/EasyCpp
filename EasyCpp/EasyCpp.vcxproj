@@ -122,6 +122,7 @@
     <ClInclude Include="Net\Services\Spotify\AudioFeatures.h" />
     <ClInclude Include="Net\Services\Spotify\Authorization.h" />
     <ClInclude Include="Net\Services\Spotify\AuthorizeResult.h" />
+    <ClInclude Include="Net\Services\Spotify\Category.h" />
     <ClInclude Include="Net\Services\Spotify\Client.h" />
     <ClInclude Include="Net\Services\Spotify\Copyright.h" />
     <ClInclude Include="Net\Services\Spotify\Exception.h" />
@@ -133,6 +134,9 @@
     <ClInclude Include="Net\Services\Spotify\Paging.h" />
     <ClInclude Include="Net\Services\Spotify\ProductType.h" />
     <ClInclude Include="Net\Services\Spotify\PublicUser.h" />
+    <ClInclude Include="Net\Services\Spotify\SavedAlbum.h" />
+    <ClInclude Include="Net\Services\Spotify\SavedTrack.h" />
+    <ClInclude Include="Net\Services\Spotify\TimeRange.h" />
     <ClInclude Include="Net\Services\Spotify\Track.h" />
     <ClInclude Include="Net\Services\Spotify\TrackLink.h" />
     <ClInclude Include="Net\Services\Spotify\User.h" />
@@ -289,6 +293,7 @@
     <ClCompile Include="Net\Services\Spotify\AudioFeatures.cpp" />
     <ClCompile Include="Net\Services\Spotify\Authorization.cpp" />
     <ClCompile Include="Net\Services\Spotify\AuthorizeResult.cpp" />
+    <ClCompile Include="Net\Services\Spotify\Category.cpp" />
     <ClCompile Include="Net\Services\Spotify\Client.cpp" />
     <ClCompile Include="Net\Services\Spotify\Copyright.cpp" />
     <ClCompile Include="Net\Services\Spotify\Exception.cpp" />
@@ -298,6 +303,8 @@
     <ClCompile Include="Net\Services\Spotify\FullTrack.cpp" />
     <ClCompile Include="Net\Services\Spotify\Image.cpp" />
     <ClCompile Include="Net\Services\Spotify\PublicUser.cpp" />
+    <ClCompile Include="Net\Services\Spotify\SavedAlbum.cpp" />
+    <ClCompile Include="Net\Services\Spotify\SavedTrack.cpp" />
     <ClCompile Include="Net\Services\Spotify\Track.cpp" />
     <ClCompile Include="Net\Services\Spotify\TrackLink.cpp" />
     <ClCompile Include="Net\Services\Spotify\User.cpp" />
