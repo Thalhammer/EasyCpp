@@ -624,6 +624,39 @@
     <ClInclude Include="Net\Services\Spotify\Authorization.h">
       <Filter>Headerdateien\Net\Services\Spotify</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Category.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\SavedAlbum.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\SavedTrack.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\TimeRange.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\Playlist.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\FullPlaylist.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\FeaturedPlaylists.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\RecommendationSeed.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\PlaylistTrack.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\RecommendationResponse.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Spotify\SearchResult.h">
+      <Filter>Headerdateien\Net\Services\Spotify</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1014,6 +1047,36 @@
       <Filter>Quelldateien\Net\Services\Spotify</Filter>
     </ClCompile>
     <ClCompile Include="Net\Services\Spotify\Authorization.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\SavedAlbum.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Category.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\SavedTrack.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\Playlist.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\FullPlaylist.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\PlaylistTrack.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\FeaturedPlaylists.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\RecommendationSeed.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\RecommendationResponse.cpp">
+      <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Spotify\SearchResult.cpp">
       <Filter>Quelldateien\Net\Services\Spotify</Filter>
     </ClCompile>
   </ItemGroup>
