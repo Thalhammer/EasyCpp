@@ -657,6 +657,9 @@
     <ClInclude Include="Net\Services\Spotify\SearchResult.h">
       <Filter>Headerdateien\Net\Services\Spotify</Filter>
     </ClInclude>
+    <ClInclude Include="Database\Mapper.h">
+      <Filter>Headerdateien\Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1078,6 +1081,9 @@
     </ClCompile>
     <ClCompile Include="Net\Services\Spotify\SearchResult.cpp">
       <Filter>Quelldateien\Net\Services\Spotify</Filter>
+    </ClCompile>
+    <ClCompile Include="Database\Mapper.cpp">
+      <Filter>Quelldateien\Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
