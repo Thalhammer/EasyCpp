@@ -526,7 +526,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::userFollowsPlaylist(const std::string & puid, const std::string & pid, const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/users/" + puid + "/playlists/" + pid + "/followers/contains?ids=" + implode<std::string>(",", ids));
+					auto info = this->doGET("/users/" + puid + "/playlists/" + pid + "/followers/contains?ids=" + implode<std::string>(",", ids), true);
 					return fromAnyArray<bool>(info);
 				}
 
@@ -537,7 +537,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::userFollowsArtist(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/following/contains?type=artist&ids=" + implode<std::string>(",", ids));
+					auto info = this->doGET("/me/following/contains?type=artist&ids=" + implode<std::string>(",", ids), true);
 					return fromAnyArray<bool>(info);
 				}
 
@@ -548,7 +548,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::userFollowsUser(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/following/contains?type=user&ids=" + implode<std::string>(",", ids));
+					auto info = this->doGET("/me/following/contains?type=user&ids=" + implode<std::string>(",", ids), true);
 					return fromAnyArray<bool>(info);
 				}
 
@@ -559,7 +559,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::myTracksContains(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/tracks/contains?ids=" + implode<std::string>(",", ids));
+					auto info = this->doGET("/me/tracks/contains?ids=" + implode<std::string>(",", ids), true);
 					return fromAnyArray<bool>(info);
 				}
 
@@ -570,13 +570,60 @@ namespace EasyCpp
 
 				std::vector<bool> Client::myAlbumsContains(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/albums/contains?ids=" + implode<std::string>(",", ids));
+					auto info = this->doGET("/me/albums/contains?ids=" + implode<std::string>(",", ids), true);
 					return fromAnyArray<bool>(info);
 				}
 
 				bool Client::myAlbumsContains(const std::string & id)
 				{
 					return this->myAlbumsContains(std::vector<std::string>({ id }))[0];
+				}
+
+				RecommendationResponse Client::getRecommendations(const std::vector<std::string>& seed_artists, const std::vector<std::string>& seed_tracks, const std::vector<std::string>& seed_genres, const std::map<std::string, std::string>& max, const std::map<std::string, std::string>& min, const std::map<std::string, std::string>& target, size_t limit)
+				{
+					std::string params;
+					params += "?seed_artists=" + implode<std::string>(",", seed_artists);
+					params += "&seed_tracks=" + implode<std::string>(",", seed_tracks);
+					params += "&seed_genres=" + implode<std::string>(",", seed_genres);
+					for (auto& e : max) {
+						params += "&max_" + e.first + "=" + e.second;
+					}
+					for (auto& e : min) {
+						params += "&min_" + e.first + "=" + e.second;
+					}
+					for (auto& e : target) {
+						params += "&target_" + e.first + "=" + e.second;
+					}
+					if (_market != "") params += "&market=" + _market;
+					params += "&limit=" + std::to_string(limit);
+
+					auto info = this->doGET("/recommendations" + params, true);
+
+					RecommendationResponse res;
+					res.fromAnyValue(info);
+					return res;
+				}
+
+				std::vector<std::string> Client::getGenreSeeds()
+				{
+					auto info = this->doGET("/recommendations/available-genre-seeds", true);
+
+					return fromAnyArray<std::string>(info.as<Bundle>().get<AnyArray>("genres"));
+				}
+
+				SearchResult Client::search(const std::string & q, const std::vector<std::string>& types, size_t limit, size_t offset)
+				{
+					std::string params = "?q=" + URI::URLEncode(q);
+					params += "&type=" + implode<std::string>(",", types);
+					params += "&limit=" + std::to_string(limit);
+					params += "&offset=" + std::to_string(offset);
+					if (!_market.empty()) params += "&market=" + _market;
+
+					auto info = this->doGET("/search" + params);
+
+					SearchResult res;
+					res.fromAnyValue(info);
+					return res;
 				}
 
 				AnyValue Client::doGET(const std::string & url, bool req_auth)

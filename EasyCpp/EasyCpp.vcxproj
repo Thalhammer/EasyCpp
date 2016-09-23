@@ -138,8 +138,11 @@
     <ClInclude Include="Net\Services\Spotify\PlaylistTrack.h" />
     <ClInclude Include="Net\Services\Spotify\ProductType.h" />
     <ClInclude Include="Net\Services\Spotify\PublicUser.h" />
+    <ClInclude Include="Net\Services\Spotify\RecommendationResponse.h" />
+    <ClInclude Include="Net\Services\Spotify\RecommendationSeed.h" />
     <ClInclude Include="Net\Services\Spotify\SavedAlbum.h" />
     <ClInclude Include="Net\Services\Spotify\SavedTrack.h" />
+    <ClInclude Include="Net\Services\Spotify\SearchResult.h" />
     <ClInclude Include="Net\Services\Spotify\TimeRange.h" />
     <ClInclude Include="Net\Services\Spotify\Track.h" />
     <ClInclude Include="Net\Services\Spotify\TrackLink.h" />
@@ -311,8 +314,11 @@
     <ClCompile Include="Net\Services\Spotify\Playlist.cpp" />
     <ClCompile Include="Net\Services\Spotify\PlaylistTrack.cpp" />
     <ClCompile Include="Net\Services\Spotify\PublicUser.cpp" />
+    <ClCompile Include="Net\Services\Spotify\RecommendationResponse.cpp" />
+    <ClCompile Include="Net\Services\Spotify\RecommendationSeed.cpp" />
     <ClCompile Include="Net\Services\Spotify\SavedAlbum.cpp" />
     <ClCompile Include="Net\Services\Spotify\SavedTrack.cpp" />
+    <ClCompile Include="Net\Services\Spotify\SearchResult.cpp" />
     <ClCompile Include="Net\Services\Spotify\Track.cpp" />
     <ClCompile Include="Net\Services\Spotify\TrackLink.cpp" />
     <ClCompile Include="Net\Services\Spotify\User.cpp" />

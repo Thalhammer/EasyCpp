@@ -1,5 +1,6 @@
 #include "Image.h"
 #include "../../../Bundle.h"
+#include <cstddef>
 
 namespace EasyCpp
 {
@@ -40,8 +41,8 @@ namespace EasyCpp
 				void Image::fromAnyValue(const AnyValue & state)
 				{
 					Bundle b = state.as<Bundle>();
-					_height = b.get<uint64_t>("height");
-					_width = b.get<uint64_t>("width");
+					_height = b.get("height").isType<nullptr_t>() ? 0 : b.get<uint64_t>("height");
+					_width = b.get("width").isType<nullptr_t>() ? 0 : b.get<uint64_t>("width");
 					_url = b.get<std::string>("url");
 				}
 

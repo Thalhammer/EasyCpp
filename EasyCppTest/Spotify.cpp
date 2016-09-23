@@ -21,6 +21,13 @@ namespace EasyCppTest
 		return access_token;
 	}
 
+	TEST(Spotify, Search)
+	{
+		Client sp;
+		sp.setAccessToken(GetAccessToken());
+		auto res = sp.search("Sample");
+	}
+
 	TEST(Spotify, CurrentUser)
 	{
 		Client sp;

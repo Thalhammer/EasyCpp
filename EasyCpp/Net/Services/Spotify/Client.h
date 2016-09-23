@@ -13,6 +13,8 @@
 #include "SavedTrack.h"
 #include "TimeRange.h"
 #include "FeaturedPlaylists.h"
+#include "RecommendationResponse.h"
+#include "SearchResult.h"
 
 namespace EasyCpp
 {
@@ -109,9 +111,20 @@ namespace EasyCpp
 					bool myTracksContains(const std::string& id);
 					std::vector<bool> myAlbumsContains(const std::vector<std::string>& ids);
 					bool myAlbumsContains(const std::string& id);
+
+					RecommendationResponse getRecommendations(
+						const std::vector<std::string>& seed_artists,
+						const std::vector<std::string>& seed_tracks,
+						const std::vector<std::string>& seed_genres,
+						const std::map<std::string, std::string>& max = {},
+						const std::map<std::string, std::string>& min = {},
+						const std::map<std::string, std::string>& target = {},
+						size_t limit = 20);
+
+					std::vector<std::string> getGenreSeeds();
+
+					SearchResult search(const std::string& q, const std::vector<std::string>& types = { "album", "artist", "playlist", "track" }, size_t limit = 20, size_t offset = 0);
 					/* TODO:
-					 * getGenreSeeds
-					 * getRecommendations
 					 * search
 					 */
 
