@@ -148,6 +148,7 @@ namespace EasyCpp
 			void perform();
 			bool receive(void* buffer, size_t buflen, size_t& bytes_read);
 			bool send(void* buffer, size_t buflen, size_t& bytes_send);
+			bool wait(bool recv, uint64_t timeout_ms = 0);
 			void reset();
 
 			/* Behavior Options*/
@@ -404,7 +405,7 @@ namespace EasyCpp
 			std::string getLocalIP();
 			uint16_t getLocalPort();
 			std::vector<std::string> getCookieList();
-			long getLastSocket();
+			uint64_t getActiveSocket();
 			std::string getFTPEntryPath();
 			std::vector<std::multimap<std::string, std::string>> getCertInfo();
 

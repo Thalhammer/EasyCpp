@@ -660,6 +660,9 @@
     <ClInclude Include="Database\Mapper.h">
       <Filter>Headerdateien\Database</Filter>
     </ClInclude>
+    <ClInclude Include="Net\WebsocketClient.h">
+      <Filter>Headerdateien\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1084,6 +1087,9 @@
     </ClCompile>
     <ClCompile Include="Database\Mapper.cpp">
       <Filter>Quelldateien\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\WebsocketClient.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

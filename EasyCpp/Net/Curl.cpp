@@ -47,6 +47,35 @@ namespace EasyCpp
 			return true;
 		}
 
+		bool Curl::wait(bool recv, uint64_t timeout_ms)
+		{
+			curl_socket_t sock = getActiveSocket();
+
+			struct timeval tv;
+			fd_set infd, outfd, errfd;
+			int res;
+
+			tv.tv_sec = timeout_ms / 1000;
+			tv.tv_usec = (timeout_ms % 1000) * 1000;
+
+			FD_ZERO(&infd);
+			FD_ZERO(&outfd);
+			FD_ZERO(&errfd);
+
+			FD_SET(sock, &errfd); /* always check for error */
+
+			if (recv) {
+				FD_SET(sock, &infd);
+			}
+			else {
+				FD_SET(sock, &outfd);
+			}
+
+			/* select() returns the number of signalled sockets or -1 */
+			res = select(sock + 1, &infd, &outfd, &errfd, &tv);
+			return res != 0;
+		}
+
 		void Curl::reset()
 		{
 			{
@@ -1518,11 +1547,11 @@ namespace EasyCpp
 			return res;
 		}
 
-		long Curl::getLastSocket()
+		uint64_t Curl::getActiveSocket()
 		{
-			long res;
-			getInfo(CURLINFO_LASTSOCKET, res);
-			return res;
+			curl_socket_t t;
+			getInfo(CURLINFO_ACTIVESOCKET, (void**)&t);
+			return t;
 		}
 
 		std::string Curl::getFTPEntryPath()

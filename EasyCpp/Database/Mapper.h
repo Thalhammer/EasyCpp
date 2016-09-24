@@ -34,6 +34,7 @@ namespace EasyCpp
 				if (tryDynamicObject<T>(res, data)) {
 					return res;
 				}
+				throw std::runtime_error("Type not serializable");
 			}
 		private:
 			template<typename T>
