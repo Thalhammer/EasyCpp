@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 #include <Net/WebsocketClient.h>
+#include <mutex>
+#include <condition_variable>
 
 using namespace EasyCpp;
 

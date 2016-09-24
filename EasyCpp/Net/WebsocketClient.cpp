@@ -107,17 +107,17 @@ namespace EasyCpp
 
 		void WebsocketClient::send(const std::string & msg, bool bin)
 		{
-			uint8_t mask[4];
-			for (int i = 0; i < 4; i++) {
-				mask[i] = rand() % 255;
-			}
 			frame frame;
 			frame.data = msg;
 			frame.fin = true;
 			frame.len = msg.size();
 			frame.masked = true;
 			frame.opcode = bin ? 0x02 : 0x01;
-			frame.mask = *((uint32_t*)&mask);
+
+			uint8_t* mask = (uint8_t*)&frame.mask;
+			for (int i = 0; i < 4; i++) {
+				mask[i] = rand() % 255;
+			}
 			this->sendFrame(frame);
 		}
 
@@ -146,7 +146,7 @@ namespace EasyCpp
 			nonce.resize(16);
 			std::uniform_int_distribution<unsigned short> dist(0, 255);
 			std::random_device rd;
-			for (int c = 0; c < nonce.size(); c++)
+			for (size_t c = 0; c < nonce.size(); c++)
 				nonce[c] = static_cast<unsigned char>(dist(rd));
 
 			nonce = Base64::toString(nonce);
@@ -224,7 +224,6 @@ namespace EasyCpp
 
 			_read_thread = std::thread([this, state]() mutable {
 				try {
-					bool wait_exit = true;
 					while (!_exit.load() && _curl) {
 						std::string buf(128, ' ');
 						size_t read = 0;
@@ -286,18 +285,17 @@ namespace EasyCpp
 			msg[1] = code & 0xff;
 			msg.append(cmsg);
 
-			uint8_t mask[4];
-			for (int i = 0; i < 4; i++) {
-				mask[i] = rand() % 255;
-			}
-
 			frame frame;
 			frame.data = msg;
 			frame.fin = true;
 			frame.len = msg.size();
 			frame.masked = true;
 			frame.opcode = 0x08;
-			frame.mask = *((uint32_t*)&mask);
+			uint8_t* mask = (uint8_t*)&frame.mask;
+			for (int i = 0; i < 4; i++) {
+				mask[i] = rand() % 255;
+			}
+
 			_exit.store(true);
 			this->sendFrame(frame);
 			if(_read_thread.joinable())
@@ -322,7 +320,7 @@ namespace EasyCpp
 			if (!_curl)
 				return;
 			std::string msg(2, 0x00);
-			msg[0] = (frame.fin ? 0x80 : 0x00) | frame.opcode & 0x0f;
+			msg[0] = (frame.fin ? 0x80 : 0x00) | (frame.opcode & 0x0f);
 			msg[1] = frame.masked ? 0x80 : 0x00;
 			if (frame.len < 126) msg[1] |= frame.len;
 			else if (frame.len < UINT16_MAX) {
@@ -365,35 +363,32 @@ namespace EasyCpp
 				if (_on_close)
 					_on_close(status_code, status_msg);
 
-				uint8_t mask[4];
-				for (int i = 0; i < 4; i++) {
-					mask[i] = rand() % 255;
-				}
-
 				frame frame;
 				frame.data = cframe.data;
 				frame.fin = true;
 				frame.len = cframe.data.size();
 				frame.masked = true;
 				frame.opcode = 0x08;
-				frame.mask = *((uint32_t*)&mask);
+				uint8_t* mask = (uint8_t*)&frame.mask;
+				for (int i = 0; i < 4; i++) {
+					mask[i] = rand() % 255;
+				}
 				_exit.store(true);
 				this->sendFrame(frame);
 				_curl.reset();
 			}
 			else if (cframe.opcode == 0x09) {
 				// Ping
-				uint8_t mask[4];
-				for (int i = 0; i < 4; i++) {
-					mask[i] = rand() % 255;
-				}
 				frame pong;
 				pong.data = cframe.data;
 				pong.fin = true;
 				pong.len = cframe.data.size();
 				pong.masked = true;
 				pong.opcode = 0x0A;
-				pong.mask = *((uint32_t*)&mask);
+				uint8_t* mask = (uint8_t*)&pong.mask;
+				for (int i = 0; i < 4; i++) {
+					mask[i] = rand() % 255;
+				}
 				this->sendFrame(pong);
 			}
 			else if (cframe.opcode == 0x0A) {
