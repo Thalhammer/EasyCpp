@@ -18,12 +18,6 @@ namespace EasyCpp
 			std::string data;
 		};
 
-		enum WebsocketClient::steps {
-			READ_START,
-			READ_LEN,
-			READ_CONTENT
-		};
-
 		struct WebsocketClient::parser_state {
 			std::string buf;
 			steps step;

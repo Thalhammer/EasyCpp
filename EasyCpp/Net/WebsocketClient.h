@@ -37,7 +37,11 @@ namespace EasyCpp
 			std::function<void(const std::string&, bool)> _on_message;
 
 			struct frame;
-			enum steps;
+			enum steps {
+				READ_START,
+				READ_LEN,
+				READ_CONTENT
+			};
 			struct parser_state;
 			void sendAll(const std::string& data);
 			void sendFrame(const frame& frame);
