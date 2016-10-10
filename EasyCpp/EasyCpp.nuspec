@@ -2,7 +2,7 @@
 <package>
 	<metadata>
 		<id>EasyCpp</id>
-		<version>0.0.1</version>
+		<version>0.0.$rev$</version>
 		<authors>Dominik Thalhammer</authors>
 		<owners>$author$</owners>
 		<licenseUrl>https://raw.githubusercontent.com/Thalhammer/EasyCpp/master/LICENSE</licenseUrl>
