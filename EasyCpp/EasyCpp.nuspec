@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>EasyCpp</id>
+		<version>0.0.1</version>
+		<authors>Dominik Thalhammer</authors>
+		<owners>$author$</owners>
+		<licenseUrl>https://raw.githubusercontent.com/Thalhammer/EasyCpp/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/Thalhammer/EasyCpp</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Library to make creating c++ projects easier.</description>
+		<copyright>Copyright 2016</copyright>
+		<tags>c++</tags>
+		<dependencies>
+			<dependency id="rmt_curl" version="7.47.1" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="**\*.h" target="include\EasyCpp" />
+		<file src="..\Release\EasyCpp.dll" target="win32\bin\EasyCpp.dll" />
+		<file src="..\Release\EasyCpp.lib" target="win32\lib\EasyCpp.lib" />
+		<file src="..\x64\Release\EasyCpp.dll" target="x64\bin\EasyCpp.dll" />
+		<file src="..\x64\Release\EasyCpp.lib" target="x64\lib\EasyCpp.lib" />
+	</files>
+</package>
