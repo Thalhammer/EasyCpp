@@ -63,7 +63,7 @@ ifeq ($(ARCH),64)
 else
 	@echo "Architecture: i386" >> $(DEBFOLDER)/DEBIAN/control
 endif
-	@echo "Depends: " >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Depends: libcurl3, libssl1.0.0" >> $(DEBFOLDER)/DEBIAN/control
 	@echo "Maintainer: Dominik Thalhammer <dominik@thalhammer.it>" >> $(DEBFOLDER)/DEBIAN/control
 	@echo "Description: A library to make creating C++ projects easier." >> $(DEBFOLDER)/DEBIAN/control
 	@find . -name $(DEBFOLDER) -prune -o -name '*.h' -exec cp --parents \{\} $(DEBFOLDER)/usr/include/EasyCpp/ \;
