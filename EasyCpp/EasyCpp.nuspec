@@ -16,10 +16,15 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="**\*.h" target="include\EasyCpp" />
-		<file src="..\Release\EasyCpp.dll" target="win32\bin\EasyCpp.dll" />
-		<file src="..\Release\EasyCpp.lib" target="win32\lib\EasyCpp.lib" />
-		<file src="..\x64\Release\EasyCpp.dll" target="x64\bin\EasyCpp.dll" />
-		<file src="..\x64\Release\EasyCpp.lib" target="x64\lib\EasyCpp.lib" />
+		<file src="EasyCpp.targets" target="build\native\EasyCpp.targets" />
+		<file src="**\*.h" target="lib\native\include\EasyCpp" />
+		<file src="..\Release\EasyCpp.dll" target="lib\native\Win32\Release\EasyCpp.dll" />
+		<file src="..\Release\EasyCpp.lib" target="lib\native\Win32\Release\EasyCpp.lib" />
+		<file src="..\x64\Release\EasyCpp.dll" target="lib\native\x64\Release\EasyCpp.dll" />
+		<file src="..\x64\Release\EasyCpp.lib" target="lib\native\x64\Release\EasyCpp.lib" />
+		<file src="..\Debug\EasyCpp.dll" target="lib\native\Win32\Debug\EasyCpp.dll" />
+		<file src="..\Debug\EasyCpp.lib" target="lib\native\Win32\Debug\EasyCpp.lib" />
+		<file src="..\x64\Debug\EasyCpp.dll" target="lib\native\x64\Debug\EasyCpp.dll" />
+		<file src="..\x64\Debug\EasyCpp.lib" target="lib\native\x64\Debug\EasyCpp.lib" />
 	</files>
 </package>

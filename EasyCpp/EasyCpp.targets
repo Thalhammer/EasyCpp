@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<ItemDefinitionGroup>
+		<ClCompile>
+			<PreprocessorDefinitions>;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)..\..\lib\native\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+		</ClCompile>
+	</ItemDefinitionGroup>
+	<ItemDefinitionGroup>
+		<Link>
+			<AdditionalDependencies>$(MSBuildThisFileDirectory)../../lib/native/$(Platform)/$(Configuration)/EasyCpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+		</Link>
+	</ItemDefinitionGroup>
+	<ItemGroup>
+		<NativeLibs Include="$(MSBuildThisFileDirectory)..\..\lib\native\$(Platform)\$(Configuration)\*.dll" />
+		<None Include="@(NativeLibs)">
+			<Link>%(RecursiveDir)%(FileName)%(Extension)</Link>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+</Project>
