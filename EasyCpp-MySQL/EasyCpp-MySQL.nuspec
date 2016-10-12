@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+	<metadata>
+		<id>EasyCpp-MySQL</id>
+		<version>0.0.$rev$</version>
+		<authors>Dominik Thalhammer</authors>
+		<owners>$author$</owners>
+		<licenseUrl>https://raw.githubusercontent.com/Thalhammer/EasyCpp/master/LICENSE</licenseUrl>
+		<projectUrl>https://github.com/Thalhammer/EasyCpp</projectUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>MySQL database provider for EasyCpp</description>
+		<copyright>Copyright 2016</copyright>
+		<tags>c++</tags>
+		<dependencies>
+			<dependency id="EasyCpp" version="0.0.$rev$" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="EasyCpp-MySQL.targets" target="build\native\EasyCpp-MySQL.targets" />
+		<file src="..\Release\EasyCpp-MySQL.dll" target="lib\native\Win32\Release\EasyCpp-MySQL.dll" />
+		<file src="..\x64\Release\EasyCpp-MySQL.dll" target="lib\native\x64\Release\EasyCpp-MySQL.dll" />
+		<file src="..\Debug\EasyCpp-MySQL.dll" target="lib\native\Win32\Debug\EasyCpp-MySQL.dll" />
+		<file src="..\x64\Debug\EasyCpp-MySQL.dll" target="lib\native\x64\Debug\EasyCpp-MySQL.dll" />
+	</files>
+</package>
