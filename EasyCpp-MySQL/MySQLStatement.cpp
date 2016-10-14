@@ -1,4 +1,5 @@
 #include "MySQLStatement.h"
+#include <climits>
 
 using namespace EasyCpp;
 using namespace EasyCpp::Database;
@@ -14,8 +15,11 @@ namespace EasyCppMySql
 			if (_stmt == nullptr)
 				throw DatabaseException("Failed to initialize statement", {});
 
+			if (sql.length() > ULONG_MAX)
+				throw DatabaseException("SQL Statement too long", {});
+
 			// Try to prepare statement
-			if (mysql_stmt_prepare(_stmt, sql.c_str(), sql.length()) != 0)
+			if (mysql_stmt_prepare(_stmt, sql.c_str(), (unsigned long)sql.length()) != 0)
 			{
 				throw DatabaseException("Failed to prepare statement", {});
 			}
@@ -257,9 +261,11 @@ namespace EasyCppMySql
 	{
 		if (value.isType<std::vector<uint8_t>>()) {
 			auto v = value.as<std::vector<uint8_t>>();
+			if (v.size() > ULONG_MAX)
+				throw DatabaseException("Blobvalue too long", {});
 			void* data = malloc(v.size());
 			memcpy(data, v.data(), v.size());
-			this->setBind(id, MYSQL_TYPE_BLOB, data, v.size(), false);
+			this->setBind(id, MYSQL_TYPE_BLOB, data, (unsigned long)v.size(), false);
 		}
 		else if (value.type_info().isIntegral()) {
 			auto v = value.as<int64_t>();
@@ -278,9 +284,11 @@ namespace EasyCppMySql
 		}
 		else {
 			auto v = value.as<std::string>();
+			if (v.size() > ULONG_MAX)
+				throw DatabaseException("String too long", {});
 			void* data = malloc(v.size());
 			memcpy(data, v.data(), v.size());
-			this->setBind(id, MYSQL_TYPE_STRING, data, v.size(), false);
+			this->setBind(id, MYSQL_TYPE_STRING, data, (unsigned long)v.size(), false);
 		}
 	}
 
