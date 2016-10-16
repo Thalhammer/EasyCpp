@@ -166,6 +166,7 @@
     <ClCompile Include="HMAC.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Mapper.cpp" />
+    <ClCompile Include="MSCognitive.cpp" />
     <ClCompile Include="OTP.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Program.cpp" />
