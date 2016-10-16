@@ -48,7 +48,7 @@ namespace EasyCpp
 			{
 				std::lock_guard<std::mutex> lck(_log_mtx);
 				openlog(_source.c_str(), LOG_PID, LOG_USER);
-				syslog(priority, message.c_str());
+				syslog(priority, "%s", message.c_str());
 				closelog();
 			}
 		}

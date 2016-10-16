@@ -29,7 +29,7 @@ namespace EasyCpp
 		while (true)
 		{
 			int num = backtrace((void**)buf.data(), buf.size());
-			if (num < buf.size())
+			if (num < (int)buf.size())
 			{
 				buf.resize(num);
 				break;
