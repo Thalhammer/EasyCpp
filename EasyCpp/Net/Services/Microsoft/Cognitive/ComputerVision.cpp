@@ -1,6 +1,7 @@
 #include "ComputerVision.h"
 #include "../../../Curl.h"
 #include "../../../../Serialize/JsonSerializer.h"
+#include "../../../../StringAlgorithm.h"
 #include "ApiException.h"
 
 namespace EasyCpp
@@ -128,6 +129,68 @@ namespace EasyCpp
 						std::string image(data.cbegin(), data.cend());
 						CVOCRResult res;
 						res.fromAnyValue(sendPost("/ocr?language=" + lang + "&detectOrientation=" + (detect_orientation ? "true" : "false"), image, true));
+						return res;
+					}
+
+					CVAnalyseResult ComputerVision::analyse(const std::string & url, const std::vector<CVAnalyse>& features, const std::vector<std::string>& details)
+					{
+						std::vector<std::string> sfeatures;
+						for (auto& e : features) {
+							switch (e)
+							{
+							case CVAnalyse::Faces:
+								sfeatures.push_back("faces"); break;
+							case CVAnalyse::Adult:
+								sfeatures.push_back("adult"); break;
+							case CVAnalyse::Description:
+								sfeatures.push_back("description"); break;
+							case CVAnalyse::ImageType:
+								sfeatures.push_back("imagetype"); break;
+							case CVAnalyse::Color:
+								sfeatures.push_back("color"); break;
+							case CVAnalyse::Tags:
+								sfeatures.push_back("tags"); break;
+							case CVAnalyse::Categories:
+								sfeatures.push_back("categories"); break;
+							default:
+								break;
+							}
+						}
+
+						std::string json = Serialize::JsonSerializer().serialize(Bundle({ { "url", url } }));
+						CVAnalyseResult res;
+						res.fromAnyValue(sendPost("/analyse?visualFeatures=" + implode<std::string>(",", sfeatures) + "&details=" + implode<std::string>(",", details), json, false));
+						return res;
+					}
+
+					CVAnalyseResult ComputerVision::analyse(const std::vector<uint8_t>& data, const std::vector<CVAnalyse>& features, const std::vector<std::string>& details)
+					{
+						std::vector<std::string> sfeatures;
+						for (auto& e : features) {
+							switch (e)
+							{
+							case CVAnalyse::Faces:
+								sfeatures.push_back("faces"); break;
+							case CVAnalyse::Adult:
+								sfeatures.push_back("adult"); break;
+							case CVAnalyse::Description:
+								sfeatures.push_back("description"); break;
+							case CVAnalyse::ImageType:
+								sfeatures.push_back("imagetype"); break;
+							case CVAnalyse::Color:
+								sfeatures.push_back("color"); break;
+							case CVAnalyse::Tags:
+								sfeatures.push_back("tags"); break;
+							case CVAnalyse::Categories:
+								sfeatures.push_back("categories"); break;
+							default:
+								break;
+							}
+						}
+
+						std::string image(data.cbegin(), data.cend());
+						CVAnalyseResult res;
+						res.fromAnyValue(sendPost("/analyse?visualFeatures=" + implode<std::string>(",", sfeatures) + "&details=" + implode<std::string>(",", details), image, true));
 						return res;
 					}
 

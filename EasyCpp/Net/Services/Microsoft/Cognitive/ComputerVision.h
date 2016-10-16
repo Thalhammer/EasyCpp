@@ -4,6 +4,7 @@
 #include "CVDescribeImageResult.h"
 #include "CVTagImageResult.h"
 #include "CVOCRResult.h"
+#include "CVAnalyseResult.h"
 #include <memory>
 
 namespace EasyCpp
@@ -18,6 +19,17 @@ namespace EasyCpp
 			{
 				namespace Cognitive
 				{
+					enum class CVAnalyse
+					{
+						Faces,
+						ImageType,
+						Color,
+						Adult,
+						Description,
+						Tags,
+						Categories
+					};
+
 					class DLL_EXPORT ComputerVision
 					{
 					public:
@@ -38,6 +50,8 @@ namespace EasyCpp
 
 						CVOCRResult ocr(const std::string& url, const std::string& lang="unk", bool detect_orientation=true);
 						CVOCRResult ocr(const std::vector<uint8_t>& data, const std::string& lang = "unk", bool detect_orientation = true);
+						CVAnalyseResult analyse(const std::string& url, const std::vector<CVAnalyse>& features = {}, const std::vector<std::string>& details = {});
+						CVAnalyseResult analyse(const std::vector<uint8_t>& data, const std::vector<CVAnalyse>& features = {}, const std::vector<std::string>& details = {});
 					private:
 						std::string _ocp_api_key;
 

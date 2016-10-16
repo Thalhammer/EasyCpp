@@ -723,6 +723,21 @@
     <ClInclude Include="Net\Services\Microsoft\Cognitive\CVImageFaceRectangle.h">
       <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
     </ClInclude>
+    <ClInclude Include="Net\Services\Microsoft\Cognitive\CVImageFace.h">
+      <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Microsoft\Cognitive\CVAnalyseResult.h">
+      <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Microsoft\Cognitive\CVImageType.h">
+      <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Microsoft\Cognitive\CVImageColor.h">
+      <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Services\Microsoft\Cognitive\CVImageAdult.h">
+      <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1197,6 +1212,21 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageFaceRectangle.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageFace.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVAnalyseResult.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageType.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageColor.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageAdult.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,7 +1,6 @@
 #pragma once
 #include "../../../../DllExport.h"
 #include "../../../../Serialize/Serializable.h"
-#include <string>
 
 namespace EasyCpp
 {
@@ -13,23 +12,26 @@ namespace EasyCpp
 			{
 				namespace Cognitive
 				{
-					class DLL_EXPORT CVImageTag : public Serialize::Serializable
+					class DLL_EXPORT CVImageAdult : public Serialize::Serializable
 					{
 					public:
-						CVImageTag();
-						virtual ~CVImageTag();
+						CVImageAdult();
+						virtual ~CVImageAdult();
 
-						const std::string& getName() const;
-						double getConfidence() const;
+						bool isAdultContent() const;
+						bool isRacyContent() const;
+						double adultScore() const;
+						double racyScore() const;
 
 						// Geerbt über Serializable
 						virtual AnyValue toAnyValue() const override;
 						virtual void fromAnyValue(const AnyValue & state) override;
 					private:
-						std::string _name;
-						double _confidence;
+						bool _adult_content;
+						bool _racy_content;
+						double _adult_score;
+						double _racy_score;
 					};
-					typedef CVImageTag CVImageCategory;
 				}
 			}
 		}
