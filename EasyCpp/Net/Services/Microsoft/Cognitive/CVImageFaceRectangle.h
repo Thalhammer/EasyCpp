@@ -1,6 +1,7 @@
 #pragma once
 #include "../../../../DllExport.h"
 #include "../../../../Serialize/Serializable.h"
+#include <cstddef>
 
 namespace EasyCpp
 {

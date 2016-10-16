@@ -11,7 +11,7 @@ namespace EasyCpp
 				namespace Cognitive
 				{
 					ApiException::ApiException(std::string code, std::string message, std::string req_id)
-						: RuntimeException(message), _code(code), _request_id(req_id)
+						: RuntimeException(message),  _request_id(req_id), _code(code)
 					{
 					}
 
