@@ -40,8 +40,8 @@ namespace EasyCppTest
 			auto sample = std::make_shared<Sample>();
 			engine->put("sample", sample);
 			engine->eval("test = sample:getText()\n"
-						 "test = test .. \" World\"\n"
-						 "sample:setText(test)\n");
+				"test = test .. \" World\"\n"
+				"sample:setText(test)\n");
 			ASSERT_EQ(std::string("Hello World"), sample->getText());
 		}
 
