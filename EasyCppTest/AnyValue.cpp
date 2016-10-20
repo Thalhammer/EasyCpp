@@ -93,70 +93,72 @@ namespace EasyCppTest
 	};
 }
 
-template<>
-struct EasyCpp::TypeCheck<EasyCppTest::SimpleSample*>
+namespace EasyCpp
 {
-	typedef EasyCppTest::SimpleSample Type;
-	static bool IsSerializable()
+	template<>
+	struct TypeCheck<EasyCppTest::SimpleSample*>
 	{
-		return false;
-	}
-
-	static bool IsDynamicObject()
-	{
-		return true;
-	}
-
-	static const Serialize::Serializable& AsSerializable(const EasyCppTest::SimpleSample* value)
-	{
-		throw std::runtime_error("This Anyvalue does not implement Serializable");
-	}
-
-	static std::shared_ptr<DynamicObject> AsDynamicObject(EasyCppTest::SimpleSample* value)
-	{
-		class DynamicWrapper : public DynamicObjectHelper
+		typedef EasyCppTest::SimpleSample Type;
+		static bool IsSerializable()
 		{
-		public:
-			DynamicWrapper(EasyCppTest::SimpleSample* value)
-				:_value(value)
+			return false;
+		}
+
+		static bool IsDynamicObject()
+		{
+			return true;
+		}
+
+		static const Serialize::Serializable& AsSerializable(const EasyCppTest::SimpleSample* value)
+		{
+			throw std::runtime_error("This Anyvalue does not implement Serializable");
+		}
+
+		static std::shared_ptr<DynamicObject> AsDynamicObject(EasyCppTest::SimpleSample* value)
+		{
+			class DynamicWrapper : public DynamicObjectHelper
 			{
-				this->addFunction("setText", AnyFunction::fromDynamicFunction([this](const AnyArray& params) {
-					this->_value->setText(params[0].as<std::string>());
-					return AnyValue();
-				}));
-			}
-		private:
-			EasyCppTest::SimpleSample* _value;
-		};
-		return std::make_shared<DynamicWrapper>(value);
-	}
-};
+			public:
+				DynamicWrapper(EasyCppTest::SimpleSample* value)
+					:_value(value)
+				{
+					this->addFunction("setText", AnyFunction::fromDynamicFunction([this](const AnyArray& params) {
+						this->_value->setText(params[0].as<std::string>());
+						return AnyValue();
+					}));
+				}
+			private:
+				EasyCppTest::SimpleSample* _value;
+			};
+			return std::make_shared<DynamicWrapper>(value);
+		}
+	};
 
-template<>
-struct EasyCpp::TypeCheck<EasyCppTest::SimpleSample>
-{
-	typedef EasyCppTest::SimpleSample Type;
-	static bool IsSerializable()
+	template<>
+	struct TypeCheck<EasyCppTest::SimpleSample>
 	{
-		return TypeCheck<EasyCppTest::SimpleSample*>::IsSerializable();
-	}
+		typedef EasyCppTest::SimpleSample Type;
+		static bool IsSerializable()
+		{
+			return TypeCheck<EasyCppTest::SimpleSample*>::IsSerializable();
+		}
 
-	static bool IsDynamicObject()
-	{
-		return TypeCheck<EasyCppTest::SimpleSample*>::IsDynamicObject();
-	}
+		static bool IsDynamicObject()
+		{
+			return TypeCheck<EasyCppTest::SimpleSample*>::IsDynamicObject();
+		}
 
-	static const Serialize::Serializable& AsSerializable(const EasyCppTest::SimpleSample& value)
-	{
-		return TypeCheck<EasyCppTest::SimpleSample*>::AsSerializable(&value);
-	}
+		static const Serialize::Serializable& AsSerializable(const EasyCppTest::SimpleSample& value)
+		{
+			return TypeCheck<EasyCppTest::SimpleSample*>::AsSerializable(&value);
+		}
 
-	static std::shared_ptr<DynamicObject> AsDynamicObject(EasyCppTest::SimpleSample& value)
-	{
-		return TypeCheck<EasyCppTest::SimpleSample*>::AsDynamicObject(&value);
-	}
-};
-
+		static std::shared_ptr<DynamicObject> AsDynamicObject(EasyCppTest::SimpleSample& value)
+		{
+			return TypeCheck<EasyCppTest::SimpleSample*>::AsDynamicObject(&value);
+		}
+	};
+}
 namespace EasyCppTest
 {
 	TEST(AnyValue, ExternalTypeCheck)
