@@ -1,7 +1,7 @@
 #include "Sqlite3Statement.h"
 #include <cstddef>
 #include "../DatabaseException.h"
-
+#include <climits>
 #include "../../Finally.h"
 
 namespace EasyCpp
