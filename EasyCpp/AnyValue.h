@@ -15,39 +15,50 @@ namespace EasyCpp
 	template <class T>
 	struct TypeCheck
 	{
-		typedef T Type;
 		static bool IsSerializable()
 		{
-			return std::is_base_of<Serialize::Serializable, T>::value;
+			return TypeCheck<T*>::IsSerializable();
 		}
 		static bool IsDynamicObject()
 		{
-			return std::is_base_of<DynamicObject, T>::value;
+			return TypeCheck<T*>::IsDynamicObject();
 		}
 
-		template<typename U = T>
-		static typename std::enable_if<std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
-			AsSerializable(U& value)
+		static const Serialize::Serializable& AsSerializable(const T& value)
 		{
-			return dynamic_cast<const Serialize::Serializable&>(value);
+			auto ptr = &value;
+			return TypeCheck<T*>::AsSerializable(ptr);
 		}
-		template<typename U = T>
-		static typename std::enable_if<!std::is_base_of<Serialize::Serializable, U>::value, const Serialize::Serializable&>::type
-			AsSerializable(U& value)
+		static std::shared_ptr<DynamicObject> AsDynamicObject(T& value)
 		{
-			throw std::runtime_error("This Anyvalue does not implement Serializable");
+			T* ptr = &value;
+			return TypeCheck<T*>::AsDynamicObject(ptr);
 		}
-		template<typename U = T>
-		static typename std::enable_if<std::is_base_of<DynamicObject, U>::value, std::shared_ptr<DynamicObject>>::type
-			AsDynamicObject(U& value)
+	};
+
+	template <class T>
+	struct TypeCheck<T&>
+	{
+		typedef T Type;
+		static bool IsSerializable()
 		{
-			return std::shared_ptr<DynamicObject>(dynamic_cast<DynamicObject*>(&value), [](DynamicObject*) {});
+			return TypeCheck<T*>::IsSerializable();
 		}
-		template<typename U = T>
-		static typename std::enable_if<!std::is_base_of<DynamicObject, U>::value, std::shared_ptr<DynamicObject>>::type
-			AsDynamicObject(U& value)
+		static bool IsDynamicObject()
 		{
-			throw std::runtime_error("This Anyvalue does not implement DynamicObject");
+			return TypeCheck<T*>::IsDynamicObject();
+		}
+
+		static const Serialize::Serializable& AsSerializable(const T& value)
+		{
+			auto ptr = &value;
+			return TypeCheck<T*>::AsSerializable(ptr);
+		}
+
+		static std::shared_ptr<DynamicObject> AsDynamicObject(T& value)
+		{
+			auto ptr = &value;
+			return TypeCheck<T*>::AsDynamicObject(ptr);
 		}
 	};
 
@@ -57,21 +68,23 @@ namespace EasyCpp
 		typedef T Type;
 		static bool IsSerializable()
 		{
-			return TypeCheck<T>::IsSerializable();
+			return TypeCheck<T*>::IsSerializable();
 		}
 		static bool IsDynamicObject()
 		{
-			return TypeCheck<T>::IsDynamicObject();
+			return TypeCheck<T*>::IsDynamicObject();
 		}
 
 		static const Serialize::Serializable& AsSerializable(const std::shared_ptr<T>& value)
 		{
-			return TypeCheck<T>::AsSerializable(*value);
+			auto ptr = value.get();
+			return TypeCheck<T*>::AsSerializable(ptr);
 		}
 
 		static std::shared_ptr<DynamicObject> AsDynamicObject(std::shared_ptr<T>& value)
 		{
-			return TypeCheck<T>::AsDynamicObject(*value);
+			auto ptr = value.get();
+			return TypeCheck<T*>::AsDynamicObject(ptr);
 		}
 	};
 
@@ -90,13 +103,13 @@ namespace EasyCpp
 
 		template<typename U = T>
 		static typename std::enable_if<std::is_base_of<Serialize::Serializable, typename std::remove_pointer<U>::type>::value, const Serialize::Serializable&>::type
-			AsSerializable(U& value)
+			AsSerializable(const U& value)
 		{
 			return *value;
 		}
 		template<typename U = T>
 		static typename std::enable_if<!std::is_base_of<Serialize::Serializable, typename std::remove_pointer<U>::type>::value, const Serialize::Serializable&>::type
-			AsSerializable(U& value)
+			AsSerializable(const U& value)
 		{
 			throw std::runtime_error("This Anyvalue does not implement Serializable");
 		}

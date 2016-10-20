@@ -133,43 +133,19 @@ namespace EasyCpp
 			return std::make_shared<DynamicWrapper>(value);
 		}
 	};
-
-	template<>
-	struct TypeCheck<EasyCppTest::SimpleSample>
-	{
-		typedef EasyCppTest::SimpleSample Type;
-		static bool IsSerializable()
-		{
-			return TypeCheck<EasyCppTest::SimpleSample*>::IsSerializable();
-		}
-
-		static bool IsDynamicObject()
-		{
-			return TypeCheck<EasyCppTest::SimpleSample*>::IsDynamicObject();
-		}
-
-		static const Serialize::Serializable& AsSerializable(const EasyCppTest::SimpleSample& value)
-		{
-			return TypeCheck<EasyCppTest::SimpleSample*>::AsSerializable(&value);
-		}
-
-		static std::shared_ptr<DynamicObject> AsDynamicObject(EasyCppTest::SimpleSample& value)
-		{
-			return TypeCheck<EasyCppTest::SimpleSample*>::AsDynamicObject(&value);
-		}
-	};
 }
 namespace EasyCppTest
 {
 	TEST(AnyValue, ExternalTypeCheck)
 	{
-		SimpleSample sample;
-		AnyValue val(&sample);
+		SimpleSample s;
+		AnyValue val(s);
 
 		ASSERT_TRUE(val.isDynamicObject());
 		auto& obj = val.asDynamicObject();
 		obj.callFunction("setText", { std::string("test_value") });
 
-		ASSERT_EQ("test_value", sample.getText());
+		SimpleSample s2 = val.as<SimpleSample>();
+		ASSERT_EQ("test_value", s2.getText());
 	}
 }
