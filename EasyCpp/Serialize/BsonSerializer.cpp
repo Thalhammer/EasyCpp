@@ -64,7 +64,8 @@ namespace EasyCpp
 					wrt.writeUInt8(0x05);
 					wrt.writeCString(elem.first);
 					std::vector<uint8_t> v = elem.second.as<std::vector<uint8_t>>();
-					wrt.writeInt32(v.size()); // Binary size
+					if (v.size() > INT32_MAX) throw std::runtime_error("Data too large");
+					wrt.writeInt32((int32_t)v.size()); // Binary size
 					wrt.writeUInt8(0x00); // Subtype
 					wrt.writeBytes(v.data(), v.size()); // Data
 				}
@@ -85,7 +86,8 @@ namespace EasyCpp
 					wrt.writeUInt8(0x02);
 					wrt.writeCString(elem.first);
 					std::string v = elem.second.as<std::string>();
-					wrt.writeInt32(v.size() + 1);
+					if (v.size() > INT32_MAX - 1) throw std::runtime_error("String too large");
+					wrt.writeInt32((int32_t)v.size() + 1);
 					wrt.writeCString(v);
 				}
 			}
@@ -96,7 +98,8 @@ namespace EasyCpp
 			wrt.setOverwrite(true);
 
 			// Update Size value
-			wrt.writeInt32(wrt.getSize());
+			if (wrt.getSize() > INT32_MAX) throw std::runtime_error("Document to large");
+			wrt.writeInt32((int32_t)wrt.getSize());
 			return res;
 		}
 

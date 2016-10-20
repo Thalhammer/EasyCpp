@@ -163,7 +163,7 @@ namespace EasyCpp
 #else
 			std::string str;
 			str.resize(GetCurrentDirectoryA(0, nullptr));
-			GetCurrentDirectoryA(str.size(), (char*)str.data());
+			GetCurrentDirectoryA((DWORD)str.size(), (char*)str.data());
 			str.resize(str.size() - 1); // remove null char
 			return str;
 #endif

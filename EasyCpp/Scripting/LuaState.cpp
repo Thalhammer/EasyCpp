@@ -157,10 +157,11 @@ namespace EasyCpp
 					state.doTransaction([&state, params, ref, &result]() {
 						int top = state.getTop();
 						state.rawGet(REGISTRY_INDEX(), *ref);
+						if (params.size() > INT_MAX) throw std::runtime_error("Too many parameters");
 						for (auto& e : params) {
 							state.pushAnyValue(e);
 						}
-						state.pcall(params.size(), MULTRET());
+						state.pcall((int)params.size(), MULTRET());
 						int num_rets = state.getTop() - top;
 						if (num_rets == 0) result = AnyValue();
 						else if (num_rets == 1) result = state.popAnyValue();

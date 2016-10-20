@@ -14,7 +14,8 @@ namespace EasyCpp
 				:_shared(shared)
 			{
 				auto db = _shared->getDatabase();
-				int rc = sqlite3_prepare_v2(db.get(), sql.c_str(), sql.length(), &_stmt, nullptr);
+				if (sql.size() > INT_MAX) throw std::string("Query too large");
+				int rc = sqlite3_prepare_v2(db.get(), sql.c_str(), (int)sql.size(), &_stmt, nullptr);
 				if (rc != SQLITE_OK)
 					throw DatabaseException("(" + std::to_string(rc) + ") " + sqlite3_errmsg(db.get()), Bundle({ { "sql", sql } }));
 			}

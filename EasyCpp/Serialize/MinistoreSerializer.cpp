@@ -57,8 +57,9 @@ namespace EasyCpp
 
 			size_t end = wrt.getPosition();
 			size_t len = end - start;
+			if (len > UINT32_MAX) throw std::runtime_error("Document too large");
 			wrt.setPosition(start);
-			wrt.writeUInt32(len);
+			wrt.writeUInt32((uint32_t)len);
 			wrt.setPosition(end);
 		}
 
@@ -74,8 +75,9 @@ namespace EasyCpp
 
 			size_t end = wrt.getPosition();
 			size_t len = end - start;
+			if (len > UINT32_MAX) throw std::runtime_error("Document too large");
 			wrt.setPosition(start);
-			wrt.writeUInt32(len);
+			wrt.writeUInt32((uint32_t)len);
 			wrt.setPosition(end);
 		}
 
@@ -228,7 +230,8 @@ namespace EasyCpp
 				else if (type == 0x9)
 				{
 					std::string v = val.as<std::string>();
-					wrt.writeUInt32(v.size());
+					if (v.size() > UINT32_MAX) throw std::runtime_error("String too large");
+					wrt.writeUInt32((uint32_t)v.size());
 					wrt.writeString(v);
 				}
 				else if (type == 0xA)
