@@ -118,6 +118,7 @@
     <ClInclude Include="Logging\Severity.h" />
     <ClInclude Include="Logging\VFSLogger.h" />
     <ClInclude Include="Net\Curl.h" />
+    <ClInclude Include="Net\JsonRPC.h" />
     <ClInclude Include="Net\Services\Microsoft\Cognitive\ApiException.h" />
     <ClInclude Include="Net\Services\Microsoft\Cognitive\ComputerVision.h" />
     <ClInclude Include="Net\Services\Microsoft\Cognitive\CVAnalyseResult.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="Plugin\Manager.h" />
     <ClInclude Include="Preprocessor.h" />
     <ClInclude Include="Program.h" />
+    <ClInclude Include="Promise.h" />
     <ClInclude Include="RuntimeException.h" />
     <ClInclude Include="Scripting\LuaScriptEngine.h" />
     <ClInclude Include="Scripting\LuaScriptEngineFactory.h" />
@@ -319,6 +321,7 @@
     <ClCompile Include="Logging\SystemLoggerLinux.cpp" />
     <ClCompile Include="Logging\VFSLogger.cpp" />
     <ClCompile Include="Net\Curl.cpp" />
+    <ClCompile Include="Net\JsonRPC.cpp" />
     <ClCompile Include="Net\Services\Microsoft\Cognitive\ApiException.cpp" />
     <ClCompile Include="Net\Services\Microsoft\Cognitive\ComputerVision.cpp" />
     <ClCompile Include="Net\Services\Microsoft\Cognitive\CVAnalyseResult.cpp" />

@@ -738,6 +738,12 @@
     <ClInclude Include="Net\Services\Microsoft\Cognitive\CVImageAdult.h">
       <Filter>Headerdateien\Net\Services\Microsoft\Cognitive</Filter>
     </ClInclude>
+    <ClInclude Include="Net\JsonRPC.h">
+      <Filter>Headerdateien\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Promise.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1227,6 +1233,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageAdult.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\JsonRPC.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

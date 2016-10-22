@@ -164,12 +164,14 @@
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="HexEncoding.cpp" />
     <ClCompile Include="HMAC.cpp" />
+    <ClCompile Include="JsonRPC.cpp" />
     <ClCompile Include="Logging.cpp" />
     <ClCompile Include="Mapper.cpp" />
     <ClCompile Include="MSCognitive.cpp" />
     <ClCompile Include="OTP.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Program.cpp" />
+    <ClCompile Include="Promise.cpp" />
     <ClCompile Include="Spotify.cpp" />
     <ClCompile Include="ThreadSafe.cpp" />
     <ClCompile Include="URI.cpp" />
