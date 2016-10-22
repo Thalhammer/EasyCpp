@@ -171,6 +171,12 @@
     <ClCompile Include="MSCognitive.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="JsonRPC.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Promise.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="googletest\googletest\src\gtest-internal-inl.h">
