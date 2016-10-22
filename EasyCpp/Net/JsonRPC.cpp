@@ -1,5 +1,6 @@
 #include "JsonRPC.h"
 #include "../Serialize/JsonSerializer.h"
+#include <cstddef>
 
 namespace EasyCpp
 {
