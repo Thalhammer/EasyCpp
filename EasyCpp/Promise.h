@@ -109,7 +109,6 @@ namespace EasyCpp
 				return pres;
 			}
 
-			template<>
 			Promise<void> then(std::function<void(T&)> fn)
 			{
 				Promise<void> pres;
@@ -361,7 +360,6 @@ namespace EasyCpp
 				return pres;
 			}
 
-			template<>
 			Promise<void> then(std::function<void()> fn)
 			{
 				Promise<void> pres;
