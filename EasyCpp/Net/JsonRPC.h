@@ -43,11 +43,13 @@ namespace EasyCpp
 				int _code;
 				std::string _message;
 				AnyValue _data;
+				AnyValue _reqid;
 			public:
-				Error(int code, const std::string& msg = "", AnyValue data = nullptr);
+				Error(int code, const std::string& msg = "", AnyValue data = nullptr, AnyValue reqid = nullptr);
 				int getCode() const;
 				const std::string& getMessage() const;
 				AnyValue getData() const;
+				AnyValue getRequestId() const;
 			};
 		private:
 			std::atomic<uint64_t> _next_id;

@@ -52,9 +52,9 @@ namespace EasyCpp
 					// Single request
 					auto bundle = data.as<Bundle>();
 					if (bundle.isSet("method")) {
-						if (_functions.count(bundle.get<std::string>("method")) != 1)
-							throw Error(-32601, "Method not found");
 						AnyValue id = bundle.get("id");
+						if (_functions.count(bundle.get<std::string>("method")) != 1)
+							throw Error(-32601, "Method not found", nullptr, id);
 						_functions.at(bundle.get<std::string>("method"))(bundle.get("params"), [id, this](const AnyValue& result){
 							if (result.isType<Error>()) {
 								this->sendResultError(id, result.as<Error&>());
@@ -81,11 +81,8 @@ namespace EasyCpp
 
 						AnyValue id = bundle.isSet("id")?bundle.get("id"):AnyValue();
 						std::string method = bundle.get<std::string>("method");
-						if (_functions.count(method) != 1)
+						if (_functions.count(method) != 1) {
 							map->push_back({ id, AnyValue(Error(-32601, "Method not found")) });
-
-						_functions.at(method)(bundle.isSet("params")?bundle.get("params"):AnyValue(), [id, num_reply, map, this](const AnyValue& result) {
-							map->push_back({ id, result });
 							if (map->size() == num_reply) // All requests replied
 							{
 								if (!_transmit_fn) return;
@@ -103,7 +100,7 @@ namespace EasyCpp
 												{ "code", ex.getCode() },
 												{ "message", ex.getMessage() },
 												{ "data", ex.getData() }
-											}) }
+										}) }
 										}));
 									}
 									else {
@@ -117,11 +114,48 @@ namespace EasyCpp
 								std::string str = Serialize::JsonSerializer().serialize(results);
 								_transmit_fn(str);
 							}
-						});
+						}
+						else {
+							_functions.at(method)(bundle.isSet("params") ? bundle.get("params") : AnyValue(), [id, num_reply, map, this](const AnyValue& result) {
+								map->push_back({ id, result });
+								if (map->size() == num_reply) // All requests replied
+								{
+									if (!_transmit_fn) return;
+									AnyArray results;
+									for (auto &e : *map)
+									{
+										if (e.first.isType<nullptr_t>())
+											continue;
+										if (e.second.isType<Error>()) {
+											Error ex = e.second.as<Error&>();
+											results.push_back(Bundle({
+												{ "jsonrpc", "2.0" },
+												{ "id", e.first },
+												{ "error", Bundle({
+													{ "code", ex.getCode() },
+													{ "message", ex.getMessage() },
+													{ "data", ex.getData() }
+												}) }
+											}));
+										}
+										else {
+											results.push_back(Bundle({
+												{ "jsonrpc", "2.0" },
+												{ "id", e.first },
+												{ "result", e.second }
+											}));
+										}
+									}
+									std::string str = Serialize::JsonSerializer().serialize(results);
+									_transmit_fn(str);
+								}
+							});
+						}
 					}
 				}
 			}catch(const Error& e)
 			{
+				this->sendResultError(e.getRequestId(), e);
 			}
 		}
 
@@ -272,8 +306,8 @@ namespace EasyCpp
 			_transmit_fn(str);
 		}
 
-		JsonRPC::Error::Error(int code, const std::string & msg, AnyValue data)
-			:_code(code), _message(msg), _data(data)
+		JsonRPC::Error::Error(int code, const std::string & msg, AnyValue data, AnyValue reqid)
+			:_code(code), _message(msg), _data(data), _reqid(reqid)
 		{
 		}
 
@@ -290,6 +324,10 @@ namespace EasyCpp
 		AnyValue JsonRPC::Error::getData() const
 		{
 			return _data;
+		}
+		AnyValue JsonRPC::Error::getRequestId() const
+		{
+			return _reqid;
 		}
 	}
 }
