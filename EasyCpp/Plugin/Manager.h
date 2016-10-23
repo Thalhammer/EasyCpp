@@ -36,6 +36,9 @@ namespace EasyCpp
 			}
 			void unloadPlugin(const std::string& name);
 			std::vector<std::string> getPlugins();
+
+			void setAutoRegisterExtensions(bool v);
+			bool isAutoRegisterExtensions() const;
 		private:
 			class Plugin;
 
@@ -45,6 +48,7 @@ namespace EasyCpp
 			typedef std::map<std::string, std::map<uint64_t, InterfacePtr>> interface_map_t;
 			interface_map_t _server_ifaces;
 			std::map<std::string, std::shared_ptr<Plugin>> _plugins;
+			bool _autoregister;
 		};
 	}
 }

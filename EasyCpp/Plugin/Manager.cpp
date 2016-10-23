@@ -2,6 +2,9 @@
 #include "Plugin.h"
 #include <fstream>
 
+#include "IPluginDatabaseProvider.h"
+#include "../Database/DatabaseDriverManager.h"
+
 namespace EasyCpp
 {
 	namespace Plugin
@@ -34,6 +37,17 @@ namespace EasyCpp
 				tmap[e->getName()][e->getVersion()] = e;
 			auto plugin = std::make_shared<Plugin>(name, path, tmap);
 			_plugins[name] = plugin;
+
+			if (_autoregister) {
+				// Autoregister EasyCpp Extensions
+				if (plugin->hasInterface<IPluginDatabaseProvider>())
+				{
+					auto iface = plugin->getInterface<IPluginDatabaseProvider>();
+					for (auto& e : iface->getDriverMap()) {
+						Database::DatabaseDriverManager::registerDriver(e.first, e.second);
+					}
+				}
+			}
 		}
 
 		void Manager::loadPluginFromMemory(const std::string & name, const std::vector<uint8_t>& data, const std::vector<InterfacePtr>& server_ifaces)
@@ -70,6 +84,16 @@ namespace EasyCpp
 				throw std::runtime_error("Plugin not found");
 			if (!_plugins.at(name)->canUnload())
 				throw std::runtime_error("Plugin is in use");
+			if (_autoregister) {
+				// Autoregister EasyCpp Extensions
+				if (_plugins.at(name)->hasInterface<IPluginDatabaseProvider>())
+				{
+					auto iface = _plugins.at(name)->getInterface<IPluginDatabaseProvider>();
+					for (auto& e : iface->getDriverMap()) {
+						Database::DatabaseDriverManager::deregisterDriver(e.first);
+					}
+				}
+			}
 			_plugins.at(name)->deinit();
 			_plugins.erase(name);
 		}
@@ -80,6 +104,16 @@ namespace EasyCpp
 			for (auto e : _plugins)
 				res.push_back(e.first);
 			return res;
+		}
+
+		void Manager::setAutoRegisterExtensions(bool v)
+		{
+			_autoregister = v;
+		}
+
+		bool Manager::isAutoRegisterExtensions() const
+		{
+			return _autoregister;
 		}
 	}
 }
