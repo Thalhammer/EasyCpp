@@ -3,6 +3,7 @@
 #include "../Hash/SHA1.h"
 #include "../HexEncoding.h"
 #include "../StringAlgorithm.h"
+#include "Endian.h"
 #include <random>
 
 namespace EasyCpp
@@ -47,12 +48,12 @@ namespace EasyCpp
 				}
 				if (step == steps::READ_LEN && ((c_frame.len == 127 && buf.size() >= 8) || (c_frame.len == 126 && buf.size() >= 2))) {
 					if (c_frame.len == 127) {
-						uint64_t len = *((uint64_t*)buf.data());
+						uint64_t len = Endian::ntoh(*((uint64_t*)buf.data()));
 						c_frame.len = len;
 						buf = buf.substr(8);
 					}
 					else {
-						uint16_t len = *((uint16_t*)buf.data());
+						uint16_t len = Endian::ntoh(*((uint16_t*)buf.data()));
 						c_frame.len = len;
 						buf = buf.substr(2);
 					}
@@ -82,7 +83,9 @@ namespace EasyCpp
 			if (!_curl)
 				return;
 			//this->onError([](auto) {});
-			this->disconnect();
+			try {
+				this->disconnect();
+			}catch(const std::exception& e){}
 		}
 
 		void WebsocketClient::onOpen(const std::function<void()>& fn)
@@ -138,7 +141,7 @@ namespace EasyCpp
 			_curl->perform();
 
 			std::string request = "GET " + uri.getPath() + uri.getQuery() + " HTTP/1.1\r\n";
-			request += "Host: " + uri.getHostname() + "\r\n";
+			request += "Host: " + uri.getHostname() + ":" + std::to_string(uri.getPort()) + "\r\n";
 			request += "Upgrade: websocket\r\n";
 			request += "Connection: Upgrade\r\n";
 
@@ -324,14 +327,13 @@ namespace EasyCpp
 			msg[1] = frame.masked ? 0x80 : 0x00;
 			if (frame.len < 126) msg[1] |= frame.len;
 			else if (frame.len < UINT16_MAX) {
-				uint16_t len = (uint16_t)frame.len;
-				msg.resize(4);
-				msg[2] = (len >> 8) & 0xff;
-				msg[3] = len & 0xff;
+				uint16_t len = Endian::hton((uint16_t)frame.len);
+				msg.append(std::string((char*)&len, ((char*)&len) + 2));
 				msg[1] |= 126;
 			}
 			else {
-				msg.append(std::string((char*)&frame.len, ((char*)&frame.len) + 8));
+				uint64_t len = Endian::hton(frame.len);
+				msg.append(std::string((char*)&len, ((char*)&len) + 8));
 				msg[1] |= 127;
 			}
 			if (frame.masked) {

@@ -185,6 +185,20 @@ namespace EasyCpp
 			return _transmit_fn;
 		}
 
+		void JsonRPC::resetCalls(const std::string & reason)
+		{
+			Bundle error({
+				{ "code", -1 },
+				{ "message", std::string(reason) },
+				{ "data", Bundle() }
+			});
+			for (auto& e : _cb_map)
+			{
+				e.second(error, false);
+			}
+			_cb_map.clear();
+		}
+
 		void JsonRPC::handleResponse(const Bundle & data)
 		{
 			uint64_t id = data.get<uint64_t>("id");

@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
-#include <Net/JsonRPC.h>
+#include <Net/WSJsonRPC.h>
+#include <Bundle.h>
 #include <vector>
 
 using namespace EasyCpp::Net;
@@ -101,6 +102,34 @@ namespace EasyCppTest
 		ASSERT_EQ(true, called);
 	}
 
+	TEST(JsonRPC, DISABLED_WebsocketTest)
+	{
+		bool call_executed = false;
+		bool error_executed = false;
+
+		std::mutex _mtx;
+		std::condition_variable _cv;
+		WSJsonRPC rpc;
+		rpc.onOpen([&]() {
+			rpc.callFunction("Server.getSupportedMethods", Bundle()).then(std::function<void(EasyCpp::AnyValue& val)>([&](const EasyCpp::AnyValue& res) {
+				call_executed = true;
+				ASSERT_TRUE(res.isType<AnyArray>());
+				std::unique_lock<std::mutex> lck(_mtx);
+				_cv.notify_all();
+			}));
+		});
+		rpc.onError([&error_executed](std::exception_ptr ex) {
+			error_executed = true;
+		});
+		rpc.connect("wss://localhost.systemserver.tk:666/system");
+		{
+			std::unique_lock<std::mutex> lck(_mtx);
+			_cv.wait_for(lck, std::chrono::seconds(10));
+		}
+		ASSERT_TRUE(call_executed);
+		ASSERT_FALSE(error_executed);
+	}
+
 	TEST(JsonRPC, CallFunctionSend)
 	{
 		JsonRPC rpc;
@@ -112,4 +141,5 @@ namespace EasyCppTest
 		rpc.callFunction("test", { std::string("Test1"),std::string("Test2") }, [](const EasyCpp::AnyValue& val, bool error) {}); // vector<AnyValue>
 		ASSERT_EQ(true, called);
 	}
+
 }

@@ -744,6 +744,12 @@
     <ClInclude Include="Promise.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="Net\WSJsonRPC.h">
+      <Filter>Headerdateien\Net</Filter>
+    </ClInclude>
+    <ClInclude Include="Net\Endian.h">
+      <Filter>Headerdateien\Net</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1169,9 +1175,6 @@
     <ClCompile Include="Database\Mapper.cpp">
       <Filter>Quelldateien\Database</Filter>
     </ClCompile>
-    <ClCompile Include="Net\WebsocketClient.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Net\Services\Microsoft\Cognitive\CVDSMModelResult.cpp">
       <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
     </ClCompile>
@@ -1235,7 +1238,13 @@
     <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageAdult.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="Net\WebsocketClient.cpp">
+      <Filter>Quelldateien\Net</Filter>
+    </ClCompile>
     <ClCompile Include="Net\JsonRPC.cpp">
+      <Filter>Quelldateien\Net</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\WSJsonRPC.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

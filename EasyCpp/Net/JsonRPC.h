@@ -35,6 +35,8 @@ namespace EasyCpp
 			void setTransmitCallback(transmit_fn_t fn);
 			transmit_fn_t getTransmitCallback() const;
 
+			void resetCalls(const std::string& reason = "");
+
 			class Error
 			{
 			private:

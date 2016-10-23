@@ -118,6 +118,7 @@
     <ClInclude Include="Logging\Severity.h" />
     <ClInclude Include="Logging\VFSLogger.h" />
     <ClInclude Include="Net\Curl.h" />
+    <ClInclude Include="Net\Endian.h" />
     <ClInclude Include="Net\JsonRPC.h" />
     <ClInclude Include="Net\Services\Microsoft\Cognitive\ApiException.h" />
     <ClInclude Include="Net\Services\Microsoft\Cognitive\ComputerVision.h" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Net\URI.h" />
     <ClInclude Include="Net\WebClient.h" />
     <ClInclude Include="Net\WebsocketClient.h" />
+    <ClInclude Include="Net\WSJsonRPC.h" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="Nullable.h" />
     <ClInclude Include="PerformanceCheck.h" />
@@ -373,6 +375,7 @@
     <ClCompile Include="Net\URI.cpp" />
     <ClCompile Include="Net\WebClient.cpp" />
     <ClCompile Include="Net\WebsocketClient.cpp" />
+    <ClCompile Include="Net\WSJsonRPC.cpp" />
     <ClCompile Include="Plugin\DeinitArgs.cpp" />
     <ClCompile Include="Plugin\InitArgs.cpp" />
     <ClCompile Include="Plugin\Plugin.cpp" />
