@@ -141,7 +141,10 @@ namespace EasyCpp
 			_curl->perform();
 
 			std::string request = "GET " + uri.getPath() + uri.getQuery() + " HTTP/1.1\r\n";
-			request += "Host: " + uri.getHostname() + ":" + std::to_string(uri.getPort()) + "\r\n";
+			request += "Host: " + uri.getHostname();
+			if(uri.getPort()!=-1)
+				request += ":" + std::to_string(uri.getPort()) + "\r\n";
+			else request += "\r\n";
 			request += "Upgrade: websocket\r\n";
 			request += "Connection: Upgrade\r\n";
 

@@ -7,7 +7,7 @@ using namespace EasyCpp;
 
 namespace EasyCppTest
 {
-	TEST(WebsocketClient, EchoTest)
+	TEST(WebsocketClient, DISABLED_EchoTest)
 	{
 		Net::WebsocketClient client;
 
