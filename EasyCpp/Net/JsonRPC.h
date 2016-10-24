@@ -37,7 +37,7 @@ namespace EasyCpp
 
 			void resetCalls(const std::string& reason = "");
 
-			class Error
+			class DLL_EXPORT Error
 			{
 			private:
 				int _code;
