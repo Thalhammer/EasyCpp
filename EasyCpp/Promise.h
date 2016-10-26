@@ -5,6 +5,7 @@
 #include <mutex>
 #include <vector>
 #include <atomic>
+#include <condition_variable>
 
 namespace EasyCpp
 {
