@@ -48,6 +48,20 @@ namespace EasyCppTest
 		promise.resolve(10);
 	}
 
+	TEST(Promise, Await)
+	{
+		Promise<int> promise;
+		promise.resolve(10);
+		int i = promise.then(std::function<int(int&)>([](int& val) -> int {
+			return val;
+		})).await();
+		ASSERT_EQ(10, i);
+
+		Promise<void> promise2;
+		promise2.resolve();
+		promise2.await();
+	}
+
 	TEST(Promise, Void)
 	{
 		Promise<void> promise;

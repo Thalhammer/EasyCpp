@@ -12,6 +12,9 @@ namespace EasyCpp
 	class Promise;
 
 	template<>
+	class Promise<void>;
+
+	template<>
 	class Promise<void>
 	{
 	public:
@@ -42,6 +45,11 @@ namespace EasyCpp
 		Promise<Result> then(std::function<Promise<Result>()> fn)
 		{
 			return _shared->then(fn);
+		}
+
+		void await()
+		{
+			_shared->await();
 		}
 
 		Promise<void> error(std::function<void(std::exception_ptr)> fn)
@@ -157,6 +165,23 @@ namespace EasyCpp
 					pfn();
 				}
 				return pres;
+			}
+
+			void await()
+			{
+				std::unique_lock<std::mutex> lck(_mtx);
+				if (_state == State::PENDING) {
+					// Wait
+					std::condition_variable cv_wait;
+					this->then(std::function<void()>([this, &cv_wait]() {
+						std::unique_lock<std::mutex> lck(_mtx);
+						cv_wait.notify_all();
+					}));
+					cv_wait.wait(lck, [this]() { return _state == State::PENDING; });
+				}
+				if (_state == State::REJECTED) {
+					std::rethrow_exception(_exception);
+				}
 			}
 
 			Promise<void> error(std::function<void(std::exception_ptr)> fn)
@@ -289,6 +314,11 @@ namespace EasyCpp
 			return _shared->then(fn);
 		}
 
+		T await()
+		{
+			return _shared->await();
+		}
+
 		Promise<void> error(std::function<void(std::exception_ptr)> fn)
 		{
 			return _shared->error(fn);
@@ -402,6 +432,26 @@ namespace EasyCpp
 					pfn(*_value);
 				}
 				return pres;
+			}
+
+			T await()
+			{
+				std::unique_lock<std::mutex> lck(_mtx);
+				if (_state == State::PENDING) {
+					// Wait
+					std::condition_variable cv_wait;
+					this->then(std::function<void(T&)>([this, &cv_wait](T& res) {
+						std::unique_lock<std::mutex> lck(_mtx);
+						cv_wait.notify_all();
+					}));
+					cv_wait.wait(lck, [this]() { return _state == State::PENDING; });
+				}
+				if (_state == State::FULFILLED) {
+					return *_value;
+				}
+				else {
+					std::rethrow_exception(_exception);
+				}
 			}
 
 			Promise<void> error(std::function<void(std::exception_ptr)> fn)
