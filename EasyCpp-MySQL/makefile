@@ -62,7 +62,7 @@ ifeq ($(ARCH),64)
 else
 	@echo "Architecture: i386" >> $(DEBFOLDER)/DEBIAN/control
 endif
-	@echo "Depends: libeasycpp, libmysqlclient18" >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Depends: libeasycpp, libmysqlclient20" >> $(DEBFOLDER)/DEBIAN/control
 	@echo "Maintainer: Dominik Thalhammer <dominik@thalhammer.it>" >> $(DEBFOLDER)/DEBIAN/control
 	@echo "Description: MySQL Database driver for EasyCpp." >> $(DEBFOLDER)/DEBIAN/control
 	@cp $(OUTFILE) $(DEBFOLDER)/usr/lib/libeasycpp-mysql.so.$(DEBVERSION)
