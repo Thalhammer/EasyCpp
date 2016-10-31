@@ -12,6 +12,10 @@ LINKFLAGS = -lmysqlclient
 
 OUTFILE = libEasyCpp_MySQL.so
 
+ARCH := $(shell getconf LONG_BIT)
+DEBVERSION = "0.0."`git rev-list HEAD --count`
+DEBFOLDER = libeasycpp-mysql_$(DEBVERSION)
+
 .PHONY: clean debug release
 
 release: $(OUTFILE)
@@ -43,5 +47,26 @@ clean:
 	@rm -f $(OBJ)
 	@echo Removing dependency files
 	@rm -rf $(DEP_DIR)
+
+package: release
+	@rm -r -f $(DEBFOLDER)
+	@echo Creating package
+	@mkdir -p $(DEBFOLDER)/DEBIAN
+	@mkdir -p $(DEBFOLDER)/usr/lib/
+	@echo "Package: libeasycpp-mysql" >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Version: $(DEBVERSION)" >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Section: devel" >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Priority: optional" >> $(DEBFOLDER)/DEBIAN/control
+ifeq ($(ARCH),64)
+	@echo "Architecture: amd64" >> $(DEBFOLDER)/DEBIAN/control
+else
+	@echo "Architecture: i386" >> $(DEBFOLDER)/DEBIAN/control
+endif
+	@echo "Depends: libeasycpp, libmysqlclient18" >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Maintainer: Dominik Thalhammer <dominik@thalhammer.it>" >> $(DEBFOLDER)/DEBIAN/control
+	@echo "Description: MySQL Database driver for EasyCpp." >> $(DEBFOLDER)/DEBIAN/control
+	@cp $(OUTFILE) $(DEBFOLDER)/usr/lib/libeasycpp-mysql.so.$(DEBVERSION)
+	@ln -s libeasycpp-mysql.so.$(DEBVERSION) $(DEBFOLDER)/usr/lib/libeasycpp-mysql.so
+	@fakeroot dpkg-deb --build $(DEBFOLDER)
 
 -include $(OBJ:%=$(DEP_DIR)/%.d)
