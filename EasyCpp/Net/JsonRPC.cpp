@@ -279,6 +279,7 @@ namespace EasyCpp
 		void JsonRPC::sendResult(AnyValue id, AnyValue result)
 		{
 			if (!_transmit_fn) return;
+			if (id.isType<nullptr_t>()) return;
 			Bundle req({
 				{ "jsonrpc", "2.0" },
 				{ "id", id },
@@ -292,6 +293,7 @@ namespace EasyCpp
 		void JsonRPC::sendResultError(AnyValue id, Error e)
 		{
 			if (!_transmit_fn) return;
+			if (id.isType<nullptr_t>()) return;
 			Bundle req({
 				{ "jsonrpc", "2.0" },
 				{ "id", id },
