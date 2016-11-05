@@ -14,7 +14,7 @@ namespace EasyCpp
 		URI::URI(const std::string& uri)
 			:URI()
 		{
-			std::regex reg("^(.+):\\/\\/(.+@)?([a-zA-Z.\\-0-9]+)(:\\d{1,5})?([^?\\n\\#]*)(\\?[^#\\n]*)?(\\#.*)?$");
+			std::regex reg("^(.+):\\/\\/(.+@)?([a-zA-Z\\.0-9\\-]+)(:\\d{1,5})?([^?\\n\\#]*)(\\?[^#\\n]*)?(\\#.*)?$");
 			std::smatch match;
 			if (std::regex_match(uri, match, reg))
 			{
