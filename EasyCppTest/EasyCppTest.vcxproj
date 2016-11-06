@@ -159,6 +159,7 @@
     <ClCompile Include="Bundle.cpp" />
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="Convert.cpp" />
+    <ClCompile Include="CRON.cpp" />
     <ClCompile Include="Curl.cpp" />
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="DynamicObject.cpp" />

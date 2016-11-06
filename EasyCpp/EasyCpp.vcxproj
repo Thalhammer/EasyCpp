@@ -37,6 +37,7 @@
     <ClInclude Include="Bundle.h" />
     <ClInclude Include="BundleFilter.h" />
     <ClInclude Include="ConvertException.h" />
+    <ClInclude Include="CRON.h" />
     <ClInclude Include="Database\Database.h" />
     <ClInclude Include="Database\DatabaseDriver.h" />
     <ClInclude Include="Database\DatabaseDriverManager.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="Bundle.cpp" />
     <ClCompile Include="BundleFilter.cpp" />
     <ClCompile Include="ConvertException.cpp" />
+    <ClCompile Include="CRON.cpp" />
     <ClCompile Include="Database\DatabaseDriverManager.cpp" />
     <ClCompile Include="Database\DatabaseException.cpp" />
     <ClCompile Include="Database\Mapper.cpp" />

@@ -750,6 +750,9 @@
     <ClInclude Include="Net\Endian.h">
       <Filter>Headerdateien\Net</Filter>
     </ClInclude>
+    <ClInclude Include="CRON.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1245,6 +1248,9 @@
       <Filter>Quelldateien\Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\WSJsonRPC.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="CRON.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
