@@ -16,7 +16,7 @@ namespace EasyCpp
 			namespace Spotify
 			{
 				template<typename T>
-				class Paging : public Serialize::Serializable
+				class DLL_EXPORT Paging : public Serialize::Serializable
 				{
 				public:
 					Paging() : _item_key("items") {}

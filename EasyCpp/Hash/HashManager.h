@@ -9,7 +9,7 @@ namespace EasyCpp
 {
 	namespace Hash
 	{
-		class HashManager
+		class DLL_EXPORT HashManager
 		{
 		public:
 			typedef std::function<HashPtr()> HashProviderFn;

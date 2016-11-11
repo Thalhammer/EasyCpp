@@ -7,7 +7,7 @@ namespace EasyCpp
 {
 	namespace Database
 	{
-		class Statement
+		class DLL_EXPORT Statement
 		{
 		public:
 			virtual ~Statement() {}

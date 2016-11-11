@@ -1,9 +1,10 @@
 #pragma once
 #include <ctime>
+#include "DllExport.h"
 
 namespace EasyCpp
 {
-	class Time
+	class DLL_EXPORT Time
 	{
 	public:
 		/// <summary>Threadsafe localtime</summary>
