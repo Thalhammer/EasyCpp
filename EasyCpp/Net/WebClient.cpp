@@ -218,6 +218,7 @@ namespace EasyCpp
 			std::string result;
 			Curl curl;
 			curl.setURL(URI(_base_uri.str() + url).str());
+			curl.setPOST(true);
 			curl.setOutputString(result);
 			curl.setReadFunction([stream](char* data, uint64_t len) {
 				if (!stream->isGood()) return size_t(0);
@@ -255,6 +256,7 @@ namespace EasyCpp
 			std::string result;
 			Curl curl;
 			curl.setURL(URI(_base_uri.str() + url).str());
+			curl.setPOST(true);
 			curl.setOutputString(result);
 			curl.setInputString(data);
 			if (_user_agent != "") {
