@@ -1,6 +1,7 @@
 #include "HexEncoding.h"
 #include <sstream>
 #include <iomanip>
+#include <stdexcept>
 
 std::string EasyCpp::HexEncoding::encode(const std::string & str)
 {
@@ -14,9 +15,17 @@ std::string EasyCpp::HexEncoding::encode(const std::string & str)
 	return res;
 }
 
-std::string EasyCpp::HexEncoding::decode(const std::string & hex)
+std::string EasyCpp::HexEncoding::decode(const std::string & ihex)
 {
-	if (hex.size() % 2 != 0) throw std::runtime_error("Invalid hex string");
+	std::string hex;
+	if (ihex.size() % 2 != 0) {
+		hex = "0" + ihex;
+	}
+	else {
+		hex = ihex;
+	}
+	if (hex.find_first_not_of("0123456789ABCDEFabcdef") != std::string::npos)
+		throw std::runtime_error("Invalid hex string");
 	std::string res;
 	res.resize(hex.size() / 2);
 	for (size_t i = 0; i < hex.size(); i += 2)
