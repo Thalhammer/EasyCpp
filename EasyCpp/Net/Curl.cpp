@@ -6,6 +6,13 @@
 #include <cstring>
 #include "../StringAlgorithm.h"
 
+// Fix for missing macro in old versions
+#ifndef CURL_AT_LEAST_VERSION
+#define CURL_VERSION_BITS(x,y,z) ((x)<<16|(y)<<8|z)
+#define CURL_AT_LEAST_VERSION(x,y,z) \
+  (LIBCURL_VERSION_NUM >= CURL_VERSION_BITS(x, y, z))
+#endif
+
 namespace EasyCpp
 {
 	namespace Net
@@ -184,7 +191,11 @@ namespace EasyCpp
 
 		void Curl::setPathAsIs(bool v)
 		{
+#if CURL_AT_LEAST_VERSION(7,42,0)
 			setOption(CURLOPT_PATH_AS_IS, v);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setProtocols(const std::string & protocols)
@@ -199,7 +210,11 @@ namespace EasyCpp
 
 		void Curl::setDefaultProtocol(const std::string & protocol)
 		{
+#if CURL_AT_LEAST_VERSION(7,45,0)
 			setOption(CURLOPT_DEFAULT_PROTOCOL, protocol);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setProxy(const std::string & proxy)
@@ -241,7 +256,7 @@ namespace EasyCpp
 
 		void Curl::setConnectTo(const std::vector<std::string>& list)
 		{
-#if defined(CURLOPT_CONNECT_TO)
+#if CURL_AT_LEAST_VERSION(7,49,0)
 			setOption(CURLOPT_CONNECT_TO, nullptr);
 			{
 				std::unique_lock<std::mutex> lck(_handle_lock);
@@ -249,7 +264,7 @@ namespace EasyCpp
 			}
 			setOption(CURLOPT_CONNECT_TO, _slist_connect_to.get());
 #else
-			throw std::runtime_error("Not supported by this CURL version");
+			throw std::runtime_error("Not supported by compiled curl version");
 #endif
 		}
 
@@ -260,12 +275,20 @@ namespace EasyCpp
 
 		void Curl::setProxyServiceName(const std::string & service)
 		{
+#if CURL_AT_LEAST_VERSION(7,43,0)
 			setOption(CURLOPT_PROXY_SERVICE_NAME, service);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setAuthenticationServiceName(const std::string & name)
 		{
+#if CURL_AT_LEAST_VERSION(7,43,0)
 			setOption(CURLOPT_SERVICE_NAME, name);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setInterface(const std::string & str)
@@ -336,9 +359,13 @@ namespace EasyCpp
 
 		void Curl::setUnixSocketPath(const std::string & path)
 		{
+#if CURL_AT_LEAST_VERSION(7,40,0)
 			if (path == "")
 				setOption(CURLOPT_UNIX_SOCKET_PATH, nullptr);
 			else setOption(CURLOPT_UNIX_SOCKET_PATH, path);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setNETRC(bool read, bool required)
@@ -814,7 +841,12 @@ namespace EasyCpp
 			case HTTPVersion::V1_0: version = CURL_HTTP_VERSION_1_0; break;
 			case HTTPVersion::V1_1: version = CURL_HTTP_VERSION_1_1; break;
 			case HTTPVersion::V2_0: version = CURL_HTTP_VERSION_2_0; break;
+#if CURL_AT_LEAST_VERSION(7,47,0)
 			case HTTPVersion::V2TLS: version = CURL_HTTP_VERSION_2TLS; break;
+#else
+			case HTTPVersion::V2TLS:
+				throw std::runtime_error("Not supported by compiled curl version");
+#endif
 			default: version = CURL_HTTP_VERSION_NONE; break;
 			}
 			setOption(CURLOPT_HTTP_VERSION, version);
@@ -842,12 +874,20 @@ namespace EasyCpp
 
 		void Curl::setPipeWait(long wait)
 		{
+#if CURL_AT_LEAST_VERSION(7,43,0)
 			setOption(CURLOPT_PIPEWAIT, wait);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setStreamWeight(long w)
 		{
+#if CURL_AT_LEAST_VERSION(7,46,0)
 			setOption(CURLOPT_STREAM_WEIGHT, w);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setFTPPort(const std::string & spec)
@@ -1214,7 +1254,11 @@ namespace EasyCpp
 
 		void Curl::setSSLFalseStart(bool v)
 		{
+#if CURL_AT_LEAST_VERSION(7,42,0)
 			setOption(CURLOPT_SSL_FALSESTART, v);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setSSLVersion(SSLVersion v)
@@ -1234,7 +1278,11 @@ namespace EasyCpp
 
 		void Curl::setSSLVerifyStatus(bool v)
 		{
+#if CURL_AT_LEAST_VERSION(7,41,0)
 			setOption(CURLOPT_SSL_VERIFYSTATUS, v);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setSSLCABundle(const std::string& path)
@@ -1264,7 +1312,11 @@ namespace EasyCpp
 
 		void Curl::setSSLPinnedPublicKey(const std::string& ppk)
 		{
+#if CURL_AT_LEAST_VERSION(7,39,0)
 			setOption(CURLOPT_PINNEDPUBLICKEY, ppk);
+#else
+			throw std::runtime_error("Not supported by compiled curl version");
+#endif
 		}
 
 		void Curl::setSSLRandomFile(const std::string& file)
@@ -1549,9 +1601,15 @@ namespace EasyCpp
 
 		uint64_t Curl::getActiveSocket()
 		{
+#if CURL_AT_LEAST_VERSION(7,45,0)
 			curl_socket_t t;
 			getInfo(CURLINFO_ACTIVESOCKET, (void**)&t);
 			return t;
+#else
+			long t;
+			getInfo(CURLINFO_LASTSOCKET, t);
+			return (uint64_t)t;
+#endif
 		}
 
 		std::string Curl::getFTPEntryPath()
@@ -1743,8 +1801,10 @@ namespace EasyCpp
 				{ "rtmps",CURLPROTO_RTMPS },
 				{ "rtmpts", CURLPROTO_RTMPTS },
 				{ "gopher", CURLPROTO_GOPHER },
+#if CURL_AT_LEAST_VERSION(7,40,0)
 				{ "smb", CURLPROTO_SMB },
 				{ "smbs", CURLPROTO_SMBS },
+#endif
 				{ "all", CURLPROTO_ALL }
 			};
 			long result = 0;
