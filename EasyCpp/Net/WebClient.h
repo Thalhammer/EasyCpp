@@ -14,6 +14,8 @@ namespace EasyCpp
 		class DLL_EXPORT WebClient: public DynamicObject
 		{
 		public:
+			WebClient();
+
 			void DownloadFile(const std::string& url, VFS::OutputStreamPtr stream);
 			std::string Download(const std::string& url);
 			std::string Upload(const std::string& url, VFS::InputStreamPtr stream);
@@ -33,6 +35,9 @@ namespace EasyCpp
 
 			Bundle getResponseHeaders();
 
+			void setTimeout(std::chrono::milliseconds timeout);
+			std::chrono::milliseconds getTimeout();
+
 			// Geerbt von DynamicObject
 			virtual AnyValue getProperty(const std::string & name) override;
 			virtual std::vector<std::string> getProperties() override;
@@ -43,6 +48,8 @@ namespace EasyCpp
 			std::string _username;
 			std::string _password;
 			std::string _user_agent;
+
+			std::chrono::milliseconds _timeout;
 
 			URI _base_uri;
 			Bundle _headers;

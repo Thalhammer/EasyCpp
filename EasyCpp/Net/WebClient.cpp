@@ -151,6 +151,11 @@ namespace EasyCpp
 			};
 		}
 
+		WebClient::WebClient()
+			:_timeout(0)
+		{
+		}
+
 		void WebClient::DownloadFile(const std::string & url, VFS::OutputStreamPtr stream)
 		{
 			Curl curl;
@@ -158,6 +163,7 @@ namespace EasyCpp
 			curl.setWriteFunction([stream](char* data, uint64_t len) {
 				return stream->write(std::vector<uint8_t>(data, data + len));
 			});
+			curl.setTimeout(_timeout.count());
 			if (_user_agent != "") {
 				curl.setUserAgent(_user_agent);
 			}
@@ -187,6 +193,7 @@ namespace EasyCpp
 			std::string result;
 			Curl curl;
 			curl.setURL(URI(_base_uri.str() + url).str());
+			curl.setTimeout(_timeout.count());
 			curl.setOutputString(result);
 			if (_user_agent != "") {
 				curl.setUserAgent(_user_agent);
@@ -218,6 +225,7 @@ namespace EasyCpp
 			std::string result;
 			Curl curl;
 			curl.setURL(URI(_base_uri.str() + url).str());
+			curl.setTimeout(_timeout.count());
 			curl.setPOST(true);
 			curl.setOutputString(result);
 			curl.setReadFunction([stream](char* data, uint64_t len) {
@@ -256,6 +264,7 @@ namespace EasyCpp
 			std::string result;
 			Curl curl;
 			curl.setURL(URI(_base_uri.str() + url).str());
+			curl.setTimeout(_timeout.count());
 			curl.setPOST(true);
 			curl.setOutputString(result);
 			curl.setInputString(data);
@@ -332,6 +341,16 @@ namespace EasyCpp
 		Bundle WebClient::getResponseHeaders()
 		{
 			return _response_headers;
+		}
+
+		void WebClient::setTimeout(std::chrono::milliseconds timeout)
+		{
+			_timeout = timeout;
+		}
+
+		std::chrono::milliseconds WebClient::getTimeout()
+		{
+			return _timeout;
 		}
 	}
 }
