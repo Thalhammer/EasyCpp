@@ -107,7 +107,13 @@ namespace EasyCppMySql
 				throw DatabaseException("Failed to bind parameters", {});
 			if (mysql_stmt_execute(_stmt) != 0)
 				throw DatabaseException("Failed to execute statement", {});
-			return mysql_stmt_affected_rows(_stmt);
+			auto rows = mysql_stmt_affected_rows(_stmt);
+
+			int error = mysql_stmt_reset(_stmt);
+			if (error != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
+
+			return rows;
 		});
 	}
 
@@ -149,8 +155,9 @@ namespace EasyCppMySql
 			else
 				res = bind2Result(_result_meta_bind);
 
-			if (mysql_stmt_reset(_stmt) != 0)
-				throw DatabaseException("Failed to reset statement", {});
+			int error = mysql_stmt_reset(_stmt);
+			if (error != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
 
 			return res;
 		});
@@ -201,8 +208,9 @@ namespace EasyCppMySql
 				}
 			}
 
-			if (mysql_stmt_reset(_stmt) != 0)
-				throw DatabaseException("Failed to reset statement", {});
+			int error = mysql_stmt_reset(_stmt);
+			if (error != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
 
 			return values;
 		});
@@ -250,8 +258,9 @@ namespace EasyCppMySql
 				result.appendRow(values);
 			}
 
-			if (mysql_stmt_reset(_stmt) != 0)
-				throw DatabaseException("Failed to reset statement", {});
+			int error = mysql_stmt_reset(_stmt);
+			if (error != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
 
 			return result;
 		});
