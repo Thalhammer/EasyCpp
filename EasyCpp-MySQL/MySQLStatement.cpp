@@ -106,12 +106,11 @@ namespace EasyCppMySql
 			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
 				throw DatabaseException("Failed to bind parameters", {});
 			if (mysql_stmt_execute(_stmt) != 0)
-				throw DatabaseException("Failed to execute statement", {});
+				throw DatabaseException("Failed to execute statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 			auto rows = mysql_stmt_affected_rows(_stmt);
 
-			int error = mysql_stmt_reset(_stmt);
-			if (error != 0)
-				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			return rows;
 		});
@@ -123,7 +122,7 @@ namespace EasyCppMySql
 			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
 				throw DatabaseException("Failed to bind parameters", {});
 			if (mysql_stmt_execute(_stmt) != 0)
-				throw DatabaseException("Failed to execute statement", {});
+				throw DatabaseException("Failed to execute statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
 			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
@@ -155,9 +154,8 @@ namespace EasyCppMySql
 			else
 				res = bind2Result(_result_meta_bind);
 
-			int error = mysql_stmt_reset(_stmt);
-			if (error != 0)
-				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			return res;
 		});
@@ -169,7 +167,7 @@ namespace EasyCppMySql
 			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
 				throw DatabaseException("Failed to bind parameters", {});
 			if (mysql_stmt_execute(_stmt) != 0)
-				throw DatabaseException("Failed to execute statement", {});
+				throw DatabaseException("Failed to execute statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
 			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
@@ -208,9 +206,8 @@ namespace EasyCppMySql
 				}
 			}
 
-			int error = mysql_stmt_reset(_stmt);
-			if (error != 0)
-				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			return values;
 		});
@@ -222,7 +219,7 @@ namespace EasyCppMySql
 			if (mysql_stmt_bind_param(_stmt, _param_bind) != 0)
 				throw DatabaseException("Failed to bind parameters", {});
 			if (mysql_stmt_execute(_stmt) != 0)
-				throw DatabaseException("Failed to execute statement", {});
+				throw DatabaseException("Failed to execute statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
 			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
@@ -258,9 +255,8 @@ namespace EasyCppMySql
 				result.appendRow(values);
 			}
 
-			int error = mysql_stmt_reset(_stmt);
-			if (error != 0)
-				throw DatabaseException("Failed to reset statement: " + std::to_string(error), {});
+			if (mysql_stmt_reset(_stmt) != 0)
+				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 
 			return result;
 		});
