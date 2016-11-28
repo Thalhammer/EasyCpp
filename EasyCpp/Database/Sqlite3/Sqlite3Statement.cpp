@@ -51,8 +51,10 @@ namespace EasyCpp
 				int rc = sqlite3_reset(_stmt);
 				// Do we need to check the return code ?
 				rc = sqlite3_step(_stmt);
-				if (rc != SQLITE_OK&&rc != SQLITE_ROW)
+				if (rc != SQLITE_OK&&rc != SQLITE_ROW&&rc != SQLITE_DONE)
 					throw DatabaseException("Failed to execute statement", {});
+				if (rc == SQLITE_DONE) // No result rows
+					throw DatabaseException("Query did not return a result", {});
 				return getColumn(0);
 			}
 
@@ -65,7 +67,7 @@ namespace EasyCpp
 				int rc = sqlite3_reset(_stmt);
 				// Do we need to check the return code ?
 				rc = sqlite3_step(_stmt);
-				if (rc != SQLITE_OK&&rc != SQLITE_ROW)
+				if (rc != SQLITE_OK&&rc != SQLITE_ROW&&rc != SQLITE_DONE)
 					throw DatabaseException("Failed to execute statement", {});
 
 				int colcount = sqlite3_column_count(_stmt);
@@ -86,7 +88,7 @@ namespace EasyCpp
 				int rc = sqlite3_reset(_stmt);
 				// Do we need to check the return code ?
 				rc = sqlite3_step(_stmt);
-				if (rc != SQLITE_OK&&rc != SQLITE_ROW)
+				if (rc != SQLITE_OK&&rc != SQLITE_ROW&&rc != SQLITE_DONE)
 					throw DatabaseException("Failed to execute statement", {});
 
 				int colcount = sqlite3_column_count(_stmt);
