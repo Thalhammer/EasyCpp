@@ -174,11 +174,15 @@ namespace EasyCpp
 				if (_state == State::PENDING) {
 					// Wait
 					std::condition_variable cv_wait;
-					this->then(std::function<void()>([this, &cv_wait]() {
-						std::unique_lock<std::mutex> lck(_mtx);
+					_then.push_back([&cv_wait]() {
+						// Mutex is locked by resolv call
 						cv_wait.notify_all();
-					}));
-					cv_wait.wait(lck, [this]() { return _state == State::PENDING; });
+					});
+					_error.push_back([&cv_wait](std::exception_ptr) {
+						// Mutex is locked by reject call
+						cv_wait.notify_all();
+					});
+					cv_wait.wait(lck, [this]() { return _state != State::PENDING; });
 				}
 				if (_state == State::REJECTED) {
 					std::rethrow_exception(_exception);
@@ -441,11 +445,15 @@ namespace EasyCpp
 				if (_state == State::PENDING) {
 					// Wait
 					std::condition_variable cv_wait;
-					this->then(std::function<void(T&)>([this, &cv_wait](T& res) {
-						std::unique_lock<std::mutex> lck(_mtx);
+					_then.push_back([&cv_wait](T& res) {
+						// Mutex is locked by resolv call
 						cv_wait.notify_all();
-					}));
-					cv_wait.wait(lck, [this]() { return _state == State::PENDING; });
+					});
+					_error.push_back([&cv_wait](std::exception_ptr ex) {
+						// Mutex is locked by reject call
+						cv_wait.notify_all();
+					});
+					cv_wait.wait(lck, [this]() { return _state != State::PENDING; });
 				}
 				if (_state == State::FULFILLED) {
 					return *_value;

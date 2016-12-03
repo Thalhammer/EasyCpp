@@ -62,6 +62,31 @@ namespace EasyCppTest
 		promise2.await();
 	}
 
+	TEST(Promise, AwaitFailure)
+	{
+		Promise<int> promise;
+		std::thread th = std::thread([promise]() mutable {
+			std::this_thread::sleep_for(std::chrono::milliseconds(500));
+			try {
+				throw std::string("Error");
+			}
+			catch (...) {
+				promise.reject(std::current_exception());
+			}
+		});
+
+		try {
+			ASSERT_THROW([&promise](){
+				promise.await();
+			}(), std::string);
+		}
+		catch (...) {
+			th.join();
+			throw;
+		}
+		th.join();
+	}
+
 	TEST(Promise, Void)
 	{
 		Promise<void> promise;
