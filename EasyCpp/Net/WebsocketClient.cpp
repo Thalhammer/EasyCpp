@@ -134,6 +134,11 @@ namespace EasyCpp
 			else if (uri.getScheme() == "wss")
 				uri.setScheme("https");
 			else throw std::runtime_error("Invalid scheme");
+
+			if (_curl) {
+				this->disconnect();
+			}
+
 			_curl = std::unique_ptr<Curl>(new Curl());
 			_curl->setURL(uri);
 			_curl->setConnectOnly(true);
@@ -303,7 +308,9 @@ namespace EasyCpp
 			}
 
 			_exit.store(true);
-			this->sendFrame(frame);
+			try {
+				this->sendFrame(frame);
+			}catch(const std::exception&) {}
 			if(_read_thread.joinable())
 				_read_thread.join();
 			_curl.reset();
