@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <Promise.h>
 #include <vector>
+#include <thread>
 
 using namespace EasyCpp;
 
