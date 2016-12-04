@@ -97,5 +97,10 @@ namespace EasyCpp
 		{
 			_connection.connect(url);
 		}
+
+		void WSJsonRPC::disconnect(uint16_t code, const std::string & msg)
+		{
+			_connection.disconnect(code, msg);
+		}
 	}
 }

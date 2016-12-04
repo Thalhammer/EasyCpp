@@ -233,6 +233,8 @@ namespace EasyCpp
 			state.c_frame.opcode = 0;
 			state.c_frame.mask = false;
 
+			_exit = false;
+
 			_read_thread = std::thread([this, state]() mutable {
 				try {
 					while (!_exit.load() && _curl) {
