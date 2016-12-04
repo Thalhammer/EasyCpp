@@ -174,8 +174,10 @@ namespace EasyCpp
 			Promise<AnyValue> promise;
 			this->callFunction(name, args, [promise](const AnyValue& res, bool error) mutable {
 				try {
-					if (error)
-						throw res.as<Error&>();
+					if (error) {
+						EasyCpp::Bundle e = res.as<EasyCpp::Bundle>();
+						throw Error(e.get<int>("code"), e.get<std::string>("message"), e.isSet("data") ? e.get("data") : EasyCpp::AnyValue());
+					}
 					promise.resolve(res);
 				}catch(...) {
 					promise.reject(std::current_exception());
@@ -189,8 +191,10 @@ namespace EasyCpp
 			Promise<AnyValue> promise;
 			this->callFunction(name, args, [promise](const AnyValue& res, bool error) mutable {
 				try {
-					if (error)
-						throw res.as<Error&>();
+					if (error) {
+						EasyCpp::Bundle e = res.as<EasyCpp::Bundle>();
+						throw Error(e.get<int>("code"), e.get<std::string>("message"), e.isSet("data") ? e.get("data") : EasyCpp::AnyValue());
+					}
 					promise.resolve(res);
 				}
 				catch (...) {
