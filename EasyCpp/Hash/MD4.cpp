@@ -36,12 +36,17 @@ namespace EasyCpp
 		{
 			std::string res = std::string(MD4_DIGEST_LENGTH, 0x00);
 			MD4_Final((unsigned char*)res.data(), (MD4_CTX*)md4);
-			return HexEncoding::encode(res);
+			return res;
 		}
 
 		size_t MD4::blocksize()
 		{
 			return MD4_CBLOCK;
+		}
+
+		size_t MD4::outputsize()
+		{
+			return MD4_DIGEST_LENGTH;
 		}
 
 		void MD4::reset()

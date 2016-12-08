@@ -753,6 +753,12 @@
     <ClInclude Include="Plugin\IPluginScriptEngineFactoryProvider.h">
       <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
+    <ClInclude Include="Hash\PBKDF2.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
+    <ClInclude Include="Hash\PBKDF1.h">
+      <Filter>Headerdateien\Hash</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1249,6 +1255,12 @@
     </ClCompile>
     <ClCompile Include="Net\WSJsonRPC.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\PBKDF2.cpp">
+      <Filter>Quelldateien\Hash</Filter>
+    </ClCompile>
+    <ClCompile Include="Hash\PBKDF1.cpp">
+      <Filter>Quelldateien\Hash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

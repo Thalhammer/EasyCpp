@@ -99,6 +99,8 @@
     <ClInclude Include="Hash\HOTP.h" />
     <ClInclude Include="Hash\MD4.h" />
     <ClInclude Include="Hash\MD5.h" />
+    <ClInclude Include="Hash\PBKDF1.h" />
+    <ClInclude Include="Hash\PBKDF2.h" />
     <ClInclude Include="Hash\SHA1.h" />
     <ClInclude Include="Hash\SHA224.h" />
     <ClInclude Include="Hash\SHA256.h" />
@@ -308,6 +310,8 @@
     <ClCompile Include="Hash\HOTP.cpp" />
     <ClCompile Include="Hash\MD4.cpp" />
     <ClCompile Include="Hash\MD5.cpp" />
+    <ClCompile Include="Hash\PBKDF1.cpp" />
+    <ClCompile Include="Hash\PBKDF2.cpp" />
     <ClCompile Include="Hash\SHA1.cpp" />
     <ClCompile Include="Hash\SHA224.cpp" />
     <ClCompile Include="Hash\SHA256.cpp" />

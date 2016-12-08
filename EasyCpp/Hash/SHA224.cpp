@@ -2,7 +2,6 @@
 #include "HashManager.h"
 #include "../AutoInit.h"
 #include <openssl/sha.h>
-#include "../HexEncoding.h"
 
 #pragma comment(lib,"libeay32.lib")
 
@@ -36,12 +35,17 @@ namespace EasyCpp
 		{
 			std::string res = std::string(SHA224_DIGEST_LENGTH, 0x00);
 			SHA224_Final((unsigned char*)res.data(), (SHA256_CTX*)sha224);
-			return HexEncoding::encode(res);
+			return res;
 		}
 
-		size_t EasyCpp::Hash::SHA224::blocksize()
+		size_t SHA224::blocksize()
 		{
 			return SHA256_CBLOCK;
+		}
+
+		size_t SHA224::outputsize()
+		{
+			return SHA224_DIGEST_LENGTH;
 		}
 
 		void SHA224::reset()

@@ -2,7 +2,6 @@
 #include "HashManager.h"
 #include "../AutoInit.h"
 #include <openssl/md5.h>
-#include "../HexEncoding.h"
 
 #pragma comment(lib,"libeay32.lib")
 
@@ -36,12 +35,17 @@ namespace EasyCpp
 		{
 			std::string res = std::string(MD5_DIGEST_LENGTH, 0x00);
 			MD5_Final((unsigned char*)res.data(), (MD5_CTX*)md5);
-			return HexEncoding::encode(res);
+			return res;
 		}
 
 		size_t MD5::blocksize()
 		{
 			return MD5_CBLOCK;
+		}
+
+		size_t MD5::outputsize()
+		{
+			return MD5_DIGEST_LENGTH;
 		}
 
 		void MD5::reset()

@@ -1,6 +1,5 @@
 #include "HMAC.h"
 #include "HashManager.h"
-#include "../HexEncoding.h"
 
 namespace EasyCpp
 {
@@ -22,7 +21,7 @@ namespace EasyCpp
 			auto blocksize = _hash->blocksize();
 			if (mkey.length() > blocksize) {
 				_hash->update(mkey);
-				mkey = HexEncoding::decode(_hash->final());
+				mkey = _hash->final();
 			}
 			if (mkey.length() < blocksize) {
 				mkey = mkey + std::string((blocksize - mkey.length()), 0x00);
@@ -36,7 +35,7 @@ namespace EasyCpp
 
 			_hash->reset();
 			_hash->update(i_key_pad + message);
-			std::string inner = HexEncoding::decode(_hash->final());
+			std::string inner = _hash->final();
 			_hash->reset();
 			_hash->update(o_key_pad + inner);
 			return _hash->final();

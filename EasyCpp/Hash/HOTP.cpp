@@ -1,6 +1,5 @@
 #include "HOTP.h"
 #include "HMAC.h"
-#include "../HexEncoding.h"
 
 namespace EasyCpp
 {
@@ -15,7 +14,7 @@ namespace EasyCpp
 		{
 			std::string message = std::string(8, 0x00);
 			for (int i = 0; i < 8; i++) { message[i] = *(((char*)&counter) + 7 - i); }
-			std::string hmac_val = HexEncoding::decode(HMAC("sha1").run(message, _key));
+			std::string hmac_val = HMAC("sha1").run(message, _key);
 
 			uint8_t offset = hmac_val[19] & 0x0f;
 			uint32_t bin_code = (((uint32_t)hmac_val[offset]) & 0xff) << 24 | (((uint32_t)hmac_val[offset + 1])&0xff) << 16 | (((uint32_t)hmac_val[offset + 2]) & 0xff) << 8 | (((uint32_t)hmac_val[offset + 3]) & 0xff);
