@@ -750,6 +750,9 @@
     <ClInclude Include="Net\Endian.h">
       <Filter>Headerdateien\Net</Filter>
     </ClInclude>
+    <ClInclude Include="Plugin\IPluginScriptEngineFactoryProvider.h">
+      <Filter>Headerdateien\Plugin</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">

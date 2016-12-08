@@ -34,6 +34,11 @@ namespace EasyCpp
 			getInstance()._deregisterEngineFactory(short_name);
 		}
 
+		void ScriptEngineManager::deregisterEngineFactory(ScriptEngineFactoryPtr factory)
+		{
+			deregisterEngineFactory(factory->getNames().at(0));
+		}
+
 		ScriptEngineManager::ScriptEngineManager()
 		{
 		}

@@ -22,6 +22,8 @@ namespace EasyCpp
 			static void registerEngineFactory(ScriptEngineFactoryPtr factory);
 			/// <summary>Deregister script engine.</summary>
 			static void deregisterEngineFactory(const std::string& short_name);
+			/// <summary>Deregister script engine.</summary>
+			static void deregisterEngineFactory(ScriptEngineFactoryPtr factory);
 		private:
 			ScriptEngineManager();
 			static ScriptEngineManager& getInstance();

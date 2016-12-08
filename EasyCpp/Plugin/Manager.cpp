@@ -3,7 +3,9 @@
 #include <fstream>
 
 #include "IPluginDatabaseProvider.h"
+#include "IPluginScriptEngineFactoryProvider.h"
 #include "../Database/DatabaseDriverManager.h"
+#include "../Scripting/ScriptEngineManager.h"
 
 namespace EasyCpp
 {
@@ -47,6 +49,13 @@ namespace EasyCpp
 						Database::DatabaseDriverManager::registerDriver(e.first, e.second);
 					}
 				}
+				if (plugin->hasInterface<IPluginScriptEngineFactoryProvider>())
+				{
+					auto iface = plugin->getInterface<IPluginScriptEngineFactoryProvider>();
+					for (auto& e : iface->getFactories()) {
+						Scripting::ScriptEngineManager::registerEngineFactory(e);
+					}
+				}
 			}
 		}
 
@@ -82,15 +91,23 @@ namespace EasyCpp
 		{
 			if (!_plugins.count(name))
 				throw std::runtime_error("Plugin not found");
-			if (!_plugins.at(name)->canUnload())
+			auto plugin = _plugins.at(name);
+			if (!plugin->canUnload())
 				throw std::runtime_error("Plugin is in use");
 			if (_autoregister) {
 				// Autoregister EasyCpp Extensions
-				if (_plugins.at(name)->hasInterface<IPluginDatabaseProvider>())
+				if (plugin->hasInterface<IPluginDatabaseProvider>())
 				{
-					auto iface = _plugins.at(name)->getInterface<IPluginDatabaseProvider>();
+					auto iface = plugin->getInterface<IPluginDatabaseProvider>();
 					for (auto& e : iface->getDriverMap()) {
 						Database::DatabaseDriverManager::deregisterDriver(e.first);
+					}
+				}
+				if (plugin->hasInterface<IPluginScriptEngineFactoryProvider>())
+				{
+					auto iface = plugin->getInterface<IPluginScriptEngineFactoryProvider>();
+					for (auto& e : iface->getFactories()) {
+						Scripting::ScriptEngineManager::deregisterEngineFactory(e);
 					}
 				}
 			}
