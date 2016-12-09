@@ -128,7 +128,7 @@ namespace EasyCppTest
 		bool executed = false;
 
 		auto all = Promise<size_t>::All({ p1,p2,p3 });
-		all.then<void>([&executed](std::vector<size_t>& val) {
+		all.then([&executed](std::vector<size_t>& val) {
 			executed = true;
 			ASSERT_EQ(1, val[0]);
 			ASSERT_EQ(2, val[1]);
@@ -152,7 +152,7 @@ namespace EasyCppTest
 		bool executed = false;
 
 		auto any = Promise<size_t>::Race({ p1,p2,p3 });
-		any.then<void>([&executed](size_t& val) {
+		any.then([&executed](size_t& val) {
 			executed = true;
 			ASSERT_EQ(1, val);
 		});

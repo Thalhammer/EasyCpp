@@ -15,6 +15,16 @@ namespace EasyCpp
 	template<>
 	class Promise<void>;
 
+	template<typename T>
+	struct is_promise {
+		static const bool value = false;
+	};
+
+	template<typename T>
+	struct is_promise<Promise<T>> {
+		static const bool value = true;
+	};
+
 	template<>
 	class Promise<void>
 	{
@@ -36,14 +46,8 @@ namespace EasyCpp
 			_shared->reject(ex);
 		}
 
-		template<typename Result>
-		Promise<Result> then(std::function<Result()> fn)
-		{
-			return _shared->then(fn);
-		}
-
-		template<typename Result>
-		Promise<Result> then(std::function<Promise<Result>()> fn)
+		template<typename Func>
+		auto then(Func fn)
 		{
 			return _shared->then(fn);
 		}
@@ -98,8 +102,9 @@ namespace EasyCpp
 				_state = State::REJECTED;
 			}
 
-			template<typename Result>
-			Promise<Result> then(std::function<Result()> fn)
+			template<typename Func, typename Result = typename std::result_of<Func()>::type>
+			typename std::enable_if<!std::is_void<Result>::value && !is_promise<Result>::value, Promise<Result>>::type
+				then(Func fn)
 			{
 				Promise<Result> pres;
 				auto pfn = [fn, pres]() mutable {
@@ -121,7 +126,9 @@ namespace EasyCpp
 				return pres;
 			}
 
-			Promise<void> then(std::function<void()> fn)
+			template<typename Func, typename Result = typename std::result_of<Func()>::type>
+			typename std::enable_if<std::is_void<Result>::value && !is_promise<Result>::value, Promise<void>>::type
+				then(Func fn)
 			{
 				Promise<void> pres;
 				auto pfn = [fn, pres]() mutable {
@@ -143,16 +150,17 @@ namespace EasyCpp
 				return pres;
 			}
 
-			template<typename Result>
-			Promise<Result> then(std::function<Promise<Result>()> fn)
+			template<typename Func, typename Result = typename std::result_of<Func()>::type>
+			typename std::enable_if<!std::is_void<Result>::value && is_promise<Result>::value, Promise<typename Result::value_type>>::type
+				then(Func fn)
 			{
-				Promise<Result> pres;
+				Promise<typename Result::value_type> pres;
 				auto pfn = [fn, pres]() mutable {
 					try {
-						Promise<Result> res = fn();
-						res.then(std::function<void(Result&)>([pres](Result& val) mutable {
+						Result res = fn();
+						res.then([pres](typename Result::value_type& val) mutable {
 							pres.resolve(val);
-						}));
+						});
 					}
 					catch (...) {
 						pres.reject(std::current_exception());
@@ -307,16 +315,10 @@ namespace EasyCpp
 			_shared->reject(ex);
 		}
 
-		template<typename Result>
-		Promise<Result> then(std::function<Result(T&)> fn)
+		template<typename Func>
+		auto then(Func f)
 		{
-			return _shared->then(fn);
-		}
-
-		template<typename Result>
-		Promise<Result> then(std::function<Promise<Result>(T&)> fn)
-		{
-			return _shared->then(fn);
+			return _shared->then(f);
 		}
 
 		T await()
@@ -370,8 +372,9 @@ namespace EasyCpp
 				_state = State::REJECTED;
 			}
 
-			template<typename Result>
-			Promise<Result> then(std::function<Result(T&)> fn)
+			template<typename Func, typename Result = typename std::result_of<Func(T&)>::type>
+			typename std::enable_if<!std::is_void<Result>::value && !is_promise<Result>::value, Promise<Result>>::type
+				then(Func fn)
 			{
 				Promise<Result> pres;
 				auto pfn = [fn, pres](T& val) mutable {
@@ -386,13 +389,16 @@ namespace EasyCpp
 				std::unique_lock<std::mutex> lck(_mtx);
 				if (_state == State::PENDING) {
 					_then.push_back(pfn);
-				} else {
+				}
+				else {
 					pfn(*_value);
 				}
 				return pres;
 			}
 
-			Promise<void> then(std::function<void(T&)> fn)
+			template<typename Func, typename Result = typename std::result_of<Func(T&)>::type>
+			typename std::enable_if<std::is_void<Result>::value && !is_promise<Result>::value, Promise<void>>::type
+				then(Func fn)
 			{
 				Promise<void> pres;
 				auto pfn = [fn, pres](T& val) mutable {
@@ -414,16 +420,17 @@ namespace EasyCpp
 				return pres;
 			}
 
-			template<typename Result>
-			Promise<Result> then(std::function<Promise<Result>(T&)> fn)
+			template<typename Func, typename Result = typename std::result_of<Func(T&)>::type>
+			typename std::enable_if<!std::is_void<Result>::value && is_promise<Result>::value, Promise<typename Result::value_type>>::type
+				then(Func fn)
 			{
-				Promise<Result> pres;
+				Promise<typename Result::value_type> pres;
 				auto pfn = [fn, pres](T& val) mutable {
 					try {
-						Promise<Result> res = fn(val);
-						res.then(std::function<void(Result&)>([pres](Result& val) mutable {
+						Result res = fn(val);
+						res.then([pres](typename Result::value_type& val) mutable {
 							pres.resolve(val);
-						}));
+						});
 					}
 					catch (...) {
 						pres.reject(std::current_exception());
@@ -552,7 +559,7 @@ namespace EasyCpp
 			// Required to prevent lambda copy to use persistent variables
 			auto ptr_fn = std::make_shared<decltype(fn)>(fn);
 
-			for (size_t id=0; id<promises.size(); id++)
+			for (size_t id = 0; id < promises.size(); id++)
 			{
 				auto& e = promises.at(id);
 				e.then(std::function<void(T&)>([ptr_fn, id](T& val) mutable {
