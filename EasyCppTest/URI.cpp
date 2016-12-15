@@ -103,6 +103,24 @@ namespace EasyCppTest
 			ASSERT_EQ("", uri.getFragment());
 			ASSERT_EQ("http://example.com:8080/leer%20zeichen/test.html", uri.str());
 		}
+		{
+			Net::URI uri("http://example.com:8080/leer%20zeichen/test.html?test=1&test2&test=&");
+			ASSERT_EQ("http", uri.getScheme());
+			ASSERT_EQ("", uri.getUser());
+			ASSERT_EQ("", uri.getPassword());
+			ASSERT_EQ(8080, uri.getPort());
+			ASSERT_EQ("example.com", uri.getHostname());
+			ASSERT_EQ("/leer zeichen/test.html", uri.getPath());
+			ASSERT_EQ("?test=1&test2&test=&", uri.getQuery());
+			ASSERT_EQ("", uri.getFragment());
+			auto params = uri.getParams();
+			ASSERT_EQ(2, params.count("test"));
+			ASSERT_EQ(1, params.count("test2"));
+			auto pos = params.find("test");
+			ASSERT_EQ("1", pos->second);
+			pos++;
+			ASSERT_EQ("", pos->second);
+		}
 	}
 
 	TEST(URI, URLEncoding)

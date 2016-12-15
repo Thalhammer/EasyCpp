@@ -1,6 +1,7 @@
 #pragma once
 #include "../DllExport.h"
 #include <string>
+#include <map>
 
 namespace EasyCpp
 {
@@ -21,6 +22,7 @@ namespace EasyCpp
 			const std::string& getQuery() const { return _query; }
 			const std::string& getFragment() const { return _fragment; }
 			int getPort() const { return _port; }
+			const std::multimap<std::string, std::string>& getParams() const { return _params; }
 
 
 			void setScheme(const std::string& scheme) { _scheme = scheme; }
@@ -45,6 +47,7 @@ namespace EasyCpp
 			std::string _query;
 			std::string _fragment;
 			int _port;
+			std::multimap<std::string, std::string> _params;
 		};
 	}
 }

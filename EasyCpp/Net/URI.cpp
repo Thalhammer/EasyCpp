@@ -1,6 +1,7 @@
 #include "URI.h"
 #include <regex>
 #include "../RuntimeException.h"
+#include "../StringAlgorithm.h"
 
 namespace EasyCpp
 {
@@ -50,6 +51,18 @@ namespace EasyCpp
 			}
 			else
 				throw RuntimeException("Not a valid uri");
+			if (!getQuery().empty()) {
+				for (auto& parts : EasyCpp::stringSplit("&", getQuery().substr(1)))
+				{
+					auto elems = EasyCpp::stringSplit("=", parts);
+					if (elems.size() == 1) {
+						_params.insert({ elems[0], "" });
+					}
+					else if (elems.size() == 2) {
+						_params.insert({ elems[0], elems[1] });
+					}
+				}
+			}
 		}
 
 
