@@ -215,7 +215,7 @@ namespace EasyCpp
 					throw std::runtime_error("Did not upgrade");
 			}
 			{
-				std::string expected_sha = Base64::toString(HexEncoding::decode(Hash::SHA1::getString(nonce + ws_magic_string)));
+				std::string expected_sha = Base64::toString(Hash::SHA1::getString(nonce + ws_magic_string));
 				std::string actual_sha = headers.find("Sec-WebSocket-Accept")->second;
 
 				if (expected_sha != actual_sha)
