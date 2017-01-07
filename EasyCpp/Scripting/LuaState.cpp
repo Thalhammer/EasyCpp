@@ -382,21 +382,19 @@ namespace EasyCpp
 
 		void LuaState::pushAnyValue(AnyValue v)
 		{
-			if (v.type_info().isFundamental())
-			{
-				if (v.isType<bool>())
-				{
-					this->pushBoolean(v.as<bool>());
-				} else if (v.type_info().isArithmetic())
-				{
-					if (v.type_info().isFloatingPoint())
-						this->pushDouble(v.as<double>());
-					else this->pushInteger(v.as<int64_t>());
-				}
-			}
-			else if (v.isType<nullptr_t>())
+			if (v.isType<nullptr_t>())
 			{
 				pushNil();
+			}
+			else if (v.type_info().isFundamental() && v.isType<bool>())
+			{
+				this->pushBoolean(v.as<bool>());
+			}
+			else if (v.type_info().isFundamental() && v.type_info().isArithmetic())
+			{
+				if (v.type_info().isFloatingPoint())
+					this->pushDouble(v.as<double>());
+				else this->pushInteger(v.as<int64_t>());
 			}
 			else if (v.isType<Bundle>())
 			{
@@ -445,7 +443,8 @@ namespace EasyCpp
 
 					try {
 						state.pushAnyValue(result);
-					}catch(const std::exception&){
+					}
+					catch (const std::exception&) {
 						return 0;
 					}
 					return 1;
