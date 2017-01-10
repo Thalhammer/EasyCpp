@@ -124,6 +124,9 @@
     <Filter Include="Quelldateien\Net\Services\Microsoft\Cognitive">
       <UniqueIdentifier>{45ab750b-437d-4516-aeec-5d719e95eb53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="external\xml">
+      <UniqueIdentifier>{74717180-0125-4472-a2f8-7bafc3de75cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DllExport.h">
@@ -759,6 +762,21 @@
     <ClInclude Include="Hash\PBKDF1.h">
       <Filter>Headerdateien\Hash</Filter>
     </ClInclude>
+    <ClInclude Include="external\xml\rapidxml.hpp">
+      <Filter>external\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="external\xml\rapidxml_iterators.hpp">
+      <Filter>external\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="external\xml\rapidxml_print.hpp">
+      <Filter>external\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="external\xml\rapidxml_utils.hpp">
+      <Filter>external\xml</Filter>
+    </ClInclude>
+    <ClInclude Include="Serialize\XMLSerializer.h">
+      <Filter>Headerdateien\Serialize</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
@@ -1262,6 +1280,9 @@
     <ClCompile Include="Hash\PBKDF1.cpp">
       <Filter>Quelldateien\Hash</Filter>
     </ClCompile>
+    <ClCompile Include="Serialize\XMLSerializer.cpp">
+      <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="external\json\json_valueiterator.inl">
@@ -1269,5 +1290,13 @@
     </None>
     <None Include="packages.config" />
     <None Include="curl-ca-bundle.crt" />
+    <None Include="external\xml\manual.html">
+      <Filter>external\xml</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="external\xml\license.txt">
+      <Filter>external\xml</Filter>
+    </Text>
   </ItemGroup>
 </Project>

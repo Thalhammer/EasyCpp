@@ -92,6 +92,10 @@
     <ClInclude Include="external\lua\lvm.h" />
     <ClInclude Include="external\lua\lzio.h" />
     <ClInclude Include="external\sqlite3\sqlite3.h" />
+    <ClInclude Include="external\xml\rapidxml.hpp" />
+    <ClInclude Include="external\xml\rapidxml_iterators.hpp" />
+    <ClInclude Include="external\xml\rapidxml_print.hpp" />
+    <ClInclude Include="external\xml\rapidxml_utils.hpp" />
     <ClInclude Include="Finally.h" />
     <ClInclude Include="Hash\Hash.h" />
     <ClInclude Include="Hash\HashManager.h" />
@@ -209,6 +213,7 @@
     <ClInclude Include="Serialize\Serializable.h" />
     <ClInclude Include="Serialize\Serializer.h" />
     <ClInclude Include="Serialize\Vector.h" />
+    <ClInclude Include="Serialize\XMLSerializer.h" />
     <ClInclude Include="StringAlgorithm.h" />
     <ClInclude Include="SafeTime.h" />
     <ClInclude Include="ThreadSafe.h" />
@@ -398,6 +403,7 @@
     <ClCompile Include="Serialize\MinistoreSerializer.cpp" />
     <ClCompile Include="Serialize\PHPSessionSerializer.cpp" />
     <ClCompile Include="SafeTime.cpp" />
+    <ClCompile Include="Serialize\XMLSerializer.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="ValueConverter.cpp" />
     <ClCompile Include="VFS\BinaryReader.cpp" />
@@ -420,7 +426,11 @@
     </Content>
     <None Include="curl-ca-bundle.crt" />
     <None Include="external\json\json_valueiterator.inl" />
+    <None Include="external\xml\manual.html" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="external\xml\license.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AB3A108E-1190-43AE-93F9-EF7CA1C06AA0}</ProjectGuid>

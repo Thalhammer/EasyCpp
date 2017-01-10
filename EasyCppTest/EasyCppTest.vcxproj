@@ -237,6 +237,7 @@
     <ClCompile Include="VFS_Path.cpp" />
     <ClCompile Include="WebClient.cpp" />
     <ClCompile Include="WebsocketClient.cpp" />
+    <ClCompile Include="XMLSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="googletest\googletest\include\gtest\gtest-death-test.h" />
