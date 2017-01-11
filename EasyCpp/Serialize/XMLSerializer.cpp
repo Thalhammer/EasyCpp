@@ -33,19 +33,25 @@ namespace EasyCpp
 						node->append_attribute(doc->allocate_attribute(doc->allocate_string(name.data(), name.size()), doc->allocate_string(val.data(), val.size()), name.size(), val.size()));
 					}
 					else {
-						// Element
-						if (e.second.isConvertibleTo<EasyCpp::Bundle>()) {
-							auto bundle = e.second.as<EasyCpp::Bundle>();
-							xml_node<>* n = doc->allocate_node(node_element, doc->allocate_string(e.first.data(), e.first.size()), 0, e.first.size(), 0);
-							node->append_node(n);
-							serialize_bundle(doc, n, bundle);
-						}
-						else if (e.second.isConvertibleTo<EasyCpp::AnyArray>()) {
-							serialize_array(doc, node, e.first, e.second.as<EasyCpp::AnyArray>());
+						if (e.first == "$value$") {
+							std::string value = e.second.as<std::string>();
+							node->value(doc->allocate_string(value.data(), value.size()), value.size());
 						}
 						else {
-							std::string val = e.second.as<std::string>();
-							node->append_node(doc->allocate_node(node_type::node_element, doc->allocate_string(e.first.data(), e.first.size()), doc->allocate_string(val.data(), val.size()), e.first.size(), val.size()));
+							// Element
+							if (e.second.isConvertibleTo<EasyCpp::Bundle>()) {
+								auto bundle = e.second.as<EasyCpp::Bundle>();
+								xml_node<>* n = doc->allocate_node(node_element, doc->allocate_string(e.first.data(), e.first.size()), 0, e.first.size(), 0);
+								node->append_node(n);
+								serialize_bundle(doc, n, bundle);
+							}
+							else if (e.second.isConvertibleTo<EasyCpp::AnyArray>()) {
+								serialize_array(doc, node, e.first, e.second.as<EasyCpp::AnyArray>());
+							}
+							else {
+								std::string val = e.second.as<std::string>();
+								node->append_node(doc->allocate_node(node_type::node_element, doc->allocate_string(e.first.data(), e.first.size()), doc->allocate_string(val.data(), val.size()), e.first.size(), val.size()));
+							}
 						}
 					}
 				}
@@ -103,7 +109,6 @@ namespace EasyCpp
 				const rapidxml::node_type t = node->type();
 				if(t == rapidxml::node_element)
 				{
-					//std::string name = std::string(node->name(), node->name_size());
 					for (const rapidxml::xml_attribute<>* a = node->first_attribute()
 						; a
 						; a = a->next_attribute()
@@ -115,10 +120,13 @@ namespace EasyCpp
 						; n
 						; n = n->next_sibling()
 						) {
-						if (n->type() == node_data)
-							return convert(n);
-						else
+						if (n->type() == node_data || n->type() == node_cdata) {
+							buffer_array_check.insert({ "$value$", convert(n) });
+							break;
+						}
+						else if (n->type() == node_element) {
 							buffer_array_check.insert({ std::string(n->name(), n->name_size()), convert(n) });
+						}
 					}
 
 					{
@@ -142,6 +150,8 @@ namespace EasyCpp
 							}
 						}
 					}
+					if (buffer_array_check.size() == 1 && buffer_array_check.begin()->first == "$value$")
+						return buffer_array_check.begin()->second;
 					EasyCpp::Bundle res;
 					// Should no more contain duplicates
 					for (auto& e : buffer_array_check) {
@@ -149,10 +159,10 @@ namespace EasyCpp
 					}
 					return res;
 				}
-				else if (t == rapidxml::node_data) {
+				else if (t == rapidxml::node_data || t == rapidxml::node_cdata) {
 					return std::string(node->value(), node->value_size());
 				} else {
-					// TODO
+					throw std::logic_error("Invalid path called!");
 				}
 			};
 
