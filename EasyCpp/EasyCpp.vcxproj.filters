@@ -1106,9 +1106,6 @@
     <ClCompile Include="Net\WebClient.cpp">
       <Filter>Quelldateien\Net</Filter>
     </ClCompile>
-    <ClCompile Include="Logging\FilterLogger.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="DynamicObjectHelper.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -1244,35 +1241,11 @@
     <ClCompile Include="Net\Services\Microsoft\Cognitive\CVOCRWord.cpp">
       <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
     </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVOCRResult.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageFaceRectangle.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageFace.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVAnalyseResult.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageType.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageColor.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageAdult.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="Net\WebsocketClient.cpp">
       <Filter>Quelldateien\Net</Filter>
     </ClCompile>
     <ClCompile Include="Net\JsonRPC.cpp">
       <Filter>Quelldateien\Net</Filter>
-    </ClCompile>
-    <ClCompile Include="Net\WSJsonRPC.cpp">
-      <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="Hash\PBKDF2.cpp">
       <Filter>Quelldateien\Hash</Filter>
@@ -1282,6 +1255,33 @@
     </ClCompile>
     <ClCompile Include="Serialize\XMLSerializer.cpp">
       <Filter>Quelldateien\Serialize</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVOCRResult.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVAnalyseResult.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageAdult.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageColor.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageFace.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageFaceRectangle.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\Services\Microsoft\Cognitive\CVImageType.cpp">
+      <Filter>Quelldateien\Net\Services\Microsoft\Cognitive</Filter>
+    </ClCompile>
+    <ClCompile Include="Logging\FilterLogger.cpp">
+      <Filter>Quelldateien\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="Net\WSJsonRPC.cpp">
+      <Filter>Quelldateien\Net</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

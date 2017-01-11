@@ -26,14 +26,12 @@ namespace EasyCppMySql
 
 		static EasyCpp::AnyValue bind2Result(MYSQL_BIND* bind);
 		static enum_field_types convertType(enum_field_types t);
+		static std::pair<std::vector<std::string>, std::unique_ptr<MYSQL_BIND, std::function<void(MYSQL_BIND*)>>> getBind(MYSQL_RES* res);
 
 		MYSQL_STMT* _stmt;
 
 		MYSQL_BIND* _param_bind;
 		unsigned long _param_count;
-		MYSQL_BIND* _result_meta_bind;
-		unsigned long _result_meta_count;
-		std::vector<std::string> _result_names;
 
 		std::shared_ptr<MySQLHandle> _hdl;
 	};

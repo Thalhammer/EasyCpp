@@ -8,7 +8,7 @@ namespace EasyCppMySql
 {
 
 	MySQLStatement::MySQLStatement(const std::string& sql, std::shared_ptr<MySQLHandle> hdl)
-		:_stmt(nullptr), _param_bind(nullptr), _result_meta_bind(nullptr), _hdl(hdl)
+		:_stmt(nullptr), _param_bind(nullptr), _hdl(hdl)
 	{
 		_hdl->executeThreadSafe<void>([this, sql](MySQLHandle::HandleAccessor& hdl) {
 			_stmt = mysql_stmt_init(hdl.getHandle());
@@ -33,44 +33,6 @@ namespace EasyCppMySql
 				for (unsigned long i = 0; i < _param_count; i++)
 					this->setBind(i, MYSQL_TYPE_NULL, nullptr, 0, false);
 			}
-
-			// Get information about result
-			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
-			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
-			if (meta) {
-				_result_meta_count = mysql_num_fields(meta.get());
-				MYSQL_FIELD *fields = mysql_fetch_fields(meta.get());
-				// Dummy bind that receives content length on fetch
-				this->_result_meta_bind = (MYSQL_BIND*)malloc(sizeof(MYSQL_BIND)*_result_meta_count);
-				memset(_result_meta_bind, 0x00, sizeof(MYSQL_BIND)*_result_meta_count);
-				for (unsigned long i = 0; i < _result_meta_count; i++) {
-					_result_meta_bind[i].length = (unsigned long*)malloc(sizeof(unsigned long));
-					_result_meta_bind[i].error = (my_bool*)malloc(sizeof(my_bool));
-					_result_meta_bind[i].is_null = (my_bool*)malloc(sizeof(my_bool));
-					_result_meta_bind[i].buffer_type = convertType(fields[i].type);
-#ifdef __GNUC__
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wswitch" // We know nothing else is possible since we did set it.
-#endif
-					switch (_result_meta_bind[i].buffer_type)
-					{
-					case MYSQL_TYPE_LONGLONG:
-						_result_meta_bind[i].buffer = malloc(sizeof(long long int));
-						_result_meta_bind[i].buffer_length = sizeof(long long int);
-						break;
-					case MYSQL_TYPE_DOUBLE:
-						_result_meta_bind[i].buffer = malloc(sizeof(double));
-						_result_meta_bind[i].buffer_length = sizeof(double);
-						break;
-					}
-#ifdef __GNUC__
-#pragma GCC diagnostic pop
-#endif
-					_result_names.push_back(fields[i].name);
-				}
-				if (mysql_stmt_bind_result(_stmt, _result_meta_bind) != 0)
-					throw DatabaseException("Failed to bind buffer", {});
-			}
 		});
 	}
 
@@ -87,17 +49,6 @@ namespace EasyCppMySql
 			}
 			free(_param_bind);
 		}
-
-		if (_result_meta_bind != nullptr) {
-			for (unsigned long i = 0; i < _result_meta_count; i++)
-			{
-				free(_result_meta_bind[i].buffer);
-				free(_result_meta_bind[i].length);
-				free(_result_meta_bind[i].error);
-				free(_result_meta_bind[i].is_null);
-			}
-			free(_result_meta_bind);
-		}
 	}
 
 	uint64_t MySQLStatement::execute()
@@ -108,6 +59,11 @@ namespace EasyCppMySql
 			if (mysql_stmt_execute(_stmt) != 0)
 				throw DatabaseException("Failed to execute statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
 			auto rows = mysql_stmt_affected_rows(_stmt);
+
+			// Skip all other results
+			do {
+				mysql_stmt_free_result(_stmt);
+			} while (mysql_stmt_next_result(_stmt) == 0);
 
 			if (mysql_stmt_reset(_stmt) != 0)
 				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
@@ -126,33 +82,42 @@ namespace EasyCppMySql
 
 			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
 			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
+			auto bind = getBind(meta.get());
 
-			if (mysql_num_fields(meta.get()) != 1)
-				throw DatabaseException("Query returned more than 1 column", {});
+			if (mysql_stmt_bind_result(_stmt, bind.second.get()) != 0)
+				throw DatabaseException("Failed to bind buffer", {});
+
 			auto err = mysql_stmt_fetch(_stmt);
 			if (err == 1)
 				throw DatabaseException("Failed to fetch column:" + std::string(mysql_stmt_error(_stmt)), {});
+
 			if (err == MYSQL_NO_DATA)
 				throw DatabaseException("Query returned no rows", {});
 			AnyValue res;
-			if (_result_meta_bind->buffer == nullptr)
+			MYSQL_BIND* resbind = bind.second.get();
+			if (resbind->buffer == nullptr)
 			{
-				_result_meta_bind->buffer = malloc(*(_result_meta_bind->length));
-				_result_meta_bind->buffer_length = *(_result_meta_bind->length);
-				if (mysql_stmt_fetch_column(_stmt, _result_meta_bind, 0, 0) != 0)
+				resbind->buffer = malloc(*(resbind->length));
+				resbind->buffer_length = *(resbind->length);
+				if (mysql_stmt_fetch_column(_stmt, resbind, 0, 0) != 0)
 				{
-					free(_result_meta_bind->buffer);
-					_result_meta_bind->buffer = 0;
-					_result_meta_bind->buffer_length = 0;
+					free(resbind->buffer);
+					resbind->buffer = 0;
+					resbind->buffer_length = 0;
 					throw DatabaseException("Failed to retrieve result", {});
 				}
-				res = bind2Result(_result_meta_bind);
-				free(_result_meta_bind->buffer);
-				_result_meta_bind->buffer = 0;
-				_result_meta_bind->buffer_length = 0;
+				res = bind2Result(resbind);
+				free(resbind->buffer);
+				resbind->buffer = 0;
+				resbind->buffer_length = 0;
 			}
 			else
-				res = bind2Result(_result_meta_bind);
+				res = bind2Result(resbind);
+
+			// Skip all other results
+			do {
+				mysql_stmt_free_result(_stmt);
+			} while (mysql_stmt_next_result(_stmt) == 0);
 
 			if (mysql_stmt_reset(_stmt) != 0)
 				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
@@ -172,7 +137,10 @@ namespace EasyCppMySql
 			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
 			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
 
-			unsigned int num_fields = mysql_num_fields(meta.get());
+			auto bind = getBind(meta.get());
+
+			if (mysql_stmt_bind_result(_stmt, bind.second.get()) != 0)
+				throw DatabaseException("Failed to bind buffer", {});
 
 			Bundle values;
 
@@ -182,9 +150,10 @@ namespace EasyCppMySql
 			if (res == 1)
 				throw DatabaseException("Failed to retrieve result", {});
 
-			for (unsigned int i = 0; i < num_fields; i++)
+			MYSQL_BIND* resbind = bind.second.get();
+			for (unsigned int i = 0; i < bind.first.size(); i++)
 			{
-				MYSQL_BIND* ptr = &_result_meta_bind[i];
+				MYSQL_BIND* ptr = &resbind[i];
 				if (ptr->buffer == nullptr)
 				{
 					ptr->buffer = malloc(*(ptr->length));
@@ -196,15 +165,20 @@ namespace EasyCppMySql
 						ptr->buffer_length = 0;
 						throw DatabaseException("Failed to retrieve result", {});
 					}
-					values.set(_result_names[i], bind2Result(ptr));
+					values.set(bind.first[i], bind2Result(ptr));
 					free(ptr->buffer);
 					ptr->buffer = 0;
 					ptr->buffer_length = 0;
 				}
 				else {
-					values.set(_result_names[i], bind2Result(ptr));
+					values.set(bind.first[i], bind2Result(ptr));
 				}
 			}
+
+			// Skip all other results
+			do {
+				mysql_stmt_free_result(_stmt);
+			} while (mysql_stmt_next_result(_stmt) == 0);
 
 			if (mysql_stmt_reset(_stmt) != 0)
 				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
@@ -224,14 +198,19 @@ namespace EasyCppMySql
 			auto del = [](MYSQL_RES* res) { mysql_free_result(res); };
 			std::unique_ptr<MYSQL_RES, decltype(del)> meta(mysql_stmt_result_metadata(_stmt), del);
 
-			unsigned int num_fields = mysql_num_fields(meta.get());
+			auto bind = getBind(meta.get());
+
+			if (mysql_stmt_bind_result(_stmt, bind.second.get()) != 0)
+				throw DatabaseException("Failed to bind buffer", {});
+
+			MYSQL_BIND* resbind = bind.second.get();
 			ResultSet result;
 			while (mysql_stmt_fetch(_stmt) != MYSQL_NO_DATA)
 			{
 				Bundle values;
-				for (unsigned int i = 0; i < num_fields; i++)
+				for (unsigned int i = 0; i < bind.first.size(); i++)
 				{
-					MYSQL_BIND* ptr = &_result_meta_bind[i];
+					MYSQL_BIND* ptr = &resbind[i];
 					if (ptr->buffer == nullptr)
 					{
 						ptr->buffer = malloc(*(ptr->length));
@@ -243,17 +222,22 @@ namespace EasyCppMySql
 							ptr->buffer_length = 0;
 							throw DatabaseException("Failed to retrieve result", {});
 						}
-						values.set(_result_names[i], bind2Result(ptr));
+						values.set(bind.first[i], bind2Result(ptr));
 						free(ptr->buffer);
 						ptr->buffer = 0;
 						ptr->buffer_length = 0;
 					}
 					else {
-						values.set(_result_names[i], bind2Result(ptr));
+						values.set(bind.first[i], bind2Result(ptr));
 					}
 				}
 				result.appendRow(values);
 			}
+
+			// Skip all other results
+			do {
+				mysql_stmt_free_result(_stmt);
+			} while (mysql_stmt_next_result(_stmt) == 0);
 
 			if (mysql_stmt_reset(_stmt) != 0)
 				throw DatabaseException("Failed to reset statement: " + std::to_string(mysql_stmt_errno(_stmt)) + " " + mysql_stmt_error(_stmt), {});
@@ -392,6 +376,44 @@ namespace EasyCppMySql
 #pragma GCC diagnostic pop
 #endif
 
+	}
+
+	std::pair<std::vector<std::string>, std::unique_ptr<MYSQL_BIND, std::function<void(MYSQL_BIND*)>>> MySQLStatement::getBind(MYSQL_RES * meta)
+	{
+		std::pair<std::vector<std::string>, std::unique_ptr<MYSQL_BIND, std::function<void(MYSQL_BIND*)>>> res;
+		MYSQL_FIELD *fields = mysql_fetch_fields(meta);
+		unsigned int num_fields = mysql_num_fields(meta);
+		// Dummy bind that receives content length on fetch
+		MYSQL_BIND* bind = (MYSQL_BIND*)malloc(sizeof(MYSQL_BIND)*num_fields);
+		memset(bind, 0x00, sizeof(MYSQL_BIND)*num_fields);
+		for (unsigned long i = 0; i < num_fields; i++) {
+			bind[i].length = (unsigned long*)malloc(sizeof(unsigned long));
+			bind[i].error = (my_bool*)malloc(sizeof(my_bool));
+			bind[i].is_null = (my_bool*)malloc(sizeof(my_bool));
+			bind[i].buffer_type = convertType(fields[i].type);
+			if (bind[i].buffer_type == MYSQL_TYPE_LONGLONG) {
+				bind[i].buffer = malloc(sizeof(long long int));
+				bind[i].buffer_length = sizeof(long long int);
+			}
+			else if (bind[i].buffer_type == MYSQL_TYPE_DOUBLE) {
+				bind[i].buffer = malloc(sizeof(double));
+				bind[i].buffer_length = sizeof(double);
+			}
+			res.first.push_back(fields[i].name);
+		}
+		res.second = std::unique_ptr<MYSQL_BIND, std::function<void(MYSQL_BIND*)>>(bind, [num_fields](MYSQL_BIND* bind) {
+			if (bind != nullptr) {
+				for (unsigned long i = 0; i < num_fields; i++)
+				{
+					free(bind[i].buffer);
+					free(bind[i].length);
+					free(bind[i].error);
+					free(bind[i].is_null);
+				}
+				free(bind);
+			}
+		});
+		return res;
 	}
 
 }
