@@ -73,14 +73,14 @@ namespace EasyCpp
 			this->loadPlugin(name, fname, server_ifaces);
 		}
 
-		InterfacePtr Manager::getInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version)
+		InterfacePtr Manager::getInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version) const
 		{
 			if (_plugins.count(pluginname) == 0)
 				throw std::runtime_error("Plugin not found");
 			return _plugins.at(pluginname)->getInterface(ifacename, version);
 		}
 
-		bool Manager::hasInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version)
+		bool Manager::hasInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version) const
 		{
 			if (_plugins.count(pluginname) == 0)
 				throw std::runtime_error("Plugin not found");
@@ -115,11 +115,11 @@ namespace EasyCpp
 			_plugins.erase(name);
 		}
 
-		std::vector<std::string> Manager::getPlugins()
+		std::set<std::string> Manager::getPlugins() const
 		{
-			std::vector<std::string> res;
+			std::set<std::string> res;
 			for (auto e : _plugins)
-				res.push_back(e.first);
+				res.insert(e.first);
 			return res;
 		}
 
