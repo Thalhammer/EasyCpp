@@ -11,6 +11,9 @@ namespace EasyCpp
 		class DLL_EXPORT InitArgs
 		{
 		public:
+			void setUnloadProtect(std::shared_ptr<void> p);
+			std::shared_ptr<void> getUnloadProtect();
+
 			std::vector<InterfacePtr> getServerInterfaces();
 			std::vector<InterfacePtr> getPluginInterfaces();
 			void setServerInterfaces(std::vector<InterfacePtr> ifaces);
@@ -24,7 +27,7 @@ namespace EasyCpp
 		private:
 			std::vector<InterfacePtr> _server_interfaces;
 			std::vector<InterfacePtr> _plugin_interfaces;
-
+			std::shared_ptr<void> _unload_protect;
 			std::string _plugin_name;
 		};
 	}

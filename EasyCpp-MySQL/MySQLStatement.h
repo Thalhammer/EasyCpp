@@ -1,14 +1,13 @@
 #pragma once
-#include "RefCounted.h"
 #include "MySQLHandle.h"
 #include <Database/Statement.h>
 
 namespace EasyCppMySql
 {
-	class MySQLStatement : public EasyCpp::Database::Statement, RefCounted
+	class MySQLStatement : public EasyCpp::Database::Statement
 	{
 	public:
-		MySQLStatement(const std::string& sql, std::shared_ptr<MySQLHandle> hdl);
+		MySQLStatement(const std::string& sql, std::shared_ptr<MySQLHandle> hdl, std::shared_ptr<void> unloadp);
 		~MySQLStatement();
 
 		MySQLStatement(MySQLStatement const&) = delete;
@@ -34,5 +33,6 @@ namespace EasyCppMySql
 		unsigned long _param_count;
 
 		std::shared_ptr<MySQLHandle> _hdl;
+		std::shared_ptr<void> _unloadp;
 	};
 }

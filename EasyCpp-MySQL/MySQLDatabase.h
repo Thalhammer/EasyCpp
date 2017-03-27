@@ -1,14 +1,13 @@
 #pragma once
-#include "RefCounted.h"
 #include "MySQLHandle.h"
 #include <Database/Database.h>
 
 namespace EasyCppMySql
 {
-	class MySQLDatabase : public EasyCpp::Database::Database, RefCounted
+	class MySQLDatabase : public EasyCpp::Database::Database
 	{
 	public:
-		MySQLDatabase(const std::string& dsn, const EasyCpp::Bundle& options);
+		MySQLDatabase(const std::string& dsn, const EasyCpp::Bundle& options, std::shared_ptr<void> unloadp);
 		virtual ~MySQLDatabase();
 
 		// Geerbt über Database
@@ -25,5 +24,6 @@ namespace EasyCppMySql
 		virtual EasyCpp::Database::StatementPtr prepare(const std::string & sql, const EasyCpp::Bundle & driver_options = {}) override;
 	private:
 		std::shared_ptr<MySQLHandle> _hdl;
+		std::shared_ptr<void> _unloadp;
 	};
 }

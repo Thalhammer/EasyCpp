@@ -7,8 +7,8 @@ using namespace EasyCpp::Database;
 namespace EasyCppMySql
 {
 
-	MySQLStatement::MySQLStatement(const std::string& sql, std::shared_ptr<MySQLHandle> hdl)
-		:_stmt(nullptr), _param_bind(nullptr), _hdl(hdl)
+	MySQLStatement::MySQLStatement(const std::string& sql, std::shared_ptr<MySQLHandle> hdl, std::shared_ptr<void> unloadp)
+		:_stmt(nullptr), _param_bind(nullptr), _hdl(hdl), _unloadp(unloadp)
 	{
 		_hdl->executeThreadSafe<void>([this, sql](MySQLHandle::HandleAccessor& hdl) {
 			_stmt = mysql_stmt_init(hdl.getHandle());

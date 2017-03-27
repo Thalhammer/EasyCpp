@@ -7,7 +7,7 @@ namespace EasyCppMySql
 	{
 	public:
 		// Geerbt über Base
-		virtual void deinit(EasyCpp::Plugin::DeinitArgs & args) override;
+		virtual void deinit() override;
 		virtual void pluginInit(EasyCpp::Plugin::InitArgs & args) override;
 	};
 }

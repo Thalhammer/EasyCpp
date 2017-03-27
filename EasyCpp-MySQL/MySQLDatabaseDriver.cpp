@@ -4,7 +4,8 @@
 namespace EasyCppMySql
 {
 
-	MySQLDatabaseDriver::MySQLDatabaseDriver()
+	MySQLDatabaseDriver::MySQLDatabaseDriver(std::shared_ptr<void> unloadp)
+		:_unloadp(unloadp)
 	{
 	}
 
@@ -14,6 +15,6 @@ namespace EasyCppMySql
 
 	EasyCpp::Database::DatabasePtr MySQLDatabaseDriver::createInstance(const std::string & dsn, const EasyCpp::Bundle & options)
 	{
-		return std::make_shared<MySQLDatabase>(dsn, options);
+		return std::make_shared<MySQLDatabase>(dsn, options, _unloadp);
 	}
 }

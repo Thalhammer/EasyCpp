@@ -3,6 +3,16 @@ namespace EasyCpp
 {
 	namespace Plugin
 	{
+		void InitArgs::setUnloadProtect(std::shared_ptr<void> p)
+		{
+			_unload_protect = p;
+		}
+
+		std::shared_ptr<void> InitArgs::getUnloadProtect()
+		{
+			return _unload_protect;
+		}
+
 		std::vector<InterfacePtr> InitArgs::getServerInterfaces()
 		{
 			return _server_interfaces;

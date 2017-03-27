@@ -24,9 +24,6 @@
     <ClInclude Include="MySQLDatabaseDriver.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="RefCounted.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="MySQLDatabase.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -42,9 +39,6 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="PluginDatabaseProvider.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="RefCounted.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="MySQLDatabaseDriver.cpp">

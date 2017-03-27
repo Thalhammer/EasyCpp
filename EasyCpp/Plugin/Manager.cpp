@@ -37,7 +37,8 @@ namespace EasyCpp
 			interface_map_t tmap = _server_ifaces;
 			for (auto& e : server_ifaces)
 				tmap[e->getName()][e->getVersion()] = e;
-			auto plugin = std::make_shared<Plugin>(name, path, tmap);
+			auto plugin = std::make_shared<Plugin>(name, path);
+			plugin->init(tmap);
 			_plugins[name] = plugin;
 
 			if (_autoregister) {
@@ -92,8 +93,6 @@ namespace EasyCpp
 			if (!_plugins.count(name))
 				throw std::runtime_error("Plugin not found");
 			auto plugin = _plugins.at(name);
-			if (!plugin->canUnload())
-				throw std::runtime_error("Plugin is in use");
 			if (_autoregister) {
 				// Autoregister EasyCpp Extensions
 				if (plugin->hasInterface<IPluginDatabaseProvider>())
@@ -111,7 +110,6 @@ namespace EasyCpp
 					}
 				}
 			}
-			_plugins.at(name)->deinit();
 			_plugins.erase(name);
 		}
 

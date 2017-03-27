@@ -87,10 +87,11 @@ namespace EasyCppMySql
 
 	EasyCpp::Database::StatementPtr MySQLDatabase::prepare(const std::string & sql, const EasyCpp::Bundle & driver_options)
 	{
-		return std::make_shared<MySQLStatement>(sql, _hdl);
+		return std::make_shared<MySQLStatement>(sql, _hdl, _unloadp);
 	}
 
-	EasyCppMySql::MySQLDatabase::MySQLDatabase(const std::string& dsn, const EasyCpp::Bundle& options)
+	EasyCppMySql::MySQLDatabase::MySQLDatabase(const std::string& dsn, const EasyCpp::Bundle& options, std::shared_ptr<void> unloadp)
+		:_unloadp(unloadp)
 	{
 		std::string idsn = dsn;
 		EasyCpp::Bundle ioptions = options;

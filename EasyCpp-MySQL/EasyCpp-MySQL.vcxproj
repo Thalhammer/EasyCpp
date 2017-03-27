@@ -158,7 +158,6 @@
     <ClInclude Include="MySQLStatement.h" />
     <ClInclude Include="PluginDatabaseProvider.h" />
     <ClInclude Include="PluginInterface.h" />
-    <ClInclude Include="RefCounted.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MySQLDatabase.cpp" />
@@ -166,7 +165,6 @@
     <ClCompile Include="MySQLStatement.cpp" />
     <ClCompile Include="PluginDatabaseProvider.cpp" />
     <ClCompile Include="PluginInterface.cpp" />
-    <ClCompile Include="RefCounted.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EasyCpp\EasyCpp.vcxproj">

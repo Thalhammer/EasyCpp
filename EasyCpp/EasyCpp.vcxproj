@@ -185,13 +185,11 @@
     <ClInclude Include="Nullable.h" />
     <ClInclude Include="PerformanceCheck.h" />
     <ClInclude Include="Plugin\InitArgs.h" />
-    <ClInclude Include="Plugin\IPluginCanUnload.h" />
     <ClInclude Include="Plugin\IPluginDatabaseProvider.h" />
     <ClInclude Include="Plugin\IPluginScriptEngineFactoryProvider.h" />
     <ClInclude Include="Plugin\Plugin.h" />
     <ClInclude Include="Plugin\Base.h" />
     <ClInclude Include="Plugin\BaseInterface.h" />
-    <ClInclude Include="Plugin\DeinitArgs.h" />
     <ClInclude Include="Plugin\Interface.h" />
     <ClInclude Include="Plugin\Manager.h" />
     <ClInclude Include="Preprocessor.h" />
@@ -386,7 +384,6 @@
     <ClCompile Include="Net\WebClient.cpp" />
     <ClCompile Include="Net\WebsocketClient.cpp" />
     <ClCompile Include="Net\WSJsonRPC.cpp" />
-    <ClCompile Include="Plugin\DeinitArgs.cpp" />
     <ClCompile Include="Plugin\InitArgs.cpp" />
     <ClCompile Include="Plugin\Plugin.cpp" />
     <ClCompile Include="Plugin\Base.cpp" />

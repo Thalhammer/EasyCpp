@@ -1,6 +1,5 @@
 #pragma once
 #include "InitArgs.h"
-#include "DeinitArgs.h"
 #include "../DllExport.h"
 
 namespace EasyCpp
@@ -12,7 +11,7 @@ namespace EasyCpp
 		public:
 			virtual ~BaseInterface() {}
 			virtual void init(InitArgs& args) = 0;
-			virtual void deinit(DeinitArgs& args) = 0;
+			virtual void deinit() = 0;
 		};
 #define EASYCPP_PLUGIN_ENTRY(x) \
 extern "C" { \

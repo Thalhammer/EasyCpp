@@ -339,9 +339,6 @@
     <ClInclude Include="Plugin\Plugin.h">
       <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
-    <ClInclude Include="Plugin\IPluginCanUnload.h">
-      <Filter>Headerdateien\Plugin</Filter>
-    </ClInclude>
     <ClInclude Include="VFS\Path.h">
       <Filter>Headerdateien\VFS</Filter>
     </ClInclude>
@@ -467,9 +464,6 @@
     </ClInclude>
     <ClInclude Include="AnyFunction.h">
       <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="Plugin\DeinitArgs.h">
-      <Filter>Headerdateien\Plugin</Filter>
     </ClInclude>
     <ClInclude Include="Plugin\Interface.h">
       <Filter>Headerdateien\Plugin</Filter>
@@ -1033,9 +1027,6 @@
     </ClCompile>
     <ClCompile Include="AnyFunction.cpp">
       <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="Plugin\DeinitArgs.cpp">
-      <Filter>Quelldateien\Plugin</Filter>
     </ClCompile>
     <ClCompile Include="Plugin\Base.cpp">
       <Filter>Quelldateien\Plugin</Filter>

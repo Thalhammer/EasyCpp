@@ -1,19 +1,23 @@
 #include "Plugin.h"
-#include "IPluginCanUnload.h"
-
 
 namespace EasyCpp
 {
 	namespace Plugin
 	{
-		Manager::Plugin::Plugin(std::string name, std::string path, interface_map_t & server_ifaces)
+		Manager::Plugin::Plugin(std::string name, std::string path)
 			:_name(name), _path(path), _lib(path)
+		{
+			
+		}
+
+		void Manager::Plugin::init(const interface_map_t & server_ifaces)
 		{
 			auto create_fn = _lib.getFunction<BaseInterface*()>("createBaseInterface");
 			auto delete_fn = _lib.getFunction<void(BaseInterface*)>("deleteBaseInterface");
 			_baseiface.reset(create_fn(), delete_fn);
-			
+
 			InitArgs args;
+			args.setUnloadProtect(this->shared_from_this());
 			for (auto e : server_ifaces)
 				for (auto e2 : e.second)
 					args.appendServerInterface(e2.second);
@@ -28,6 +32,7 @@ namespace EasyCpp
 
 		Manager::Plugin::~Plugin()
 		{
+			deinit();
 			_interfaces.clear();
 			_baseiface.reset();
 		}
@@ -61,25 +66,11 @@ namespace EasyCpp
 			return _interfaces.count(ifacename) && _interfaces.at(ifacename).count(version);
 		}
 
-		bool Manager::Plugin::canUnload() const
-		{
-			if (this->hasInterface<IPluginCanUnload>())
-			{
-				auto iface = this->getInterface<IPluginCanUnload>();
-				return iface->canUnload();
-			}
-			else return true;
-		}
-
 		void Manager::Plugin::deinit()
 		{
 			// Clear references
 			_interfaces.clear();
-
-			DeinitArgs args;
-			_baseiface->deinit(args);
-			if (args.isCanceled())
-				throw std::runtime_error("Failed to deinit plugin:" + args.getCancelString());
+			_baseiface->deinit();
 		}
 	}
 }

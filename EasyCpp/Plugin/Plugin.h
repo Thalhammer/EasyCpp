@@ -9,17 +9,17 @@ namespace EasyCpp
 {
 	namespace Plugin
 	{
-		class Manager::Plugin
+		class Manager::Plugin: public std::enable_shared_from_this<Plugin>
 		{
 		public:
-			Plugin(std::string name, std::string path, interface_map_t& server_ifaces);
+			Plugin(std::string name, std::string path);
+			void init(const interface_map_t& server_ifaces);
 			~Plugin();
 			std::string getName() const;
 			std::string getPath() const;
 			DynLib& getDynLib();
 			InterfacePtr getInterface(const std::string& ifacename, uint64_t version) const;
 			bool hasInterface(const std::string& ifacename, uint64_t version) const;
-			bool canUnload() const;
 			void deinit();
 
 			template <typename T>
