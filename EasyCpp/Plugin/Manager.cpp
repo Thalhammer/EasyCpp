@@ -23,11 +23,11 @@ namespace EasyCpp
 		{
 			auto name = iface->getName();
 			auto rev = iface->getVersion();
-			if (_server_ifaces.count(name) && _server_ifaces[name].count(rev))
+			if (_server_ifaces.count({ name, rev }))
 			{
 				throw std::logic_error("Interface already registered");
 			}
-			_server_ifaces[name][rev] = iface;
+			_server_ifaces.insert({ { name, rev }, iface });
 		}
 
 		void Manager::loadPlugin(const std::string & name, const std::string & path, const std::vector<InterfacePtr>& server_ifaces)
@@ -36,23 +36,22 @@ namespace EasyCpp
 				throw std::runtime_error("Plugin name already used");
 			interface_map_t tmap = _server_ifaces;
 			for (auto& e : server_ifaces)
-				tmap[e->getName()][e->getVersion()] = e;
-			auto plugin = std::make_shared<Plugin>(name, path);
-			plugin->init(tmap);
-			_plugins[name] = plugin;
+				tmap.insert({ {e->getName(), e->getVersion()}, e });
+			auto plugin = std::make_shared<Plugin>(name, path, tmap);
+			_plugins.insert({ name,plugin });
 
 			if (_autoregister) {
 				// Autoregister EasyCpp Extensions
-				if (plugin->hasInterface<IPluginDatabaseProvider>())
+				if (this->hasInterface<IPluginDatabaseProvider>(name))
 				{
-					auto iface = plugin->getInterface<IPluginDatabaseProvider>();
+					auto iface = this->getInterface<IPluginDatabaseProvider>(name);
 					for (auto& e : iface->getDriverMap()) {
 						Database::DatabaseDriverManager::registerDriver(e.first, e.second);
 					}
 				}
-				if (plugin->hasInterface<IPluginScriptEngineFactoryProvider>())
+				if (this->hasInterface<IPluginScriptEngineFactoryProvider>(name))
 				{
-					auto iface = plugin->getInterface<IPluginScriptEngineFactoryProvider>();
+					auto iface = this->getInterface<IPluginScriptEngineFactoryProvider>(name);
 					for (auto& e : iface->getFactories()) {
 						Scripting::ScriptEngineManager::registerEngineFactory(e);
 					}
@@ -74,18 +73,36 @@ namespace EasyCpp
 			this->loadPlugin(name, fname, server_ifaces);
 		}
 
-		InterfacePtr Manager::getInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version) const
+		void Manager::deinitPlugin(const std::string & name)
 		{
-			if (_plugins.count(pluginname) == 0)
+			if (!_plugins.count(name))
 				throw std::runtime_error("Plugin not found");
-			return _plugins.at(pluginname)->getInterface(ifacename, version);
+			auto plugin = _plugins.at(name);
+			if (_autoregister) {
+				// Autoregister EasyCpp Extensions
+				if (this->hasInterface<IPluginDatabaseProvider>(name))
+				{
+					auto iface = this->getInterface<IPluginDatabaseProvider>(name);
+					for (auto& e : iface->getDriverMap()) {
+						Database::DatabaseDriverManager::deregisterDriver(e.first);
+					}
+				}
+				if (this->hasInterface<IPluginScriptEngineFactoryProvider>(name))
+				{
+					auto iface = this->getInterface<IPluginScriptEngineFactoryProvider>(name);
+					for (auto& e : iface->getFactories()) {
+						Scripting::ScriptEngineManager::deregisterEngineFactory(e);
+					}
+				}
+			}
+			plugin->deinit();
 		}
 
-		bool Manager::hasInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version) const
+		bool Manager::canUnloadPlugin(const std::string & name) const
 		{
-			if (_plugins.count(pluginname) == 0)
+			if (_plugins.count(name) == 0)
 				throw std::runtime_error("Plugin not found");
-			return _plugins.at(pluginname)->hasInterface(ifacename, version);
+			return _plugins.at(name)->canUnload();
 		}
 
 		void Manager::unloadPlugin(const std::string & name)
@@ -93,23 +110,8 @@ namespace EasyCpp
 			if (!_plugins.count(name))
 				throw std::runtime_error("Plugin not found");
 			auto plugin = _plugins.at(name);
-			if (_autoregister) {
-				// Autoregister EasyCpp Extensions
-				if (plugin->hasInterface<IPluginDatabaseProvider>())
-				{
-					auto iface = plugin->getInterface<IPluginDatabaseProvider>();
-					for (auto& e : iface->getDriverMap()) {
-						Database::DatabaseDriverManager::deregisterDriver(e.first);
-					}
-				}
-				if (plugin->hasInterface<IPluginScriptEngineFactoryProvider>())
-				{
-					auto iface = plugin->getInterface<IPluginScriptEngineFactoryProvider>();
-					for (auto& e : iface->getFactories()) {
-						Scripting::ScriptEngineManager::deregisterEngineFactory(e);
-					}
-				}
-			}
+			if (!plugin->canUnload())
+				throw std::runtime_error("Plugin is not ready for unloading");
 			_plugins.erase(name);
 		}
 
@@ -129,6 +131,20 @@ namespace EasyCpp
 		bool Manager::isAutoRegisterExtensions() const
 		{
 			return _autoregister;
+		}
+
+		InterfacePtr Manager::getInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version) const
+		{
+			if (_plugins.count(pluginname) == 0)
+				throw std::runtime_error("Plugin not found");
+			return _plugins.at(pluginname)->getInterface(ifacename, version);
+		}
+
+		bool Manager::hasInterface(const std::string & pluginname, const std::string & ifacename, uint64_t version) const
+		{
+			if (_plugins.count(pluginname) == 0)
+				throw std::runtime_error("Plugin not found");
+			return _plugins.at(pluginname)->hasInterface(ifacename, version);
 		}
 	}
 }

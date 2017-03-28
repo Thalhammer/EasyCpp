@@ -21,6 +21,14 @@ namespace EasyCpp
 
 			void loadPlugin(const std::string& name, const std::string& path, const std::vector<InterfacePtr>& server_ifaces = {});
 			void loadPluginFromMemory(const std::string& name, const std::vector<uint8_t>& data, const std::vector<InterfacePtr>& server_ifaces = {});
+			void deinitPlugin(const std::string& name);
+			bool canUnloadPlugin(const std::string& name) const;
+			void unloadPlugin(const std::string& name);
+			std::set<std::string> getPlugins() const;
+
+			void setAutoRegisterExtensions(bool v);
+			bool isAutoRegisterExtensions() const;
+
 			template <typename T>
 			std::shared_ptr<T> getInterface(const std::string& pluginname) const
 			{
@@ -35,18 +43,13 @@ namespace EasyCpp
 			{
 				return hasInterface(pluginname, T::INTERFACE_NAME, T::INTERFACE_VERSION);
 			}
-			void unloadPlugin(const std::string& name);
-			std::set<std::string> getPlugins() const;
-
-			void setAutoRegisterExtensions(bool v);
-			bool isAutoRegisterExtensions() const;
 		private:
 			class Plugin;
 
 			InterfacePtr getInterface(const std::string& pluginname, const std::string& ifacename, uint64_t version) const;
 			bool hasInterface(const std::string& pluginname, const std::string& ifacename, uint64_t version) const;
 
-			typedef std::map<std::string, std::map<uint64_t, InterfacePtr>> interface_map_t;
+			typedef std::map<std::pair<std::string, uint64_t>, InterfacePtr> interface_map_t;
 			interface_map_t _server_ifaces;
 			std::map<std::string, std::shared_ptr<Plugin>> _plugins;
 			bool _autoregister;
