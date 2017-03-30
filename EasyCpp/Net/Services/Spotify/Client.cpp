@@ -35,7 +35,7 @@ namespace EasyCpp
 
 				User Client::getCurrentUser()
 				{
-					Bundle bundle = doGET("/me", true);
+					Bundle bundle = doGET("/me");
 
 					User res;
 					res.fromAnyValue(bundle);
@@ -44,7 +44,7 @@ namespace EasyCpp
 
 				PublicUser Client::getUser(const std::string & name)
 				{
-					Bundle bundle = doGET("/users/" + name, false);
+					Bundle bundle = doGET("/users/" + name);
 
 					PublicUser res;
 					res.fromAnyValue(bundle);
@@ -53,7 +53,7 @@ namespace EasyCpp
 
 				FullAlbum Client::getAlbum(const std::string & uri)
 				{
-					Bundle bundle = doGET("/albums/" + uri + (_market != "" ? ("?market=" + _market) : ""), false);
+					Bundle bundle = doGET("/albums/" + uri + (_market != "" ? ("?market=" + _market) : ""));
 
 					FullAlbum res;
 					res.fromAnyValue(bundle);
@@ -65,7 +65,7 @@ namespace EasyCpp
 					std::string url = "/albums?ids=" + implode<std::string>(",", uris);
 					if (_market != "") url += "&market=" + _market;
 
-					Bundle bundle = doGET(url, false);
+					Bundle bundle = doGET(url);
 
 					return fromAnyArray<FullAlbum>(bundle.get<AnyArray>("albums"));
 				}
@@ -74,7 +74,7 @@ namespace EasyCpp
 				{
 					std::string params = "?limit=" + std::to_string(limit) + "&offset=" + std::to_string(offset);
 					if (_market != "") params += "&market=" + _market;
-					Bundle bundle = doGET("/albums/" + album_uri + "/tracks" + params, false);
+					Bundle bundle = doGET("/albums/" + album_uri + "/tracks" + params);
 
 					Paging<Track> res;
 					res.fromAnyValue(bundle);
@@ -83,7 +83,7 @@ namespace EasyCpp
 
 				FullArtist Client::getArtist(const std::string & uri)
 				{
-					Bundle bundle = doGET("/artists/" + uri + (_market != "" ? ("?market=" + _market) : ""), false);
+					Bundle bundle = doGET("/artists/" + uri + (_market != "" ? ("?market=" + _market) : ""));
 
 					FullArtist res;
 					res.fromAnyValue(bundle);
@@ -95,7 +95,7 @@ namespace EasyCpp
 					std::string url = "/artists?ids=" + implode<std::string>(",", uris);
 					if (_market != "") url += "&market=" + _market;
 
-					Bundle bundle = doGET(url, false);
+					Bundle bundle = doGET(url);
 
 					return fromAnyArray<FullArtist>(bundle.get<AnyArray>("artists"));
 				}
@@ -104,7 +104,7 @@ namespace EasyCpp
 				{
 					std::string params = "?limit=" + std::to_string(limit) + "&offset=" + std::to_string(offset) + "&album_type=" + implode<std::string>(",", album_type);
 					if (_market != "") params += "&market=" + _market;
-					Bundle bundle = doGET("/artists/" + uri + "/albums" + params, false);
+					Bundle bundle = doGET("/artists/" + uri + "/albums" + params);
 
 					Paging<Album> res;
 					res.fromAnyValue(bundle);
@@ -115,21 +115,21 @@ namespace EasyCpp
 				{
 					if (_market == "")
 						throw Exception(0, "Market required but not set");
-					Bundle bundle = doGET("/artists/" + uri + "/top-tracks?country=" + _market, false);
+					Bundle bundle = doGET("/artists/" + uri + "/top-tracks?country=" + _market);
 
 					return fromAnyArray<FullTrack>(bundle.get<AnyArray>("tracks"));
 				}
 
 				std::vector<FullArtist> Client::getArtistRelatedArtists(const std::string & uri)
 				{
-					Bundle bundle = doGET("/artists/" + uri + "/related-artists", false);
+					Bundle bundle = doGET("/artists/" + uri + "/related-artists");
 
 					return fromAnyArray<FullArtist>(bundle.get<AnyArray>("artists"));
 				}
 
 				FullTrack Client::getTrack(const std::string & uri)
 				{
-					Bundle bundle = doGET("/tracks/" + uri + (_market != "" ? ("?market=" + _market) : ""), false);
+					Bundle bundle = doGET("/tracks/" + uri + (_market != "" ? ("?market=" + _market) : ""));
 
 					FullTrack res;
 					res.fromAnyValue(bundle);
@@ -141,14 +141,14 @@ namespace EasyCpp
 					std::string url = "/tracks?ids=" + implode<std::string>(",", uris);
 					if (_market != "") url += "&market=" + _market;
 
-					Bundle bundle = doGET(url, false);
+					Bundle bundle = doGET(url);
 
 					return fromAnyArray<FullTrack>(bundle.get<AnyArray>("tracks"));
 				}
 
 				AudioFeatures Client::getAudioFeatures(const std::string & uri)
 				{
-					Bundle bundle = doGET("/audio-features/" + uri, true);
+					Bundle bundle = doGET("/audio-features/" + uri);
 
 					AudioFeatures res;
 					res.fromAnyValue(bundle);
@@ -157,7 +157,7 @@ namespace EasyCpp
 
 				std::vector<AudioFeatures> Client::getAudioFeatures(const std::vector<std::string>& uris)
 				{
-					Bundle bundle = doGET("/audio-features?ids=" + implode<std::string>(",", uris), true);
+					Bundle bundle = doGET("/audio-features?ids=" + implode<std::string>(",", uris));
 
 					return fromAnyArray<AudioFeatures>(bundle.get<AnyArray>("audio_features"));
 				}
@@ -169,7 +169,7 @@ namespace EasyCpp
 					params += (_market != "" ? ("&country=" + _market) : "");
 					params += (locale != "" ? ("&locale=" + locale) : "");
 
-					Bundle bundle = doGET("/browse/categories" + params, true);
+					Bundle bundle = doGET("/browse/categories" + params);
 
 					Paging<Category> res("categories");
 					res.fromAnyValue(bundle);
@@ -182,7 +182,7 @@ namespace EasyCpp
 					params += (_market != "" ? ("&country=" + _market) : "");
 					params += (locale != "" ? ("&locale=" + locale) : "");
 					if (!params.empty()) params[0] = '?';
-					Bundle bundle = doGET("/browse/categories/" + id + params, true);
+					Bundle bundle = doGET("/browse/categories/" + id + params);
 
 					Category res;
 					res.fromAnyValue(bundle);
@@ -195,7 +195,7 @@ namespace EasyCpp
 					params += "?limit=" + std::to_string(limit);
 					params += "&offset=" + std::to_string(offset);
 					params += (_market != "" ? ("&country=" + _market) : "");
-					Bundle bundle = doGET("/browse/categories/" + catid + params, true);
+					Bundle bundle = doGET("/browse/categories/" + catid + params);
 
 					Paging<Playlist> res;
 					res.fromAnyValue(bundle.get<Bundle>("playlists"));
@@ -207,7 +207,7 @@ namespace EasyCpp
 					std::string params = "?limit=" + std::to_string(limit);
 					params += "&offset=" + std::to_string(offset);
 					params += (_market != "" ? ("&country=" + _market) : "");
-					Bundle bundle = doGET("/browse/new-releases" + params, true);
+					Bundle bundle = doGET("/browse/new-releases" + params);
 
 					Paging<Album> res("albums");
 					res.fromAnyValue(bundle);
@@ -219,7 +219,7 @@ namespace EasyCpp
 					std::string params = "?limit=" + std::to_string(limit);
 					params += "&offset=" + std::to_string(offset);
 					params += (_market != "" ? ("&market=" + _market) : "");
-					Bundle bundle = doGET("/me/albums" + params, true);
+					Bundle bundle = doGET("/me/albums" + params);
 
 					Paging<SavedAlbum> res;
 					res.fromAnyValue(bundle);
@@ -231,7 +231,7 @@ namespace EasyCpp
 					std::string params = "?limit=" + std::to_string(limit);
 					params += "&offset=" + std::to_string(offset);
 					params += (_market != "" ? ("&market=" + _market) : "");
-					Bundle bundle = doGET("/me/tracks" + params, true);
+					Bundle bundle = doGET("/me/tracks" + params);
 
 					Paging<SavedTrack> res;
 					res.fromAnyValue(bundle);
@@ -246,7 +246,7 @@ namespace EasyCpp
 					else if (range == TimeRange::MEDIUM) params += "&time_range=medium_term";
 					else if (range == TimeRange::SHORT) params += "&time_range=short_term";
 
-					Bundle bundle = doGET("/me/top/tracks" + params, true);
+					Bundle bundle = doGET("/me/top/tracks" + params);
 
 					Paging<FullTrack> res;
 					res.fromAnyValue(bundle);
@@ -261,7 +261,7 @@ namespace EasyCpp
 					else if (range == TimeRange::MEDIUM) params += "&time_range=medium_term";
 					else if (range == TimeRange::SHORT) params += "&time_range=short_term";
 
-					Bundle bundle = doGET("/me/top/artists" + params, true);
+					Bundle bundle = doGET("/me/top/artists" + params);
 
 					Paging<FullArtist> res;
 					res.fromAnyValue(bundle);
@@ -274,7 +274,7 @@ namespace EasyCpp
 					params += "&offset=" + std::to_string(offset);
 					params += "&type=artist";
 
-					Bundle bundle = doGET("/me/following" + params, true);
+					Bundle bundle = doGET("/me/following" + params);
 
 					Paging<FullArtist> res("artists");
 					res.fromAnyValue(bundle);
@@ -283,7 +283,7 @@ namespace EasyCpp
 
 				FullPlaylist Client::getUserPlaylist(const std::string & uid, const std::string & pid)
 				{
-					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + (_market != "" ? ("?market=" + _market) : ""), true);
+					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + (_market != "" ? ("?market=" + _market) : ""));
 
 					FullPlaylist res;
 					res.fromAnyValue(bundle);
@@ -292,7 +292,7 @@ namespace EasyCpp
 
 				Paging<Playlist> Client::getUserPlaylists(const std::string & uid, int limit, int offset)
 				{
-					Bundle bundle = doGET("/users/" + uid + "/playlists", true);
+					Bundle bundle = doGET("/users/" + uid + "/playlists");
 
 					Paging<Playlist> res;
 					res.fromAnyValue(bundle);
@@ -301,7 +301,7 @@ namespace EasyCpp
 
 				Paging<Playlist> Client::getMyPlaylists(int limit, int offset)
 				{
-					Bundle bundle = doGET("/me/playlists", true);
+					Bundle bundle = doGET("/me/playlists");
 
 					Paging<Playlist> res;
 					res.fromAnyValue(bundle);
@@ -313,7 +313,7 @@ namespace EasyCpp
 					std::string params = "?limit=" + std::to_string(limit);
 					params += "&offset=" + std::to_string(offset);
 					if (!_market.empty()) params += "&market=" + _market;
-					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + "/tracks" + params, true);
+					Bundle bundle = doGET("/users/" + uid + "/playlists/" + pid + "/tracks" + params);
 
 					Paging<PlaylistTrack> res;
 					res.fromAnyValue(bundle);
@@ -327,7 +327,7 @@ namespace EasyCpp
 					params += "&locale=" + locale;
 					if (_market != "") params += "&country=" + _market;
 					if (timestamp != "") params += "&timestamp=" + timestamp;
-					Bundle bundle = doGET("/browse/featured-playlists" + params, true);
+					Bundle bundle = doGET("/browse/featured-playlists" + params);
 
 					FeaturedPlaylists res;
 					res.fromAnyValue(bundle);
@@ -526,7 +526,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::userFollowsPlaylist(const std::string & puid, const std::string & pid, const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/users/" + puid + "/playlists/" + pid + "/followers/contains?ids=" + implode<std::string>(",", ids), true);
+					auto info = this->doGET("/users/" + puid + "/playlists/" + pid + "/followers/contains?ids=" + implode<std::string>(",", ids));
 					return fromAnyArray<bool>(info);
 				}
 
@@ -537,7 +537,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::userFollowsArtist(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/following/contains?type=artist&ids=" + implode<std::string>(",", ids), true);
+					auto info = this->doGET("/me/following/contains?type=artist&ids=" + implode<std::string>(",", ids));
 					return fromAnyArray<bool>(info);
 				}
 
@@ -548,7 +548,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::userFollowsUser(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/following/contains?type=user&ids=" + implode<std::string>(",", ids), true);
+					auto info = this->doGET("/me/following/contains?type=user&ids=" + implode<std::string>(",", ids));
 					return fromAnyArray<bool>(info);
 				}
 
@@ -559,7 +559,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::myTracksContains(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/tracks/contains?ids=" + implode<std::string>(",", ids), true);
+					auto info = this->doGET("/me/tracks/contains?ids=" + implode<std::string>(",", ids));
 					return fromAnyArray<bool>(info);
 				}
 
@@ -570,7 +570,7 @@ namespace EasyCpp
 
 				std::vector<bool> Client::myAlbumsContains(const std::vector<std::string>& ids)
 				{
-					auto info = this->doGET("/me/albums/contains?ids=" + implode<std::string>(",", ids), true);
+					auto info = this->doGET("/me/albums/contains?ids=" + implode<std::string>(",", ids));
 					return fromAnyArray<bool>(info);
 				}
 
@@ -597,7 +597,7 @@ namespace EasyCpp
 					if (_market != "") params += "&market=" + _market;
 					params += "&limit=" + std::to_string(limit);
 
-					auto info = this->doGET("/recommendations" + params, true);
+					auto info = this->doGET("/recommendations" + params);
 
 					RecommendationResponse res;
 					res.fromAnyValue(info);
@@ -606,7 +606,7 @@ namespace EasyCpp
 
 				std::vector<std::string> Client::getGenreSeeds()
 				{
-					auto info = this->doGET("/recommendations/available-genre-seeds", true);
+					auto info = this->doGET("/recommendations/available-genre-seeds");
 
 					return fromAnyArray<std::string>(info.as<Bundle>().get<AnyArray>("genres"));
 				}
@@ -626,7 +626,7 @@ namespace EasyCpp
 					return res;
 				}
 
-				AnyValue Client::doGET(const std::string & url, bool req_auth)
+				AnyValue Client::doGET(const std::string & url)
 				{
 					std::string str;
 					Curl curl;
@@ -640,8 +640,7 @@ namespace EasyCpp
 						});
 					}
 					else {
-						if (req_auth)
-							throw Exception(-1, "Authorization required but no token set.");
+						throw Exception(-1, "Authorization required but no token set.");
 					}
 					curl.perform();
 

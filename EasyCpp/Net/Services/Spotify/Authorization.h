@@ -32,6 +32,7 @@ namespace EasyCpp
 
 					AuthorizeResult requestToken(const std::string& code);
 					AuthorizeResult refreshToken(const std::string& refresh_token);
+					AuthorizeResult requestToken();
 
 				private:
 					std::string _client_id;

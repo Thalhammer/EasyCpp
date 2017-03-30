@@ -120,6 +120,26 @@ namespace EasyCpp
 						res._refresh_token = refresh_token;
 					return res;
 				}
+
+				AuthorizeResult Authorization::requestToken()
+				{
+					std::string post = "grant_type=client_credentials";
+					std::string result;
+					Curl c;
+					c.setPOST(true);
+					c.setPOSTFields(post);
+					c.setURL("https://accounts.spotify.com/api/token");
+					c.setSSLCABundle("curl-ca-bundle.crt");
+					c.setOutputString(result);
+					c.setHeaders({
+						{ "Authorization", "Basic " + Base64::toString(_client_id + ":" + _client_secret) }
+					});
+					c.perform();
+
+					AuthorizeResult res;
+					res.fromAnyValue(Serialize::JsonSerializer().deserialize(result));
+					return res;
+				}
 			}
 		}
 	}

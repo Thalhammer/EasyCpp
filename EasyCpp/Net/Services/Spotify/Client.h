@@ -134,7 +134,7 @@ namespace EasyCpp
 
 					std::string _market;
 
-					AnyValue doGET(const std::string& url, bool req_auth = true);
+					AnyValue doGET(const std::string& url);
 					AnyValue doPUT(const std::string& url, AnyValue body);
 					AnyValue doPOST(const std::string& url, AnyValue body);
 					AnyValue doDELETE(const std::string& url, AnyValue body);

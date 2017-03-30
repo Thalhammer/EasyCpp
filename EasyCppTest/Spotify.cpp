@@ -6,11 +6,11 @@ using namespace EasyCpp::Net::Services::Spotify;
 
 namespace EasyCppTest
 {
-	std::string access_token = "";
 	const std::string refresh_token = "AQDolrLKpDtIRYLRqg8tkV3mnCODZswhPkar67ZpkhqxDMGCiKMcvrFrB4mApEaWwg-yStvB8ulR0zUT-Fb0ffXwFuAmSrqJ6yDYC_pUqrOa9M9V-KUA_VDWnS2hs6JgDHs";
 
-	std::string GetAccessToken()
+	std::string GetAccessTokenUser()
 	{
+		static std::string access_token;
 		if (access_token == "") {
 			Authorization auth;
 			auth.setClientID("7a99705fff7042e18c61d03b8335b28e");
@@ -21,37 +21,62 @@ namespace EasyCppTest
 		return access_token;
 	}
 
-	TEST(Spotify, Search)
+	std::string GetAccessTokenService()
+	{
+		static std::string access_token;
+		if (access_token == "") {
+			Authorization auth;
+			auth.setClientID("7a99705fff7042e18c61d03b8335b28e");
+			auth.setClientSecret("8491c78d36da48808e2b6493573363d8");
+			auto n = auth.requestToken();
+			access_token = n.getAccessToken();
+		}
+		return access_token;
+	}
+
+	Client GetClientUserAuth()
 	{
 		Client sp;
-		sp.setAccessToken(GetAccessToken());
+		sp.setAccessToken(GetAccessTokenUser());
+		return sp;
+	}
+
+	Client GetClientServiceAuth()
+	{
+		Client sp;
+		sp.setAccessToken(GetAccessTokenService());
+		return sp;
+	}
+
+	TEST(Spotify, Search)
+	{
+		auto sp = GetClientServiceAuth();
 		auto res = sp.search("Sample");
 	}
 
 	TEST(Spotify, CurrentUser)
 	{
-		Client sp;
-		sp.setAccessToken(GetAccessToken());
+		auto sp = GetClientUserAuth();
 		auto user = sp.getCurrentUser();
 		ASSERT_EQ("experimental_user", user.getID());
 	}
 
 	TEST(Spotify, GetUser)
 	{
-		Client sp;
+		auto sp = GetClientUserAuth();
 		auto user = sp.getUser("experimental_user");
 		ASSERT_EQ("experimental_user", user.getID());
 	}
 
 	TEST(Spotify, GetAlbum)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto album = sp.getAlbum("0sNOF9WDwhWunNAHPD3Baj");
 	}
 
 	TEST(Spotify, GetAlbums)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto album = sp.getAlbums({
 			"41MnTivkwTO3UUJ8DrqEJJ",
 			"6JWc4iAiJ9FjyK0B59ABb4",
@@ -61,26 +86,26 @@ namespace EasyCppTest
 
 	TEST(Spotify, GetAlbumTracks)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto tracks = sp.getAlbumTracks("0sNOF9WDwhWunNAHPD3Baj");
 	}
 
 	TEST(Spotify, GetAlbumRelinking)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		sp.setMarket("DE");
 		auto album = sp.getAlbum("0sNOF9WDwhWunNAHPD3Baj");
 	}
 
 	TEST(Spotify, GetArtist)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto artist = sp.getArtist("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetArtists)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto artists = sp.getArtists({
 			"2CIMQHirSU0MQqyYHq0eOx",
 			"57dN52uHvrHOxijzpIgu3E",
@@ -90,32 +115,32 @@ namespace EasyCppTest
 
 	TEST(Spotify, GetArtistsAlbums)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto albums = sp.getArtistAlbums("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetArtistsTopTracks)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		sp.setMarket("DE");
 		auto tracks = sp.getArtistTopTracks("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetArtistsRelatedTracks)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto artists = sp.getArtistRelatedArtists("0OdUWJ0sBjDrqHygGUXeCF");
 	}
 
 	TEST(Spotify, GetTrack)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto track = sp.getTrack("1zHlj4dQ8ZAtrayhuDDmkY");
 	}
 
 	TEST(Spotify, GetTracks)
 	{
-		Client sp;
+		auto sp = GetClientServiceAuth();
 		auto tracks = sp.getTracks({
 			"7ouMYWpwJ422jRcDASZB7P",
 			"4VqPOruhp5EdPBeR92t6lQ",
@@ -125,23 +150,20 @@ namespace EasyCppTest
 
 	TEST(Spotify, AddAlbum)
 	{
-		Client sp;
-		sp.setAccessToken(GetAccessToken());
+		auto sp = GetClientUserAuth();
 		sp.addMyAlbums("4g8AOBMFKeuthiXpj6Kxmr");
 	}
 
 	TEST(Spotify, CreatePlaylist)
 	{
-		Client sp;
-		sp.setAccessToken(GetAccessToken());
+		auto sp = GetClientUserAuth();
 		auto me = sp.getCurrentUser();
 		sp.createUserPlaylist(me.getID(), "Testplaylist");
 	}
 
 	TEST(Spotify, GetAudioFeatures)
 	{
-		Client sp;
-		sp.setAccessToken(GetAccessToken());
+		auto sp = GetClientUserAuth();
 		auto features = sp.getAudioFeatures("7ouMYWpwJ422jRcDASZB7P");
 	}
 
