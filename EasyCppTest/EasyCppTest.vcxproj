@@ -169,6 +169,7 @@
     <ClCompile Include="Mapper.cpp" />
     <ClCompile Include="MSCognitive.cpp" />
     <ClCompile Include="OTP.cpp" />
+    <ClCompile Include="PerformanceCheck.cpp" />
     <ClCompile Include="Plugin.cpp" />
     <ClCompile Include="Program.cpp" />
     <ClCompile Include="Promise.cpp" />
