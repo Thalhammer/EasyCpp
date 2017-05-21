@@ -38,6 +38,7 @@ namespace EasyCpp
 
 			static std::string URLEncode(const std::string& str, const std::string& ignored = "");
 			static std::string URLDecode(const std::string& str);
+			static std::multimap<std::string, std::string> ParseURLParams(const std::string& str);
 		private:
 			std::string _scheme;
 			std::string _user;

@@ -51,18 +51,7 @@ namespace EasyCpp
 			}
 			else
 				throw RuntimeException("Not a valid uri");
-			if (!getQuery().empty()) {
-				for (auto& parts : EasyCpp::stringSplit("&", getQuery().substr(1)))
-				{
-					auto elems = EasyCpp::stringSplit("=", parts);
-					if (elems.size() == 1) {
-						_params.insert({ elems[0], "" });
-					}
-					else if (elems.size() == 2) {
-						_params.insert({ elems[0], elems[1] });
-					}
-				}
-			}
+			_params = ParseURLParams(getQuery());
 		}
 
 
@@ -150,6 +139,28 @@ namespace EasyCpp
 					i += 2;
 				}
 				else res += c;
+			}
+			return res;
+		}
+
+		std::multimap<std::string, std::string> URI::ParseURLParams(const std::string & str)
+		{
+			std::multimap<std::string, std::string> res;
+			std::vector<std::string> parts;
+			if (str[0] == '?')
+				parts = EasyCpp::stringSplit("&", str.substr(1));
+			else parts = EasyCpp::stringSplit("&", str);
+			for (auto& part : parts)
+			{
+				if (part == "")
+					continue;
+				auto elems = EasyCpp::stringSplit("=", part);
+				if (elems.size() == 1) {
+					res.insert({ URLDecode(elems[0]), "" });
+				}
+				else if (elems.size() == 2) {
+					res.insert({ URLDecode(elems[0]), URLDecode(elems[1]) });
+				}
 			}
 			return res;
 		}

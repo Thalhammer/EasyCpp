@@ -771,6 +771,9 @@
     <ClInclude Include="Serialize\XMLSerializer.h">
       <Filter>Headerdateien\Serialize</Filter>
     </ClInclude>
+    <ClInclude Include="CRC.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ValueConverter.cpp">
